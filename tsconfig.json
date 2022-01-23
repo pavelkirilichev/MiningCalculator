@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "es5",                       
+    "module": "es2015",                     
+    "lib": ["es2020", "DOM"],                           
+    "allowJs": false,                          
+    "rootDir": ".",                         
+    "strict": true,                           
+    "noImplicitAny": true,                    
+    "strictNullChecks": true,              
+    "strictFunctionTypes": true,           
+    "strictBindCallApply": true,           
+    "strictPropertyInitialization": true,  
+    "moduleResolution": "node",            
+    "baseUrl": ".",
+    "paths": {},                           
+    "types": ["node"],                           
+    "esModuleInterop": true,                  
+    "experimentalDecorators": true,        
+    "emitDecoratorMetadata": true,         
+    "skipLibCheck": true,                     
+    "forceConsistentCasingInFileNames": true  ,
+  },
+  "exclude": [
+    "node_modules",
+  ],
+  "include": [
+    "**/*.ts",
+    "**/*.d.ts",
+    "**/*.tsx",
+    "**/*.vue",
+  ]
+}
