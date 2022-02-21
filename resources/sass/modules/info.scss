@@ -1,0 +1,58 @@
+.info {
+  &__block {
+    padding: 10px;
+    border: 1px solid $color-alto;
+    border-radius: 14px;
+  }
+
+  &__block ~ &__block {
+    margin-top: 20px;
+  }
+}
+
+.info-block {
+  &__text {
+    display: block;
+  }
+ 
+  &__text {
+    font: {
+      size: rem(15px);
+    }
+  }
+
+  &__price {
+    color: $color-primary;
+    font: {
+      weight: 700;
+    }
+  }
+
+  &__count {
+    span {
+      color: $color-gallery;
+    }
+  }
+
+  &__list {
+    @include reset-list();
+  }
+  
+  &__item {
+    position: relative;
+    color: $color-secondary;
+    padding-left: 20px;
+    font: {
+      size: rem(15px);
+    }
+    
+    &::before {
+      content: "";
+      @include center("vertical");
+      @include box(10px);
+      left: 0;
+      background-color: $color-secondary;
+      border-radius: 50%;
+    }
+  }
+}

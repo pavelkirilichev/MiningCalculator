@@ -11,9 +11,12 @@
 @import "./mixins.scss";
 @import "./base.scss";
 
+@import "./modules/page.scss";
 @import "./modules/header.scss";
+@import "./modules/footer.scss";
 @import "./modules/hero.scss";
 @import "./modules/calculator.scss";
-@import "./modules/page.scss";
+@import "./modules/info.scss";
+
 @import "./components/dropdown.scss";
 @import "./components/logo.scss";

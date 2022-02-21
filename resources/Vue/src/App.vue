@@ -4,6 +4,7 @@
     <Main>
       <Hero></Hero>
       <Calculator />
+      <AddInfo />
     </Main>
     <Footer></Footer>
   </div>
@@ -19,7 +20,9 @@ import Footer from './components/Default/Footer.vue'
 import Hero from './components/Hero.vue';
 
 import "./api/gpu"
+
 import Calculator from './components/Calculator.vue';
+import AddInfo from './components/AddInfo.vue'
 
 @Component({
   components: {
@@ -27,6 +30,7 @@ import Calculator from './components/Calculator.vue';
     Main,
     Hero,
     Calculator,
+    AddInfo,
     Footer
   }
 })
