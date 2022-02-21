@@ -1,0 +1,57 @@
+.hero {
+  &__inner {
+    min-height: 350px;
+    position: relative;
+  }
+  
+  &__bg {
+    @include absolute($top: 0, $right: 0);
+    @include box(539px, 343px);
+
+    background: {
+      image: url("/build/img/bitcoin-bg.svg");
+      repeat: no-repeat;
+      size: cover;
+    };
+  }
+
+  &__content {
+    position: relative;
+    width: 100%;
+  }
+  
+  &__main-text {
+    max-width: 500px;
+    strong {
+      color: $color-primary;
+      font: {
+        size: rem(50px);
+        //600
+        weight: 700;
+      }
+    }
+
+    font: {
+      size: rem(40px);
+      weight: 700;
+    }
+  }
+
+  &__list {
+    @include reset-list();
+  }
+
+  &__list-item {
+    font: {
+      size: rem(25px);
+    }
+
+    strong {
+      color: $color-secondary;
+      font: {
+        //600
+        weight: 700;
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.calculator {
+  &__title {
+    display: block;
+    text-align: center;
+    margin-top: 150px;
+
+    font: {
+      size: rem(40px);
+      weight: 700;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+/** ---Colors--- **/
+$color-prototype-text: #000;
+$color-prototype-semi-dark: #C4C4C4;
+$color-prototype-dark: #9D9D9D;
+$color-prototype-extra-dark: #5F5F5F;
+$color-prototype-light: #D7D7D7;
+$color-prototype-extra-light: #F2F2F2;
+$color-prototype-white: #FFFFFF;
+
+$color-dark: #000;
+$color-primary: #6665E2;
+$color-secondary: #FF8100;
+$color-yellow-sea: #FFAE00;
+/** ------------ **/
+
+$enable-rounded: false;
+$input-font-size: 12px;
+$input-focus-box-shadow: none;
+$default-transition-time: .4s;
+
+$page-header-height: 120px;
+
+$base-font-family: "Roboto", "sans-serif";
+// $second-font-family: "Montserrat", "sans-serif";
+
+// z-index
+$page-header-z-index: 999;
+
+$grid-breakpoints: (
+  // Extra small screen / phone
+  xs: 0,
+  // Medium screen / tablet
+  md: 768px,
+  // Large screen / desktop
+  lg: 992px,
+  // Extra large screen / wide desktop
+  xl: 1280px
+);
+
+$container-max-widths: (
+  md: 720px,
+  lg: 960px,
+  xl: 1200px
+);
+
+/** MISC **/

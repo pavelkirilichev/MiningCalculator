@@ -1,0 +1,4 @@
+.logo {
+  @include box(70px);
+  background-color: $color-prototype-dark;
+}

@@ -1,8 +1,19 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+// @import url('https://fonts.googleapis.com/css?family=Roboto&weight=400,500,600,700,800,900&style=italic');
 
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+@import "./vars.scss";
+@import "./mixins.scss";
+@import "./base.scss";
+
+@import "./modules/header.scss";
+@import "./modules/hero.scss";
+@import "./modules/calculator.scss";
+@import "./modules/page.scss";
+@import "./components/dropdown.scss";
+@import "./components/logo.scss";
