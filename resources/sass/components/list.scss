@@ -7,12 +7,15 @@
     justify-content: space-between;
     flex-wrap: wrap;
   }
-
+  
   &__item,
   &__select,
   &__button {
     @include box(100%);
     max-width: 524px;
+  }
+
+  &__item {
     margin-top: 10px;
   }
 

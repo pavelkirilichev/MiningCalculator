@@ -21,4 +21,8 @@
       background-color: $color-gallery;
     }
   }
+
+  &--ghost {
+    opacity: 0.5;
+  }
 }
