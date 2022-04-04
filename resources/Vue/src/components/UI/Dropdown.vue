@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown" :class="{ 'dropdown--active': opened }">
     <button class="dropdown__button" @click="toggle">
-      <Icon icon="../../../../img/svg/chevron-down.svg" class="svg-icon dropdown__button-icon" />
+      <Icon :icon="require('../../../../img/svg/chevron-down.svg')" class="svg-icon dropdown__button-icon" />
       <span class="dropdown__button-text">{{ text }}</span>
     </button>
     <div class="dropdown__menu">

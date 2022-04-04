@@ -1,12 +1,94 @@
 .info {
+  margin-top: 50px;
+  padding-bottom: 50px;
+
+  &__tabs,
+  &__tab {
+    position: relative;
+
+    &::before {
+      content: '';
+      @include center('horizontal');
+      bottom: 0;
+      height: 1px;
+      width: 100%;
+      background-color: $color-alto;
+    }
+  }
+
+  &__tabs {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__tab {
+    cursor: pointer;
+
+    font: {
+      size: rem(20px);
+    }
+
+    &::before {
+      display: none;
+      background-color: $color-dark;
+    }
+
+    &--active {
+      &::before {
+        display: block;
+      }
+    }
+
+    &:hover {
+      @include lg() {
+        &::before {
+          display: block;
+        }
+      }
+    }
+
+    &:nth-child(n + 2) {
+      margin-left: 1rem;
+    }
+  }
+
+  &__body {
+    margin-top: 10px;
+  }
+
   &__block {
     padding: 10px;
     border: 1px solid $color-alto;
     border-radius: 14px;
+    margin-top: 20px;
   }
 
-  &__block ~ &__block {
-    margin-top: 20px;
+  &__title,
+  &__text {
+    display: block;
+  }
+
+  &__title {
+    font: {
+      size: rem(20px);
+      weight: 700;
+    }
+
+    strong {
+      font: {
+        weight: 400;
+      }
+      color: $color-alto;
+    }
+  }
+
+  &__text {
+    margin-top: 8px;
+    max-width: 760px;
+    font: {
+      size: rem(15px);
+    }
   }
 }
 

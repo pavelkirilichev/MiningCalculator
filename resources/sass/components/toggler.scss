@@ -1,0 +1,132 @@
+.toggler {
+  $block: &;
+
+  display: flex;
+  padding: 5px 10px;
+  border-radius: 15px;
+  background-color: $color-gallery;
+
+  &__inner {
+    position: relative;
+    display: flex;
+  }
+
+  &__input {
+    @include absolute($top: 0, $left: 0);
+    @include box(100%);
+    opacity: 0;
+  }
+
+  &__text {
+    width: 215px;
+    display: block;
+    text-align: center;
+    padding: 21px 18px;
+    position: relative;
+    font-size: 25px;
+    color: #fff;
+    transition: $default-transition-time color;
+
+    &--active {
+      color: $color-gray;
+    }
+  }
+
+  &__replacer {
+    @include absolute($top: 0, $left: 0);
+    height: 100%;
+    width: 50%;
+    border-radius: 15px;
+    background-color: $color-primary;
+    transition: $default-transition-time transform;
+  }
+
+  &--active {
+    #{$block}__replacer {
+      transform: translateX(100%);
+    }
+
+    #{$block}__text {
+      color: $color-gray;
+      &--active {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.toggler-advanced {
+  $block: &;
+
+  display: flex;
+  border: 0.5px solid $color-silver-dark;
+  padding: 10px 0;
+  border-radius: 15px;
+
+  &__inner {
+    position: relative;
+    align-items: center;
+    display: flex;
+  }
+
+  &__input-wrap {
+    position: relative;
+  }
+
+  &__input {
+    @include absolute($top: 0, $left: 0);
+    @include box(100%);
+    opacity: 0;
+  }
+
+  &__text {
+    display: block;
+    position: relative;
+    padding: 0 15px;
+    font-size: 25px;
+    color: $color-dark;
+    transition: $default-transition-time color;
+
+    &--active {
+      color: $color-gray;
+    }
+  }
+
+  &__replacer {
+    width: 50px;
+    height: 17px;
+    border-radius: 9px;
+    background-color: $color-gallery;
+    display: flex;
+    align-items: center;
+
+    &-inner {
+      position: relative;
+      transition: $default-transition-time transform;
+
+      &::after {
+        content: '';
+        @include center("vertical");
+        @include box(23px);
+        left: 0;
+        border-radius: 50%;
+        background-color: $color-primary;
+      }
+    }
+  }
+
+  &--active {
+    #{$block}__text {
+      color: $color-gray;
+      &--active {
+        color: $color-dark;
+      }
+    }
+
+    #{$block}__replacer {
+      &-inner {
+        transform: translateX(50px - 23px);
+      }
+    }
+  }
+}

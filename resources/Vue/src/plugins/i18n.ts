@@ -5,22 +5,16 @@ Vue.use(VueI18n)
 
 const messages = {
   en: {
-    message: {
-      hello: 'hello world'
-    }
+    mainTitle: 'Выбор калькулятора'
   },
   ru: {
-    message: {
-      hello: 'Привет мир'
-    }
+    mainTitle: 'Choose calculator'
   }
 }
 
-type MessagesSchema = typeof messages
-
 // Create VueI18n instance with options
 const i18n = new VueI18n({
-  locale: 'ru', // set locale
+  locale: document.documentElement.lang, // set locale
   messages, // set locale messages
 })
 
