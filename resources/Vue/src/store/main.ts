@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { GPU } from './modules/GPU';
 import { Parameters } from './modules/Parameters'
+import { Crypto } from './modules/Crypto'
 
 Vue.use(Vuex)
 
@@ -22,7 +23,8 @@ const store = new Vuex.Store({
   },
   modules: {
     GPU,
-    Parameters
+    Parameters,
+    Crypto
   },
   getters: {
     mode: ({ mode }) => mode,

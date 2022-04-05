@@ -1,5 +1,5 @@
 <template>
-  <UISelect :list="filteredList" @filter="filterHandler" @select="selectHandler($event.id)" placeholder="Введите ASIC или видеокарту">
+  <UISelect :list="filteredList" limited @filter="filterHandler" @select="selectHandler($event.id)" placeholder="Введите ASIC или видеокарту">
     <template #item="{ item }">
       <Item :item="item"></Item>
     </template>

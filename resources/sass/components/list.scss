@@ -1,22 +1,30 @@
 .list {
   $block: &;
 
+  &__inner {
+    overflow-y: auto;
+  }
+
   &__list {
     @include reset-list();
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
+    justify-content: space-between;
   }
   
   &__item,
   &__select,
   &__button {
     @include box(100%);
-    max-width: 524px;
+    // max-width: 524px;
   }
 
   &__item {
     margin-top: 10px;
+    
+    &--limited {
+      max-width: 524px;
+    }
   }
 
   &__button {

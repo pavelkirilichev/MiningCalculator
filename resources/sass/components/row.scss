@@ -41,5 +41,9 @@
       size: rem(15px);
     }
     margin-right: 20px;
+
+    &--center {
+      text-align: center;
+    }
   }
 }

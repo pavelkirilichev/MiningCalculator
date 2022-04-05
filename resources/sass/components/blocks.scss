@@ -69,6 +69,10 @@
 
       #{$block}__title {
         margin-right: 0;
+
+        &--spacing {
+          margin-right: 15px;
+        }
       }
     }
   }

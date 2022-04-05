@@ -2,19 +2,19 @@
   <div class="list">
     <div class="list__inner">
       <ul class="list__list">
-        <li class="list__item" v-for="item in list" :key="item.id">
+        <li class="list__item list__item--limited" v-for="item in list" :key="item.id">
           <InteractableItem @plus="changeHandler('plus', $event)" @minus="changeHandler('minus', $event)" :item="item"></InteractableItem>
         </li>
-        <li class="list__item" v-if="addMode">
+        <li class="list__item list__item--limited" v-if="addMode">
           <GPUSelect class="list__select" @reset="addMode = false"/>
         </li>
-        <li class="list__item" v-if="isSelectable">
+        <li class="list__item list__item--limited" v-if="isSelectable">
           <button class="list__button" @click="addMode = true">
             <div class="list__button-plus">+</div>
             <span class="list__button-text">Добавить устройство</span>
           </button>
         </li>
-        <li class="list__item" v-if="list.length === 0">
+        <li class="list__item list__item--limited" v-if="list.length === 0 && !addMode">
           <Item :class="['item--ghost']" :item="{ algorithm: 'Тут будет ваше оборудование', name: 'Тут будет ваше оборудование', id: -1 }"></Item>
         </li>
       </ul>

@@ -23,8 +23,8 @@
           </Block>
         </Blocks>
         <Blocks>
-          <Block full center title="Выбор криптовалюты" icon="lighting">
-            <Card></Card>
+          <Block full center title="Выбор криптовалюты" :hint="{}">
+            <CryptoVue />
           </Block>
         </Blocks>
         <Blocks>
@@ -68,6 +68,7 @@ import GPUVue from './Calculator/GPU.vue';
 import ElectroEnergy from './Entities/Parameters/ElectroEnergy.vue';
 import Farm from './Entities/Parameters/Farm.vue';
 import Result from './Calculator/Result.vue';
+import CryptoVue from './Entities/Crypto/Index.vue';
 
 @Component({
   components: {
@@ -82,6 +83,7 @@ import Result from './Calculator/Result.vue';
     ElectroEnergy,
     Farm,
     Result,
+    CryptoVue
   }
 })
 export default class Calculator extends Vue {}

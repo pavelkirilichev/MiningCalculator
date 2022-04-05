@@ -20,7 +20,7 @@
       <CardRow>
         <Row>
           <RowText text="Сумма"/>
-          <Output promoted v-model="energySum"></Output>
+          <Output v-model="energySum"></Output>
           <RowText text="usd"/>
         </Row>
       </CardRow>

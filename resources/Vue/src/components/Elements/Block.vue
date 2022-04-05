@@ -6,7 +6,7 @@
           <svg class="block__icon"></svg>
         </div>
       </template>
-      <span class="block__title">{{ title }}</span>
+      <span class="block__title" :class="{ 'block__title--spacing': hint }">{{ title }}</span>
       <template v-if="hint">
         <div class="block__hint block-hint">
           <div class="block-hint__badge">?</div>
