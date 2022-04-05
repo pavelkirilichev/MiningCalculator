@@ -1,0 +1,11 @@
+.crypto-item {
+  &__inner {
+    display: flex;
+    align-items: center;
+  }
+
+  &__col {
+    width: 100%;
+    max-width: calc(100% / 5);
+  }
+}

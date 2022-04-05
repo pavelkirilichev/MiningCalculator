@@ -1,5 +1,5 @@
 <template>
-  <div class="app-card-row app-card__row">
+  <div class="box__item">
     <slot name="default"></slot>
   </div>
 </template>
@@ -9,5 +9,5 @@ import Vue from 'vue'
 import { Component } from 'vue-property-decorator';
 
 @Component
-export default class CardRow extends Vue {}
+export default class BoxItem extends Vue {}
 </script>

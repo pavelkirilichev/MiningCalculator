@@ -46,7 +46,9 @@
           </Block>
         </Blocks>
         <Blocks center>
-          <Block title="Результат" full center icon="lighting"></Block>
+          <Block title="Результат" full center icon="lighting">
+            <Result></Result>
+          </Block>
         </Blocks>
       </div>
     </div>
@@ -62,9 +64,10 @@ import DataToggler from './Calculator/DataToggler.vue';
 import Blocks from './Elements/Blocks.vue'
 import Block from './Elements/Block.vue'
 import Card from './Elements/Card.vue'
-import GPUVue from './Entities/GPU.vue';
+import GPUVue from './Calculator/GPU.vue';
 import ElectroEnergy from './Entities/Parameters/ElectroEnergy.vue';
 import Farm from './Entities/Parameters/Farm.vue';
+import Result from './Calculator/Result.vue';
 
 @Component({
   components: {
@@ -77,7 +80,8 @@ import Farm from './Entities/Parameters/Farm.vue';
     ///
 
     ElectroEnergy,
-    Farm
+    Farm,
+    Result,
   }
 })
 export default class Calculator extends Vue {}

@@ -2,21 +2,27 @@
   <Card>
     <template #body>
       <CardRow>
-        <CardText text="Стоимость фермы"/>
-        <CardInput v-model="farmCostControl"></CardInput>
-        <CardText text="usd"/>
+        <Row>
+          <RowText text="Стоимость фермы"/>
+          <Input v-model="farmCostControl"></Input>
+          <RowText text="usd"/>
+        </Row>
       </CardRow>
       <CardRow>
-        <CardText text="Стоимость каркаса"/>
-        <CardInput v-model="cascadeCostControl"></CardInput>
-        <CardText text="usd"/>
+        <Row>
+          <RowText text="Стоимость каркаса"/>
+          <Input v-model="cascadeCostControl"></Input>
+          <RowText text="usd"/>
+        </Row>
       </CardRow>
     </template>
     <template #footer>
       <CardRow>
-        <CardText text="Полная стоимость фермы"/>
-        <CardOutput promoted v-model="farmFullCost"></CardOutput>
-        <CardText text="usd"/>
+        <Row>
+          <RowText text="Полная стоимость фермы"/>
+          <Output promoted v-model="farmFullCost"></Output>
+          <RowText text="usd"/>
+        </Row>
       </CardRow>
     </template>
   </Card>
@@ -32,9 +38,10 @@ import { Parameters } from '../../../store/modules/Parameters';
 
 import Card from '../../Elements/Card.vue';
 import CardRow from '../../Elements/Card/Row.vue';
-import CardText from '../../Elements/Card/Text.vue';
-import CardInput from '../../Elements/Card/Input.vue';
-import CardOutput from '../../Elements/Card/Output.vue';
+import RowText from '../../Elements/Row/Text.vue';
+import Input from '../../Elements/Input.vue';
+import Output from '../../Elements/Output.vue';
+import Row from '../../Elements/Row.vue';
 
 const parametersModule = getModule(Parameters, store)
 
@@ -42,9 +49,10 @@ const parametersModule = getModule(Parameters, store)
   components: {
     Card,
     CardRow,
-    CardText,
-    CardInput,
-    CardOutput
+    Row,
+    RowText,
+    Input,
+    Output
   }
 })
 export default class Farm extends Vue {

@@ -2,21 +2,27 @@
   <Card>
     <template #body>
       <CardRow>
-        <CardText text="Цена за kW"/>
-        <CardInput v-model="kWPriceControl"></CardInput>
-        <CardText text="usd"/>
+        <Row>
+          <RowText text="Цена за kW"/>
+          <Input v-model="kWPriceControl"></Input>
+          <RowText text="usd"/>
+        </Row>
       </CardRow>
       <CardRow>
-        <CardText text="Часы работы"/>
-        <CardInput v-model="hoursControl"></CardInput>
-        <CardText text="часов"/>
+        <Row>
+          <RowText text="Часы работы"/>
+          <Input v-model="hoursControl"></Input>
+          <RowText text="часов"/>
+        </Row>
       </CardRow>
     </template>
     <template #footer>
       <CardRow>
-        <CardText text="Сумма"/>
-        <CardOutput promoted v-model="energySum"></CardOutput>
-        <CardText text="usd"/>
+        <Row>
+          <RowText text="Сумма"/>
+          <Output promoted v-model="energySum"></Output>
+          <RowText text="usd"/>
+        </Row>
       </CardRow>
     </template>
   </Card>
@@ -32,9 +38,10 @@ import { Parameters } from '../../../store/modules/Parameters';
 
 import Card from '../../Elements/Card.vue';
 import CardRow from '../../Elements/Card/Row.vue';
-import CardText from '../../Elements/Card/Text.vue';
-import CardInput from '../../Elements/Card/Input.vue';
-import CardOutput from '../../Elements/Card/Output.vue';
+import Row from '../../Elements/Row.vue';
+import RowText from '../../Elements/Row/Text.vue';
+import Input from '../../Elements/Input.vue';
+import Output from '../../Elements/Output.vue';
 
 const parametersModule = getModule(Parameters, store)
 
@@ -42,9 +49,10 @@ const parametersModule = getModule(Parameters, store)
   components: {
     Card,
     CardRow,
-    CardText,
-    CardInput,
-    CardOutput
+    Row,
+    RowText,
+    Input,
+    Output
   }
 })
 export default class ElectroEnergy extends Vue {

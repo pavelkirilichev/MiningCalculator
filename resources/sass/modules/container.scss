@@ -1,0 +1,7 @@
+.container {
+  @each $breakpoint, $container-max-width in $container-max-widths {
+    @media (min-width: map-get($grid-breakpoints, $breakpoint)) {
+      max-width: $container-max-width;
+    }
+  }
+}

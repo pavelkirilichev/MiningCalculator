@@ -6,7 +6,7 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator';
 
-import GPUList from './GPU/List.vue'
+import GPUList from '../Entities/GPU/List.vue'
 
 @Component({
   components: {
