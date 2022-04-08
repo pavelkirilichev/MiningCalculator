@@ -27,7 +27,7 @@
             <CryptoVue />
           </Block>
         </Blocks>
-        <Blocks>
+        <Blocks v-if="isAdvancedMode">
           <Block title="Коммиссии" icon="lighting">
             <Card></Card>
           </Block>
@@ -40,12 +40,12 @@
             </Block>
           </div>
         </Blocks>
-        <Blocks center>
+        <Blocks v-if="isAdvancedMode" center>
           <Block title="Сложность сети" center icon="lighting">
             <Card></Card>
           </Block>
         </Blocks>
-        <Blocks center>
+        <Blocks v-if="isAdvancedMode" center>
           <Block title="Результат" full center icon="lighting">
             <Result></Result>
           </Block>
@@ -69,6 +69,8 @@ import ElectroEnergy from './Entities/Parameters/ElectroEnergy.vue';
 import Farm from './Entities/Parameters/Farm.vue';
 import Result from './Calculator/Result.vue';
 import CryptoVue from './Entities/Crypto/Index.vue';
+import { mixins } from 'vue-class-component';
+import ModeMixin from './mixins/mode';
 
 @Component({
   components: {
@@ -86,5 +88,5 @@ import CryptoVue from './Entities/Crypto/Index.vue';
     CryptoVue
   }
 })
-export default class Calculator extends Vue {}
+export default class Calculator extends mixins(ModeMixin) {}
 </script>

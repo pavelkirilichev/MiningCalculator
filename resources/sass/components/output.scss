@@ -4,7 +4,11 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 52px;
+  padding: {
+    left: 10px;
+    right: 10px;
+  }
+  min-width: 52px;
   height: 28px;
   background-color: $color-gallery;
   margin-right: 10px;
@@ -18,7 +22,7 @@
   }
 
   &--big {
-    width: 68px;
+    min-width: 68px;
     height: 25px;
   }
 }

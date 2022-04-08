@@ -1,5 +1,5 @@
 <template>
-  <UIList :list="list">
+  <UIList :list="list" @click:item="changeCryptoHandler" >
     <template #item="{ item }">
       <CryptoItem :item="item" />
     </template>
@@ -15,9 +15,11 @@ import { getModule } from 'vuex-module-decorators';
 import UIList from '../../UI/List.vue';
 import CryptoItem from './Item.vue'
 
-import { Crypto } from '../../../store/modules/Crypto';
+import { Crypto, ICryptoItem } from '../../../store/modules/Crypto';
 import store from '../../../store/main';
 import Card from '../../Elements/Card.vue';
+import { mixins } from 'vue-class-component';
+import ModeMixin from '../../mixins/mode';
 
 const cryptoModule = getModule(Crypto, store)
 
@@ -28,9 +30,13 @@ const cryptoModule = getModule(Crypto, store)
     Card
   }
 })
-export default class CryptoVue extends Vue {
+export default class CryptoVue extends mixins(ModeMixin) {
   get list() {
     return cryptoModule.list
+  }
+
+  changeCryptoHandler(item: ICryptoItem) {
+    cryptoModule.updateActiveId(item.id)
   }
 }
 </script>

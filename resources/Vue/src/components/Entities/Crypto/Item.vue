@@ -1,68 +1,130 @@
 <template>
-  <div class="crypto-item">
+  <div class="crypto-item" :class="{ 'crypto-item--base': !isAdvancedMode }">
     <div class="crypto-item__inner">
-      <div class="crypto-item__col crypto-item__col--inline">
-        <div class="crypto-item__img-wrap">
-          <img class="crypto-item__img" :src="item.img" :alt="item.title">
+      <template v-if="isAdvancedMode">
+        <div class="crypto-item__body">
+          <div class="crypto-item__col crypto-item__col--inline crypto-item__col--title">
+            <div class="crypto-item__img-wrap">
+              <img class="crypto-item__img" :src="item.img" :alt="item.name">
+            </div>
+            <span class="crypto-item__title">{{ item.name }}</span>
+            <span class="crypto-item__title crypto-item__title--additional">{{ item.name_abb }}</span>
+          </div>
+          <div class="crypto-item__col">
+            <Row>
+              <RowText inner center>
+                Выручка
+                <br>
+                <strong>24ч</strong>
+                <br>
+                (крипта)
+              </RowText>
+              <Output big promoted :value="item.gain.dayCrypto"></Output>
+              <RowText text="ETH" />
+            </Row>
+          </div>
+          <div class="crypto-item__col">
+            <Row>
+              <RowText inner center>
+                Выручка
+                <br>
+                <strong>24ч</strong>
+                <br>
+                (фиат)
+              </RowText>
+              <Output big promoted :value="item.gain.dayFiat"></Output>
+              <RowText text="USD" />
+            </Row>
+          </div>
+          <div class="crypto-item__col">
+            <Row>
+              <RowText inner center>
+                Выручка
+                <br>
+                <strong>месяц</strong>
+                <br>
+                (крипта)
+              </RowText>
+              <Output big promoted :value="item.gain.monthCrypto"></Output>
+              <RowText text="ETH" />
+            </Row>
+          </div>
+          <div class="crypto-item__col">
+            <Row>
+              <RowText inner center>
+                Выручка
+                <br>
+                <strong>месяц</strong>
+                <br>
+                (фиат)
+              </RowText>
+              <Output big promoted :value="item.gain.monthFiat"></Output>
+              <RowText text="ETH" />
+            </Row>
+          </div>
         </div>
-      </div>
-      <div class="crypto-item__col">
-        <span class="crypto-item__text">{{ item.title }}</span>
-        <span class="crypto-item__text crypto-item__text--additional">{{ item.unknown }}</span>
-      </div>
-      <div class="crypto-item__col">
-        <Row>
-          <RowText inner center>
-            Выручка
-            <br>
-            <strong>24ч</strong>
-            <br>
-            (крипта)
-          </RowText>
-          <Output big promoted :value="item.gain.dayCrypto"></Output>
-          <RowText text="ETH" />
-        </Row>
-      </div>
-      <div class="crypto-item__col">
-        <Row>
-          <RowText inner center>
-            Выручка
-            <br>
-            <strong>24ч</strong>
-            <br>
-            (фиат)
-          </RowText>
-          <Output big promoted :value="item.gain.dayFiat"></Output>
-          <RowText text="USD" />
-        </Row>
-      </div>
-      <div class="crypto-item__col">
-        <Row>
-          <RowText inner center>
-            Выручка
-            <br>
-            <strong>месяц</strong>
-            <br>
-            (крипта)
-          </RowText>
-          <Output big promoted :value="item.gain.monthCrypto"></Output>
-          <RowText text="ETH" />
-        </Row>
-      </div>
-      <div class="crypto-item__col">
-        <Row>
-          <RowText inner center>
-            Выручка
-            <br>
-            <strong>месяц</strong>
-            <br>
-            (фиат)
-          </RowText>
-          <Output big promoted :value="item.gain.monthFiat"></Output>
-          <RowText text="ETH" />
-        </Row>
-      </div>
-    </div>
+      </template>
+      <template v-else>
+        <div class="crypto-item__body">
+          <div class="crypto-item__col crypto-item__col--inline crypto-item__col--title">
+            <div class="crypto-item__img-wrap">
+              <img class="crypto-item__img" :src="item.img" :alt="item.name">
+            </div>
+            <span class="crypto-item__title">{{ item.name }}</span>
+            <span class="crypto-item__title crypto-item__title--additional">{{ item.name_abb }}</span>
+          </div>
+          <div class="crypto-item__col">
+            <Col>
+              <ColText inner center small>
+                Выручка 24ч
+                <br>
+                (крипта)
+              </ColText>
+              <Output big promoted :value="item.gain.dayCrypto + ' ETH'"></Output>
+            </Col>
+          </div>
+          <div class="crypto-item__col">
+            <Col>
+              <ColText inner center small>
+                Выручка 24ч
+                <br>
+                (фиат)
+              </ColText>
+              <Output big promoted :value="item.gain.dayFiat + ' USD'"></Output>
+            </Col>
+          </div>
+        </div>
+        <div class="crypto-item__footer">
+          <span class="crypto-item__text">
+            Прибыль
+          </span>
+          <div class="crypto-item__col">
+            <Col>
+              <ColText inner center>
+                В день
+              </ColText>
+              <Output big promoted :value="10 + ' USD'"></Output>
+            </Col>
+          </div>
+          <div class="crypto-item__col">
+            <Col>
+              <ColText inner center>
+                В неделю
+              </ColText>
+              <Output big promoted :value="100 + ' USD'"></Output>
+            </Col>
+          </div>
+          <div class="crypto-item__col">
+            <Col>
+              <ColText inner center>
+                В месяц
+              </ColText>
+              <Output big promoted :value="1000 + ' USD'"></Output>
+            </Col>
+          </div>
+        </div>
+      </template>
+    </div>  
   </div>
 </template>
 
@@ -74,16 +136,22 @@ import { ICryptoItem } from '../../../store/modules/Crypto'
 import Row from '../../Elements/Row.vue';
 import RowText from '../../Elements/Row/Text.vue';
 import Output from '../../Elements/Output.vue';
+import { mixins } from 'vue-class-component';
+import ModeMixin from '../../mixins/mode';
+import Col from '../../Elements/Col.vue';
+import ColText from '../../Elements/Col/Text.vue';
 
 @Component({
   components: {
     Row,
-    CryptoItem,
     RowText,
-    Output
+    Col,
+    ColText,
+    CryptoItem,
+    Output,
   }
 })
-export default class CryptoItem extends Vue {
+export default class CryptoItem extends mixins(ModeMixin) {
   @Prop({ type: Object }) item!: ICryptoItem
 }
 </script>

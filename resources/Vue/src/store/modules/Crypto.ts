@@ -1,10 +1,11 @@
-import { Module, VuexModule } from 'vuex-module-decorators';
+import { Module, VuexModule, Mutation } from 'vuex-module-decorators';
 import crypto from '../../mock/crypto';
 
 interface ICryptoItem {
   id: number,
-  title: string,
-  unknown: string,
+  name: string,
+  name_abb: string,
+  course: number,
   img: string,
   gain: {
     dayCrypto: number,
@@ -22,6 +23,15 @@ interface ICryptoItem {
 class Crypto extends VuexModule {
   list: Array<ICryptoItem> = crypto
   activeId: number = 1
+
+  get current() {
+    return this.list.find(item => item.id === this.activeId)
+  }
+
+  @Mutation
+  updateActiveId(id: number) {
+    this.activeId = id
+  }
 }
 
 export { Crypto, ICryptoItem }

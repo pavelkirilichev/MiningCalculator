@@ -1,50 +1,54 @@
 export default [
   {
     id: 1,
-    title: 'Еthereum',
-    unknown: 'ETH',
+    name: 'Еthereum',
+    name_abb: 'ETH',
     img: '/img/image_6.png',
+    course: 10000,
     gain: {
       dayCrypto: 0.002,
-      dayFiat: 0.002,
+      dayFiat: 10,
       monthCrypto: 0.002,
-      monthFiat: 0.002
+      monthFiat: 10
     }
   },
   {
     id: 2,
-    title: 'Bitcoin',
-    unknown: 'BTC',
+    name: 'Bitcoin',
+    name_abb: 'BTC',
     img: '/img/image_6.png',
+    course: 10000,
     gain: {
       dayCrypto: 0.002,
-      dayFiat: 0.002,
+      dayFiat: 10,
       monthCrypto: 0.002,
-      monthFiat: 0.002
+      monthFiat: 10
     }
   },
   {
     id: 3,
-    title: 'Tether',
-    unknown: 'USDT',
+    name: 'Tether',
+    name_abb: 'USDT',
     img: '/img/image_6.png',
+    course: 10000,
     gain: {
       dayCrypto: 0.002,
-      dayFiat: 0.002,
+      dayFiat: 10,
       monthCrypto: 0.002,
-      monthFiat: 0.002
+      monthFiat: 10
     }
   },
   {
     id: 4,
-    title: 'Tether',
-    unknown: 'USDT',
+    name: 'Tether',
+    name_abb: 'USDT',
     img: '/img/image_6.png',
+    course: 10000,
     gain: {
       dayCrypto: 0.002,
-      dayFiat: 0.002,
+      dayFiat: 10,
       monthCrypto: 0.002,
-      monthFiat: 0.002
+      monthFiat: 10
     }
   }
 ]

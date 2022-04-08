@@ -33,7 +33,7 @@ export default class GPUItem extends Vue {
   @Prop({ type: Object }) item!: IGPUItem
 
   getTitle(item: IGPUItem) {
-    return this.dataMode === DataMode.HASH_MODE ? item.algorithm : item.name
+    return this.dataMode === DataMode.HASH_MODE ? item.hashrate_measurement : item.name
   }
 }
 </script>

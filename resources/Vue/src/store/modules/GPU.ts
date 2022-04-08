@@ -6,7 +6,9 @@ import { DataMode } from '../main'
 interface IGPUItem {
   id: number,
   name: string,
-  algorithm: string
+  hashrate: number,
+  hashrate_measurement: string,
+  consumability: number
 }
 
 interface SelectedIGPUItem extends IGPUItem {
@@ -27,11 +29,11 @@ export class GPU extends VuexModule {
     if (this.context.rootState.dataMode === DataMode.BASE_MODE) {
       return this.filteredByName
     }
-    else return this.filteredByAlgorithm
+    else return this.filteredByhashrate_measurement
   }
 
-  get filteredByAlgorithm() {
-    return this.listToSelect.filter(item => item.algorithm.toLocaleLowerCase().includes(this.tmpFilter.toLocaleLowerCase()))
+  get filteredByhashrate_measurement() {
+    return this.listToSelect.filter(item => item.hashrate_measurement.toLocaleLowerCase().includes(this.tmpFilter.toLocaleLowerCase()))
   }
 
   get filteredByName() {

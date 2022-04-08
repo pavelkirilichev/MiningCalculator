@@ -10,6 +10,8 @@ class Parameters extends VuexModule {
     kWPrice: 0,
     workHours: 24,
   }
+  
+  comission = 0
 
   get energySum() {
     return this.energy.kWPrice * this.energy.workHours

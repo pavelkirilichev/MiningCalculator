@@ -18,7 +18,7 @@ enum DataMode {
 
 const store = new Vuex.Store({
   state: {
-    mode: Modes.ADVANCED_MODE,
+    mode: Modes.BASE_MODE,
     dataMode: DataMode.BASE_MODE
   },
   modules: {

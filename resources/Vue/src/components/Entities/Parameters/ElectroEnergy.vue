@@ -8,7 +8,7 @@
           <RowText text="usd"/>
         </Row>
       </CardRow>
-      <CardRow>
+      <CardRow v-if="isAdvancedMode">
         <Row>
           <RowText text="Часы работы"/>
           <Input v-model="hoursControl"></Input>
@@ -16,11 +16,11 @@
         </Row>
       </CardRow>
     </template>
-    <template #footer>
+    <template #footer v-if="isAdvancedMode">
       <CardRow>
         <Row>
           <RowText text="Сумма"/>
-          <Output v-model="energySum"></Output>
+          <Output promoted v-model="energySum"></Output>
           <RowText text="usd"/>
         </Row>
       </CardRow>
@@ -32,8 +32,9 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
+import { mixins } from 'vue-class-component';
 
-import store from '../../../store/main';
+import store, { Modes } from '../../../store/main';
 import { Parameters } from '../../../store/modules/Parameters';
 
 import Card from '../../Elements/Card.vue';
@@ -42,6 +43,7 @@ import Row from '../../Elements/Row.vue';
 import RowText from '../../Elements/Row/Text.vue';
 import Input from '../../Elements/Input.vue';
 import Output from '../../Elements/Output.vue';
+import ModeMixin from '../../mixins/mode';
 
 const parametersModule = getModule(Parameters, store)
 
@@ -55,7 +57,7 @@ const parametersModule = getModule(Parameters, store)
     Output
   }
 })
-export default class ElectroEnergy extends Vue {
+export default class ElectroEnergy extends mixins(ModeMixin) {
   get hoursControl() {
     return String(parametersModule.energy.workHours)
   }

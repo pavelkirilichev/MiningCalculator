@@ -34,6 +34,8 @@ export default class UIList extends Vue {
   mounted() {
     const wrap = this.$refs.wrap
 
+    console.log(wrap.scrollHeight)
+
     if(wrap) {
       const item = wrap.querySelector(".list__item")
 

@@ -8,7 +8,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option controls the default hash driver that will be used to hash
-    | passwords for your application. By default, the bcrypt algorithm is
+    | passwords for your application. By default, the bcrypt hashrate_measurement is
     | used; however, you remain free to modify this option if you wish.
     |
     | Supported: "bcrypt", "argon", "argon2id"
@@ -23,7 +23,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may specify the configuration options that should be used when
-    | passwords are hashed using the Bcrypt algorithm. This will allow you
+    | passwords are hashed using the Bcrypt hashrate_measurement. This will allow you
     | to control the amount of time it takes to hash the given password.
     |
     */
@@ -38,7 +38,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may specify the configuration options that should be used when
-    | passwords are hashed using the Argon algorithm. These will allow you
+    | passwords are hashed using the Argon hashrate_measurement. These will allow you
     | to control the amount of time it takes to hash the given password.
     |
     */
