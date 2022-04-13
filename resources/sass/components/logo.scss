@@ -1,0 +1,5 @@
+.logo {
+  @include box(70px);
+  background-color: $color-silver-dark;
+  border-radius: 20px;
+}

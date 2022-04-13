@@ -1,0 +1,26 @@
+.counter {
+  width: 160px;
+  
+  &__inner {
+    background-color: $color-gallery;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__button {
+    @include box(50px);
+    border: none;
+    border-radius: 14px;
+    font-size: rem(30px);
+    background-color: $color-primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+
+  &__text {
+    text-align: center;
+  }
+}

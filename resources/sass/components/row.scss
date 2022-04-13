@@ -1,0 +1,53 @@
+.app-row {
+  &__inner {
+    display: flex;
+    align-items: center;
+  }
+
+  &__input,
+  &__output {
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 52px;
+    height: 28px;
+    background-color: $color-gallery;
+    margin-right: 10px;
+    font: {
+      size: rem(15px);
+    }
+  }
+  
+  &__input {
+    border: none;
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 3px 1px $color-gray;
+    }
+  }
+
+  &__output {
+    &--promoted {
+      background-color: $color-primary;
+      color: #fff;
+    }
+  }
+
+  &__text {
+    font: {
+      size: rem(15px);
+    }
+    margin-right: 20px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    &--center {
+      text-align: center;
+    }
+  }
+}

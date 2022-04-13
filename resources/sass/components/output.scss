@@ -1,0 +1,28 @@
+.app-output {
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: {
+    left: 10px;
+    right: 10px;
+  }
+  min-width: 52px;
+  height: 28px;
+  background-color: $color-gallery;
+  margin-right: 10px;
+  font: {
+    size: rem(15px);
+  }
+
+  &--promoted {
+    background-color: $color-primary;
+    color: #fff;
+  }
+
+  &--big {
+    min-width: 68px;
+    height: 25px;
+  }
+}

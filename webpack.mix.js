@@ -11,5 +11,19 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.override(config => {
+  config.module.rules.push({
+    test: /\.vue$/,
+    use: [{
+      loader: "vue-svg-inline-loader",
+      options: { /* ... */ }
+    }]
+  })
+});
+
+mix
+  .js('resources/js/app.js', 'public/build/js')
+  .ts('resources/Vue/main.ts', 'public/build/js/vue.js')
+  .sass('resources/sass/app.scss', 'public/build/css')
+  .copy('resources/img/**', 'public/build/img')
+  .version()

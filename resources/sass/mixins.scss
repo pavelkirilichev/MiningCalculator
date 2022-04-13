@@ -1,0 +1,187 @@
+@use "sass:math";
+
+@mixin xl() {
+  @media (min-width: map-get($map: $grid-breakpoints, $key: xl)) {
+    @content;
+  }
+}
+
+@mixin lg() {
+  @media (min-width: map-get($map: $grid-breakpoints, $key: lg)) {
+    @content;
+  }
+}
+
+@mixin md() {
+  @media (min-width: map-get($map: $grid-breakpoints, $key: md)) {
+    @content;
+  }
+}
+
+@mixin sm() {
+  @media (min-width: map-get($map: $grid-breakpoints, $key: sm)) {
+    @content;
+  }
+}
+
+@mixin xs() {
+  @media (min-width: map-get($map: $grid-breakpoints, $key: xs)) {
+    @content;
+  }
+}
+
+@mixin from-xs-to-lg() {
+  @media (min-width: map-get($map: $grid-breakpoints, $key: xs)) and (max-width: map-get($map: $grid-breakpoints, $key: lg) - 0.02px) {
+    @content;
+  }
+}
+
+@mixin from-xs-to-md() {
+  @media (min-width: map-get($map: $grid-breakpoints, $key: xs)) and (max-width: map-get($map: $grid-breakpoints, $key: md) - 0.02px) {
+    @content;
+  }
+}
+
+@mixin from-xs-to-sm() {
+  @media (min-width: map-get($map: $grid-breakpoints, $key: xs)) and (max-width: map-get($map: $grid-breakpoints, $key: sm) - 0.02px) {
+    @content;
+  }
+}
+
+@mixin center($position) {
+  position: absolute;
+
+  @if ($position == "vertical") {
+    top: 50%;
+    transform: translateY(-50%);
+  } @else if($position == "horizontal") {
+    left: 50%;
+    transform: translateX(-50%);
+  } @else if($position == "both") {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@function rem($size, $base: 16px) {
+  $remSize: math.div($size, $base);
+
+  @return #{$remSize}rem;
+}
+
+@function em($size, $base: 16px) {
+  $emSize: math.div($size, $base);
+
+  @return #{$emSize}em;
+}
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+@mixin font-face($name, $path, $weight: null, $style: null, $extensions: eot woff2 woff ttf, $locals: null) {
+  $src: null;
+  $mods: (eot: "?#iefix", svg: "#" + str-replace($name, " ", "_"));
+  $formats: (otf: "opentype", ttf: "truetype");
+
+  @each $local in $locals {
+    $src: append($src, local($local), comma);
+  }
+
+  @each $ext in $extensions {
+    $mod: if(map-has-key($mods, $ext), $ext + map-get($mods, $ext), $ext);
+    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+    $src: append($src, url(quote($path + "." + $mod)) format(quote($format)), comma);
+  }
+
+  @font-face {
+    font: {
+      display: swap;
+      family: quote($name);
+      style: $style;
+      weight: $weight;
+    }
+    src: $src;
+  }
+}
+
+@mixin box($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin absolute($args...) {
+  @include position(absolute, $args...);
+}
+
+@mixin relative($args...) {
+  @include position(relative, $args...);
+}
+
+@mixin fixed($args...) {
+  @include position(fixed, $args...);
+}
+
+@mixin sticky($args...) {
+  @include position(sticky, $args...);
+}
+
+@mixin center($position: "both") {
+  position: absolute;
+
+  @if ($position == "vertical") {
+    top: 50%;
+    transform: translateY(-50%);
+  } @else if($position == "horizontal") {
+    left: 50%;
+    transform: translateX(-50%);
+  } @else if($position == "both") {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@mixin reset-list() {
+  padding-left: 0;
+  margin: {
+    top: 0;
+    bottom: 0;
+  }
+  list-style: none;
+}
+
+@mixin animated-line($color: inherit) {
+  position: relative;
+
+  &::after {
+    content: "";
+    @include absolute($bottom: 0, $left: 0);
+    background-color: $color;
+    max-width: 0;
+    width: 100%;
+    height: 2px;
+    transition: $default-transition-time max-width;
+  }
+
+  &--active {
+    &::after {
+      max-width: 100%;
+    }
+  }
+}
