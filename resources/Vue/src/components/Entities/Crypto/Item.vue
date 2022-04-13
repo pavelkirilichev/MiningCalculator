@@ -103,7 +103,7 @@
               <ColText inner center>
                 В день
               </ColText>
-              <Output big promoted :value="10 + ' USD'"></Output>
+              <Output big promoted :value="getSum.day + ' USD'"></Output>
             </Col>
           </div>
           <div class="crypto-item__col">
@@ -111,7 +111,7 @@
               <ColText inner center>
                 В неделю
               </ColText>
-              <Output big promoted :value="100 + ' USD'"></Output>
+              <Output big promoted :value="getSum.week + ' USD'"></Output>
             </Col>
           </div>
           <div class="crypto-item__col">
@@ -119,7 +119,7 @@
               <ColText inner center>
                 В месяц
               </ColText>
-              <Output big promoted :value="1000 + ' USD'"></Output>
+              <Output big promoted :value="getSum.month + ' USD'"></Output>
             </Col>
           </div>
         </div>
@@ -140,6 +140,11 @@ import { mixins } from 'vue-class-component';
 import ModeMixin from '../../mixins/mode';
 import Col from '../../Elements/Col.vue';
 import ColText from '../../Elements/Col/Text.vue';
+import { getModule } from 'vuex-module-decorators';
+import { Sum } from '../../../store/modules/Sum';
+import store from '../../../store/main';
+
+const sumModule = getModule(Sum, store)
 
 @Component({
   components: {
@@ -153,5 +158,9 @@ import ColText from '../../Elements/Col/Text.vue';
 })
 export default class CryptoItem extends mixins(ModeMixin) {
   @Prop({ type: Object }) item!: ICryptoItem
+
+  get getSum() {
+    return sumModule.getSum
+  }
 }
 </script>
