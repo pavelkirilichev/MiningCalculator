@@ -1,13 +1,17 @@
 <template>
-  <div class="list-item" @click="$emit('click')">
-    <slot name="default"></slot>
-  </div>
+  <li class="list__item" :class="{ 'list__item--limited': limited }" @click="$emit('click')">
+    <div class="list-item">
+      <slot name="default"></slot>
+    </div>
+  </li>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 @Component
-export default class ListItem extends Vue {}
+export default class UIListItem extends Vue {
+  @Prop({ type: Boolean, default: false }) limited!: boolean
+}
 </script>

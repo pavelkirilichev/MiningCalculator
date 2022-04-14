@@ -19,7 +19,7 @@
                 <br>
                 (крипта)
               </RowText>
-              <Output big promoted :value="item.gain.dayCrypto"></Output>
+              <Output big promoted :value="0"></Output>
               <RowText text="ETH" />
             </Row>
           </div>
@@ -32,7 +32,7 @@
                 <br>
                 (фиат)
               </RowText>
-              <Output big promoted :value="item.gain.dayFiat"></Output>
+              <Output big promoted :value="0"></Output>
               <RowText text="USD" />
             </Row>
           </div>
@@ -45,7 +45,7 @@
                 <br>
                 (крипта)
               </RowText>
-              <Output big promoted :value="item.gain.monthCrypto"></Output>
+              <Output big promoted :value="0"></Output>
               <RowText text="ETH" />
             </Row>
           </div>
@@ -58,7 +58,7 @@
                 <br>
                 (фиат)
               </RowText>
-              <Output big promoted :value="item.gain.monthFiat"></Output>
+              <Output big promoted :value="0"></Output>
               <RowText text="ETH" />
             </Row>
           </div>
@@ -80,7 +80,7 @@
                 <br>
                 (крипта)
               </ColText>
-              <Output big promoted :value="item.gain.dayCrypto + ' ETH'"></Output>
+              <Output big promoted :value="0 + ' ETH'"></Output>
             </Col>
           </div>
           <div class="crypto-item__col">
@@ -90,7 +90,7 @@
                 <br>
                 (фиат)
               </ColText>
-              <Output big promoted :value="item.gain.dayFiat + ' USD'"></Output>
+              <Output big promoted :value="0 + ' USD'"></Output>
             </Col>
           </div>
         </div>
@@ -103,7 +103,7 @@
               <ColText inner center>
                 В день
               </ColText>
-              <Output big promoted :value="10 + ' USD'"></Output>
+              <Output big promoted :value="0 + ' USD'"></Output>
             </Col>
           </div>
           <div class="crypto-item__col">
@@ -111,7 +111,7 @@
               <ColText inner center>
                 В неделю
               </ColText>
-              <Output big promoted :value="100 + ' USD'"></Output>
+              <Output big promoted :value="0 + ' USD'"></Output>
             </Col>
           </div>
           <div class="crypto-item__col">
@@ -119,7 +119,7 @@
               <ColText inner center>
                 В месяц
               </ColText>
-              <Output big promoted :value="1000 + ' USD'"></Output>
+              <Output big promoted :value="0 + ' USD'"></Output>
             </Col>
           </div>
         </div>
@@ -129,7 +129,6 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
 import { Prop, Component } from 'vue-property-decorator'
 
 import { ICryptoItem } from '../../../store/modules/Crypto'
@@ -140,6 +139,11 @@ import { mixins } from 'vue-class-component';
 import ModeMixin from '../../mixins/mode';
 import Col from '../../Elements/Col.vue';
 import ColText from '../../Elements/Col/Text.vue';
+import { getModule } from 'vuex-module-decorators';
+import { Sum } from '../../../store/modules/Sum';
+import store from '../../../store/main';
+
+const sumModule = getModule(Sum, store)
 
 @Component({
   components: {
@@ -153,5 +157,9 @@ import ColText from '../../Elements/Col/Text.vue';
 })
 export default class CryptoItem extends mixins(ModeMixin) {
   @Prop({ type: Object }) item!: ICryptoItem
+
+  get getSum() {
+    return sumModule.getSum
+  }
 }
 </script>

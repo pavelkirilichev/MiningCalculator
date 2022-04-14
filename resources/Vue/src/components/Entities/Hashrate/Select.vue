@@ -1,7 +1,7 @@
 <template>
-  <UISelect :list="filteredList" limited @filter="filterHandler" @select="selectHandler($event.id)" placeholder="Введите ASIC или видеокарту">
+  <UISelect :list="filteredList" limited @filter="filterHandler" @select="selectHandler($event.id)" placeholder="Введите hashrate">
     <template #item="{ item }">
-      <Item :item="item"></Item>
+      <Item :item="transform(item)"></Item>
     </template>
   </UISelect>
 </template>
@@ -12,12 +12,12 @@ import { Component } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
 
 import store from '../../../store/main';
-import { GPU } from '../../../store/modules/GPU';
 import UISelect from '../../UI/Select.vue';
 
 import Item from '../../UI/Item.vue'
+import { Crypto, ICryptoItem } from '../../../store/modules/Crypto';
 
-const gpuModule = getModule(GPU, store)
+const gpuModule = getModule(Crypto, store)
 
 @Component({
   components: {
@@ -25,7 +25,7 @@ const gpuModule = getModule(GPU, store)
     Item
   }
 })
-export default class GPUSelect extends Vue {
+export default class HashrateSelect extends Vue {
   get filteredList() {
     return gpuModule.filteredList
   }
@@ -36,6 +36,13 @@ export default class GPUSelect extends Vue {
   }
   filterHandler(value: string) {
     gpuModule.updateFilter(value)
+  }
+
+  transform(item: ICryptoItem) {
+    return {
+      ...item,
+      name: item.algorithm
+    }
   }
 }
 </script>

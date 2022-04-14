@@ -1,24 +1,24 @@
 <template>
   <Boxes>
     <Box title="Выбранная криптовалюта">
-      <CryptoMiniItem :item="currentCryptoItem"></CryptoMiniItem>
+      <CryptoMiniItem v-if="currentCryptoItem" :item="currentCryptoItem"></CryptoMiniItem>
     </Box>
     <Box title="Прибыль" addText="USD" :cols="3">
       <BoxItem>
         <Col>
           <ColText text="День"/>
-          <Output promoted big :value="10"></Output>
+          <Output promoted big :value="getSum.day"></Output>
         </Col>
       </BoxItem>
       <BoxItem>
         <Col>
           <ColText text="Неделя"/>
-          <Output promoted big :value="100"></Output></Col>
+          <Output promoted big :value="getSum.week"></Output></Col>
       </BoxItem>
       <BoxItem>
         <Col>
           <ColText text="Месяц"/>
-          <Output promoted big :value="1000"></Output>
+          <Output promoted big :value="getSum.month"></Output>
         </Col>
       </BoxItem>
     </Box>
@@ -54,8 +54,10 @@ import { getModule } from 'vuex-module-decorators';
 import { Crypto } from '../../store/modules/Crypto';
 import store from '../../store/main';
 import CryptoMiniItem from '../Entities/Crypto/MiniItem.vue';
+import { Sum } from '../../store/modules/Sum';
 
 const cryptoModule = getModule(Crypto, store)
+const sumModule = getModule(Sum, store)
 
 @Component({
   components: {
@@ -73,6 +75,10 @@ const cryptoModule = getModule(Crypto, store)
 export default class Result extends Vue {
   get currentCryptoItem() {
     return cryptoModule.current
+  }
+  
+  get getSum() {
+    return sumModule.getSum
   }
 }
 </script>

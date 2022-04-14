@@ -1,11 +1,11 @@
 <template>
   <UIList :list="list" limited>
     <template #item="{ item }">
-      <InteractableItem @plus="changeHandler('plus', $event)" @minus="changeHandler('minus', $event)" :item="item"></InteractableItem>
+      <InteractableItem @plus="changeHandler('plus', $event)" @minus="changeHandler('minus', $event)" :item="transform(item)"></InteractableItem>
     </template>
     <template v-slot:append>
       <UIListItem limited v-if="addMode">
-        <GPUSelect class="list__select" @reset="addMode = false"/>
+        <HashrateSelect class="list__select" @reset="addMode = false"/>
       </UIListItem>
       <UIListItem limited v-if="isSelectable">
         <button class="list__button" @click="addMode = true">
@@ -26,15 +26,15 @@ import { Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators';
 
 import store from '../../../store/main';
-import { GPU } from '../../../store/modules/GPU';
 
-import InteractableItem from '../../UI/InteractableItem.vue'
 import Item from '../../UI/Item.vue'
-import GPUSelect from './Select.vue'
+import InteractableItem from '../../UI/InteractableItem.vue'
 import UIList from '../../UI/List.vue';
 import UIListItem from '../../UI/List/Item.vue';
+import { Crypto, ICryptoItem } from '../../../store/modules/Crypto';
+import HashrateSelect from './Select.vue';
 
-const gpuModule = getModule(GPU, store)
+const gpuModule = getModule(Crypto, store)
 
 @Component({
   components: {
@@ -42,10 +42,10 @@ const gpuModule = getModule(GPU, store)
     Item,
     UIList,
     UIListItem,
-    GPUSelect
+    HashrateSelect
   }
 })
-export default class GPUList extends Vue {
+export default class HashrateList extends Vue {
   addMode = false
 
   get list() {
@@ -60,6 +60,13 @@ export default class GPUList extends Vue {
 
   changeHandler(type: 'plus' | 'minus', id: string) {
     gpuModule.updateItemCount({ type, id })
+  }
+
+  transform(item: ICryptoItem) {
+    return {
+      ...item,
+      name: item.algorithm
+    }
   }
 }
 </script>
