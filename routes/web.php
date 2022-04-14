@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\CoinController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,3 +14,4 @@
 Route::get('/', function () {
     return view('pages.homepage');
 });
+Route::get('/coin', [CoinController::class, 'show']);
