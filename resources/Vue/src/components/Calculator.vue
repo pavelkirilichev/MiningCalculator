@@ -11,14 +11,15 @@
       <div class="calculator__main">
         <Blocks>
           <Block full title="Выбор устройства" icon="lighting" :hint="{}">
-            <GPUVue />
+            <HashrateVue v-if="isHashrateMode" />
+            <GPUVue v-else/>
           </Block>
         </Blocks>
         <Blocks>
-          <Block title="Электроэнергия" icon="lighting">
+          <Block title="Электроэнергия" icon="lighting" :hint="{}">
             <ElectroEnergy />
           </Block>
-          <Block title="Стоимость фермы" icon="lighting">
+          <Block title="Стоимость фермы" icon="lighting" :hint="{}">
             <Farm></Farm>
           </Block>
         </Blocks>
@@ -28,25 +29,25 @@
           </Block>
         </Blocks>
         <Blocks v-if="isAdvancedMode">
-          <Block title="Коммиссии" icon="lighting">
-            <Card></Card>
+          <Block title="Коммиссии" icon="lighting" :hint="{}">
+            <Commision />
           </Block>
           <div class="blocks__col">
-            <Block title="Курс обмена валют" icon="lighting">
-              <Card></Card>
+            <Block title="Курс обмена валют" icon="lighting" :hint="{}">
+              <CurrencyExchangeRate />
             </Block>
-            <Block title="Налоги" icon="lighting">
-              <Card></Card>
+            <Block title="Налоги" icon="lighting" :hint="{}">
+              <Taxes />
             </Block>
           </div>
         </Blocks>
         <Blocks v-if="isAdvancedMode" center>
-          <Block title="Сложность сети" center icon="lighting">
-            <Card></Card>
+          <Block title="Сложность сети" center icon="lighting" :hint="{}">
+            <Network />
           </Block>
         </Blocks>
         <Blocks v-if="isAdvancedMode" center>
-          <Block title="Результат" full center icon="lighting">
+          <Block title="Результат" full center icon="lighting" :hint="{}">
             <Result></Result>
           </Block>
         </Blocks>
@@ -56,7 +57,6 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
 import {Component} from 'vue-property-decorator';
 import ModeToggler from './Calculator/ModeToggler.vue';
 import DataToggler from './Calculator/DataToggler.vue';
@@ -71,6 +71,11 @@ import Result from './Calculator/Result.vue';
 import CryptoVue from './Entities/Crypto/Index.vue';
 import { mixins } from 'vue-class-component';
 import ModeMixin from './mixins/mode';
+import HashrateVue from './Calculator/Hashrate.vue';
+import Network from './Entities/Parameters/Network.vue';
+import Taxes from './Entities/Parameters/Taxes.vue';
+import CurrencyExchangeRate from './Entities/Parameters/CurrencyExchangeRate.vue';
+import Commision from './Entities/Parameters/Commision.vue';
 
 @Component({
   components: {
@@ -80,12 +85,18 @@ import ModeMixin from './mixins/mode';
     Block,
     Card,
     GPUVue,
-    ///
+    HashrateVue,
+    CryptoVue,
+    //
 
     ElectroEnergy,
     Farm,
     Result,
-    CryptoVue
+    Network,
+    Taxes,
+    CurrencyExchangeRate,
+    Commision
+    //
   }
 })
 export default class Calculator extends mixins(ModeMixin) {}

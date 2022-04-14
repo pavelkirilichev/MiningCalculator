@@ -1,14 +1,18 @@
 import { Module, Mutation, VuexModule } from 'vuex-module-decorators'
 
 import gpu from '../../mock/gpu'
-import { DataMode } from '../main'
 
+interface Algorithm {
+  power: number,
+  speed: number
+}
 interface IGPUItem {
-  id: number,
+  id: string,
   name: string,
-  hashrate: number,
-  hashrate_measurement: string,
-  consumability: number
+  url: string,
+  type: string,
+  brand: string,
+  algorithms: Algorithm[]
 }
 
 interface SelectedIGPUItem extends IGPUItem {
@@ -26,14 +30,7 @@ export class GPU extends VuexModule {
   tmpFilter: string = ''
 
   get filteredList() {
-    if (this.context.rootState.dataMode === DataMode.BASE_MODE) {
-      return this.filteredByName
-    }
-    else return this.filteredByhashrate_measurement
-  }
-
-  get filteredByhashrate_measurement() {
-    return this.listToSelect.filter(item => item.hashrate_measurement.toLocaleLowerCase().includes(this.tmpFilter.toLocaleLowerCase()))
+    return this.filteredByName
   }
 
   get filteredByName() {
@@ -61,7 +58,7 @@ export class GPU extends VuexModule {
   }
 
   @Mutation
-  updateItemCount({ type, id }: { type: 'plus' | 'minus', id: number }) {
+  updateItemCount({ type, id }: { type: 'plus' | 'minus', id: string }) {
     const item = this.selected.find(o => o.id === id)
     if (!item) return
     

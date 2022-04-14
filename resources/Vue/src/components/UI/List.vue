@@ -2,11 +2,11 @@
   <div class="list">
     <div class="list__inner" ref="wrap">
       <ul class="list__list">
-        <li class="list__item" :class="{ 'list__item--limited': limited }" v-for="item in list" :key="item.link">
-          <ListItem @click="$emit('click:item', item)">
-            <slot name="item" :item="item"></slot>
-          </ListItem>
-        </li>
+        <slot name="prepend"></slot>
+        <UIListItem @click="$emit('click:item', item)" v-for="item in list" :key="item.link" :limited="limited">
+          <slot name="item" :item="item"></slot>
+        </UIListItem>
+        <slot name="append"></slot>
       </ul>
     </div>
   </div>
@@ -16,11 +16,11 @@
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator';
 
-import ListItem from './List/Item.vue'
+import UIListItem from './List/Item.vue'
 
 @Component({
   components: {
-    ListItem
+    UIListItem
   }
 })
 export default class UIList extends Vue {
@@ -30,13 +30,12 @@ export default class UIList extends Vue {
   
   @Prop({ type: Array }) list!: Array<any>
   @Prop({ type: Boolean }) limited!: boolean
+  @Prop({ type: Boolean }) scrollable!: boolean
 
   mounted() {
     const wrap = this.$refs.wrap
 
-    console.log(wrap.scrollHeight)
-
-    if(wrap) {
+    if(wrap && this.scrollable) {
       const item = wrap.querySelector(".list__item")
 
       if(item) {

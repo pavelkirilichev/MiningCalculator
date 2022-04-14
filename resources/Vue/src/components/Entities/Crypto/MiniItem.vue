@@ -2,7 +2,7 @@
   <div class="crypto-mini-item">
     <div class="crypto-mini-item__inner">
       <div class="crypto-mini-item__img-wrap">
-        <img :src="item.img" alt="" class="crypto-mini-item__img">
+        <img :src="''" alt="" class="crypto-mini-item__img">
       </div>
       <span class="crypto-mini-item__title">
         {{ item.name }}

@@ -1,5 +1,5 @@
 <template>
-  <UIList :list="list" @click:item="changeCryptoHandler" >
+  <UIList scrollable :list="list" @click:item="changeCryptoHandler" >
     <template #item="{ item }">
       <CryptoItem :item="item" />
     </template>
@@ -7,8 +7,6 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-
 import { Component } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
 

@@ -9,7 +9,7 @@
     right: 10px;
   }
   min-width: 52px;
-  height: 28px;
+  min-height: 28px;
   background-color: $color-gallery;
   margin-right: 10px;
   font: {
@@ -23,6 +23,6 @@
 
   &--big {
     min-width: 68px;
-    height: 25px;
+    min-height: 25px;
   }
 }

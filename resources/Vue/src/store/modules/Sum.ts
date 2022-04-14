@@ -30,8 +30,11 @@ class Sum extends VuexModule {
     const comission = this.comission
     const kWPrice = this.kWPrice
 
-    const gpuHashSum = gpuList.map(gpu => gpu.hashrate * gpu.count).reduce((prev, curr) => prev + curr, 0)
-    const gpuConsumabilitySum = gpuList.map(gpu => gpu.consumability).reduce((prev, curr) => prev + curr, 0)
+    // const gpuHashSum = gpuList.map(gpu => gpu.hashrate * gpu.count).reduce((prev, curr) => prev + curr, 0)
+    // const gpuConsumabilitySum = gpuList.map(gpu => gpu.consumability).reduce((prev, curr) => prev + curr, 0)
+
+    const gpuHashSum = 0
+    const gpuConsumabilitySum = 0
 
     const result = (gpuHashSum * (1 - comission / 100)) - (kWPrice * (gpuConsumabilitySum * gpuCount))
 

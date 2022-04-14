@@ -1,7 +1,7 @@
 <template>
   <Boxes>
     <Box title="Выбранная криптовалюта">
-      <CryptoMiniItem :item="currentCryptoItem"></CryptoMiniItem>
+      <CryptoMiniItem v-if="currentCryptoItem" :item="currentCryptoItem"></CryptoMiniItem>
     </Box>
     <Box title="Прибыль" addText="USD" :cols="3">
       <BoxItem>
