@@ -1,33 +1,35 @@
 <template>
-  <Card>
-    <template #body>
-      <CardRow>
-        <Row>
-          <RowText text="Первоначальный размер сложности"/>
-          <Input :value="1.4"></Input>
-          <RowText text="a"/>
-        </Row>
-      </CardRow>
-      <CardRow>
-        <Row>
-          <RowText text="Рост сложности"/>
-          <Output :value="6.5"></Output>
-          <RowText text="%"/>
-        </Row>
-      </CardRow>
-      <CardRow>
-        <Row>
-          <RowText text="Время роста сети"/>
-          <Output :value="1.4"></Output>
-          <RowText text="a"/>
-        </Row>
-      </CardRow>
-    </template>
-  </Card>
+  <div>
+    <UITabs :tabs="tabs" @change="changeHandler($event)" />
+    <Card v-if="activeTab === 1">
+      <template #body>
+        <CardRow>
+          <Row>
+            <RowText :text="$t('initialDifficultyLevel')"/>
+            <Input placeholder="1.4" v-model="initialDifficultyLevelControl"></Input>
+            <RowText text="a"/>
+          </Row>
+        </CardRow>
+        <CardRow>
+          <Row>
+            <RowText :text="$t('difficultyGrowth')"/>
+            <Output :value="growthInComplexityControl"></Output>
+            <RowText text="%"/>
+          </Row>
+        </CardRow>
+        <CardRow>
+          <Row>
+            <RowText :text="$t('networkGrowthTime')"/>
+            <Output :value="networkGwothTimeControl"></Output>
+            <RowText text="a"/>
+          </Row>
+        </CardRow>
+      </template>
+    </Card>
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
 import { Component } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
 import { mixins } from 'vue-class-component';
@@ -42,6 +44,7 @@ import RowText from '../../Elements/Row/Text.vue';
 import Input from '../../Elements/Input.vue';
 import Output from '../../Elements/Output.vue';
 import ModeMixin from '../../mixins/mode';
+import UITabs from '../../UI/Tabs.vue';
 
 const parametersModule = getModule(Parameters, store)
 
@@ -52,8 +55,48 @@ const parametersModule = getModule(Parameters, store)
     Row,
     RowText,
     Input,
-    Output
+    Output,
+    UITabs
   }
 })
-export default class Network extends mixins(ModeMixin) {}
+export default class Network extends mixins(ModeMixin) {
+  activeTab = 1
+
+  get tabs(){
+    return [
+      {
+        id: 1,
+        text: this.$t('dayU')
+      },
+      {
+        id: 2,
+        text: this.$t('weekU')
+      },
+      {
+        id: 3,
+        text: this.$t('monthU')
+      }
+    ]
+  }
+
+  changeHandler(id: number) {
+    this.activeTab = id
+  }
+
+  get initialDifficultyLevelControl() {
+    return String(parametersModule.network.difficultyLevel || '')
+  }
+
+  set initialDifficultyLevelControl(value: string) {
+    parametersModule.updateParameter({ key: 'network.difficultyLevel', value })
+  }
+
+  get growthInComplexityControl() {
+    return String(parametersModule.network.growthInComplexity)
+  }
+
+  get networkGwothTimeControl() {
+    return String(parametersModule.network.networkGwothTime)
+  }
+}
 </script>

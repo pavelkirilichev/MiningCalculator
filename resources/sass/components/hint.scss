@@ -1,0 +1,10 @@
+.hint {
+  &__badge {
+    @include box(28px);
+    background-color: $color-gallery;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

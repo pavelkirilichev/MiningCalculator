@@ -1,21 +1,25 @@
 <template>
-  <UIList :list="list" limited>
+  <UIList :list="selected" limited>
     <template #item="{ item }">
-      <InteractableItem @plus="changeHandler('plus', $event)" @minus="changeHandler('minus', $event)" :item="transform(item)"></InteractableItem>
+      <InteractableItem @plus="changeHandler('plus', { id: item.id })" @input="changeHandler('input', { id: item.id, value: $event }) " @minus="changeHandler('minus', { id: item.id })" :item="transform(item)">
+        <template #addon>
+          Mh/S
+        </template>
+      </InteractableItem>
     </template>
     <template v-slot:append>
       <UIListItem limited v-if="addMode">
         <HashrateSelect class="list__select" @reset="addMode = false"/>
       </UIListItem>
-      <UIListItem limited v-if="isSelectable">
+      <UIListItem limited v-if="!selected[0]">
         <button class="list__button" @click="addMode = true">
           <div class="list__button-plus">+</div>
-          <span class="list__button-text">Добавить устройство</span>
+          <span class="list__button-text">{{ $t('addAlgorithm') }}</span>
         </button>
       </UIListItem>
-      <UIListItem limited v-if="list.length === 0 && !addMode">
+      <!-- <UIListItem limited v-if="list.length === 0 && !addMode">
         <Item :class="['item--ghost']" :item="{ hashrate_measurement: 'Тут будет ваше оборудование', name: 'Тут будет ваше оборудование', id: -1 }"></Item>
-      </UIListItem>
+      </UIListItem> -->
     </template>
   </UIList>
 </template>
@@ -31,7 +35,7 @@ import Item from '../../UI/Item.vue'
 import InteractableItem from '../../UI/InteractableItem.vue'
 import UIList from '../../UI/List.vue';
 import UIListItem from '../../UI/List/Item.vue';
-import { Crypto, ICryptoItem } from '../../../store/modules/Crypto';
+import { Crypto, ICryptoItem, ISelectedCryptoItem } from '../../../store/modules/Crypto';
 import HashrateSelect from './Select.vue';
 
 const gpuModule = getModule(Crypto, store)
@@ -48,7 +52,7 @@ const gpuModule = getModule(Crypto, store)
 export default class HashrateList extends Vue {
   addMode = false
 
-  get list() {
+  get selected() {
     return gpuModule.selected
   }
 
@@ -58,11 +62,11 @@ export default class HashrateList extends Vue {
 
   @Prop({ type: Boolean }) interactable!: boolean
 
-  changeHandler(type: 'plus' | 'minus', id: string) {
-    gpuModule.updateItemCount({ type, id })
+  changeHandler(type: 'plus' | 'minus', { id, value = 0 }: { id: string, value: any }) {
+    gpuModule.updateItemCount({ type, id, value })
   }
 
-  transform(item: ICryptoItem) {
+  transform(item: ISelectedCryptoItem) {
     return {
       ...item,
       name: item.algorithm

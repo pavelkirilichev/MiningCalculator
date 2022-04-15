@@ -10,44 +10,44 @@
       </div>
       <div class="calculator__main">
         <Blocks>
-          <Block full title="Выбор устройства" icon="lighting" :hint="{}">
+          <Block full :title="$t('chooseDevice')">
             <HashrateVue v-if="isHashrateMode" />
             <GPUVue v-else/>
           </Block>
         </Blocks>
         <Blocks>
-          <Block title="Электроэнергия" icon="lighting" :hint="{}">
+          <Block :title="$t('electricity')" icon="lighting" :hint="{}">
             <ElectroEnergy />
           </Block>
-          <Block title="Стоимость фермы" icon="lighting" :hint="{}">
+          <Block :title="isAdvancedMode ? $t('farmCost') : $t('commissions')" icon="lighting" :hint="{}">
             <Farm></Farm>
           </Block>
         </Blocks>
         <Blocks>
-          <Block full center title="Выбор криптовалюты" :hint="{}">
+          <Block full center :title="$t('chooseCrypto')" :hint="{}">
             <CryptoVue />
           </Block>
         </Blocks>
         <Blocks v-if="isAdvancedMode">
-          <Block title="Коммиссии" icon="lighting" :hint="{}">
+          <Block :title="$t('commissions')" icon="lighting" :hint="{}">
             <Commision />
           </Block>
           <div class="blocks__col">
-            <Block title="Курс обмена валют" icon="lighting" :hint="{}">
+            <Block :title="$t('exchangeRate')" icon="lighting" :hint="{}">
               <CurrencyExchangeRate />
             </Block>
-            <Block title="Налоги" icon="lighting" :hint="{}">
+            <Block :title="$t('taxes')" icon="lighting" :hint="{}">
               <Taxes />
             </Block>
           </div>
         </Blocks>
         <Blocks v-if="isAdvancedMode" center>
-          <Block title="Сложность сети" center icon="lighting" :hint="{}">
+          <Block :title="$t('networkComplexity')" center icon="lighting" :hint="{}">
             <Network />
           </Block>
         </Blocks>
         <Blocks v-if="isAdvancedMode" center>
-          <Block title="Результат" full center icon="lighting" :hint="{}">
+          <Block :title="$t('result')" full center icon="lighting" :hint="{}">
             <Result></Result>
           </Block>
         </Blocks>

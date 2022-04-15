@@ -1,8 +1,11 @@
-import { Module, Mutation, VuexModule } from 'vuex-module-decorators'
+import { Module, Mutation, VuexModule, getModule, Action } from 'vuex-module-decorators';
 
 import gpu from '../../mock/gpu'
+import { GPUService } from '../../services/GPUService';
+import store from '../main';
 
 interface Algorithm {
+  key: string
   power: number,
   speed: number
 }
@@ -25,7 +28,12 @@ interface SelectedIGPUItem extends IGPUItem {
   name: 'GPU'
 })
 export class GPU extends VuexModule {
-  list: Array<IGPUItem> = gpu
+  list: Array<IGPUItem> = gpu.map(gpu => {
+    return {
+      ...gpu,
+      algorithms: Object.entries(gpu.algorithms).map(([key, value]) => ({ ...value, key }))
+    }
+  })
   selected: Array<SelectedIGPUItem> = []
   tmpFilter: string = ''
 
@@ -58,7 +66,7 @@ export class GPU extends VuexModule {
   }
 
   @Mutation
-  updateItemCount({ type, id }: { type: 'plus' | 'minus', id: string }) {
+  updateItemCount({ type, id, value }: { type: 'plus' | 'minus' | 'input', id: string, value: any }) {
     const item = this.selected.find(o => o.id === id)
     if (!item) return
     
@@ -68,11 +76,36 @@ export class GPU extends VuexModule {
         break;
       case 'plus':
         item.count++
+        break;
+      case 'input':
+        item.count = isNaN(value) ? 0 : Number(value)
     }
+  }
+
+  @Mutation
+  setList(data: IGPUItem[]) {
+    this.list = data.map(device => {
+      const algorithms = device.algorithms
+      
+      return {
+        ...device,
+        algorithms: Object.entries(algorithms).map(([key, value]) => ({ ...value, key }))
+      }
+    })
+  }
+
+  @Action
+  getAll() {
+    return new GPUService().getAll().then(res => {
+      if (res.status) {
+        this.context.commit('setList', res.data)
+      }
+    })
   }
 }
 
 export {
   IGPUItem,
+  Algorithm,
   SelectedIGPUItem
 }

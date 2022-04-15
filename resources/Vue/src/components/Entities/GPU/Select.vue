@@ -1,7 +1,7 @@
 <template>
-  <UISelect :list="filteredList" limited @filter="filterHandler" @select="selectHandler($event.id)" placeholder="Введите ASIC или видеокарту">
+  <UISelect :list="filteredList" limited @filter="filterHandler" @select="selectHandler($event.id)" :placeholder="$t('printGpuAsic')">
     <template #item="{ item }">
-      <Item :item="item"></Item>
+      <Item :item="item" interactable></Item>
     </template>
   </UISelect>
 </template>

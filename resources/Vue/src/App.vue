@@ -1,6 +1,6 @@
 <template>
   <div class="app page" id="app">
-    <Header></Header>
+    <Header :scrolled="scrolled"></Header>
     <Main>
       <Hero></Hero>
       <Calculator />
@@ -19,7 +19,7 @@ import Main from './components/Default/Main.vue'
 import Footer from './components/Default/Footer.vue'
 import Hero from './components/Hero.vue';
 
-import "./api/gpu"
+import "./api/client"
 
 import Calculator from './components/Calculator.vue';
 import AddInfo from './components/AddInfo.vue'
@@ -35,8 +35,17 @@ import AddInfo from './components/AddInfo.vue'
   }
 })
 export default class App extends Vue {
-  mounted() {
+  scrolled = false
 
+  mounted() {
+    window.addEventListener("scroll", e => {
+      const { scrollY: y } = window
+
+      if(y > 0) {
+        this.scrolled = true
+      }
+      else this.scrolled = false
+    })
   }
 }
 </script>

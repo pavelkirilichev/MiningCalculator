@@ -1,7 +1,11 @@
 <template>
-  <UISelect :list="filteredList" limited @filter="filterHandler" @select="selectHandler($event.id)" placeholder="Введите hashrate">
+  <UISelect :list="filteredList" limited @filter="filterHandler" @select="selectHandler($event.id)" :placeholder="$t('chooseAlgorithm')">
     <template #item="{ item }">
-      <Item :item="transform(item)"></Item>
+      <Item :item="transform(item)" interactable>
+        <template #addon>
+          Mh/S
+        </template>
+      </Item>
     </template>
   </UISelect>
 </template>

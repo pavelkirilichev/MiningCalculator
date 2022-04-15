@@ -1,5 +1,5 @@
 <template>
-  <UITogglerAdvanced @change="changeHandler" text="Видеокарта/ASIC" textActive="Hashrate" :value="dataMode"/>
+  <UITogglerAdvanced @change="changeHandler" :text="$t('gpuAsic')" textActive="Hashrate" :value="dataMode"/>
 </template>
 
 <script lang="ts">

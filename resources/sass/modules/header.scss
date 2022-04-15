@@ -1,11 +1,17 @@
 .header {
-  box-shadow: 0 0 1px 3px rgba($color-prototype-dark, 0.5);
+  @include lg() {
+    box-shadow: 0 0 1px 3px rgba($color-prototype-dark, 0.5);
+  }
 
   &__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 109px;
+    height: 82px;
+
+    @include lg() {
+      height: 109px;
+    }
   }
 
   &__logo {
@@ -13,6 +19,10 @@
     align-items: center;
 
     &-text {
+      @include from-xs-to-lg() {
+        display: none;
+      }
+
       font: {
         weight: 500;
         size: rem(20px);
@@ -33,7 +43,10 @@
   }
 
   &__currency {
-    margin-left: 40px;
+    @include lg() {
+      margin-left: 40px;
+    }
+    margin-left: 20px;
     display: flex;
     align-items: center;
   }
@@ -49,5 +62,9 @@
     img {
       @include box(20px);
     }
+  }
+
+  &--shifted {
+    box-shadow: 0 0 1px 3px rgba($color-prototype-dark, 0.5);
   }
 }

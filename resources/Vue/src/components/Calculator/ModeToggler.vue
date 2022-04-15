@@ -1,5 +1,5 @@
 <template>
-  <UIToggler @change="changeHandler" text="Базовый" textActive="Расширенный" :value="calcMode"/>
+  <UIToggler @change="changeHandler" :text="$t('base')" :textActive="$t('advanced')" :value="calcMode"/>
 </template>
 
 <script lang="ts">

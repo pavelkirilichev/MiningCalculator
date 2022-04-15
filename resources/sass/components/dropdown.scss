@@ -1,4 +1,6 @@
 .dropdown {
+  $block: &;
+
   &__inner {
     position: relative;
   }
@@ -18,20 +20,49 @@
 
     &-icon {
       @include box(10px);
+      margin-left: 5px;
       fill: #000;
     }
   }
 
   &__menu {
     @include center("horizontal");
+    min-width: 100%;
+    max-height: 0;
+    overflow: hidden;
     top: 100%;
-  }
-
-  &__list {
-
+    background-color: #fff;
+    
+    &-inner {
+      // box-shadow: 0 0 3px 1px rgba($color-alto, 0.5);
+      border: 1px solid rgba($color-alto, 0.5);
+    }
   }
 
   &__item {
+    display: block;
 
+    @at-root a {
+      display: block;
+      text-decoration: none;
+      color: $color-dark;
+    }
+    
+    width: 100%;
+    transition: $default-transition-time color, $default-transition-time background-color;
+    padding: 5px 10px;
+
+    &:hover {
+      @include lg() {
+        background-color: $color-primary;
+        color: #fff;
+      }
+    }
+  }
+
+  &--active {
+    #{$block}__menu {
+      max-height: 200px;
+    }
   }
 }

@@ -1,4 +1,5 @@
-import { VuexModule, Module, Mutation } from 'vuex-module-decorators';
+import { VuexModule, Module, Mutation, getModule } from 'vuex-module-decorators';
+import store from '../main';
 
 @Module({
   stateFactory: true,
@@ -9,6 +10,34 @@ class Parameters extends VuexModule {
   energy = {
     kWPrice: 0,
     workHours: 24,
+    powerConsumption: 10,
+  }
+
+  commissions = {
+    pullCommission: null as number | null,
+    transactionCommission: 0.1,
+    transferCommission: 2.5,
+    subscription: 10
+  }
+
+  exchangeRate = {
+    actualPrice: 1.4,
+    valueGrowthPercentage: 6.5
+  }
+
+  taxes = {
+    current: 4 as number | null
+  }
+
+  network = {
+    difficultyLevel: null as number | null,
+    growthInComplexity: 6.5,
+    networkGwothTime: 1.4
+  }
+  
+  farm = {
+    farmCost: 0,
+    cascadeCost: 0,
   }
   
   comission = 0
@@ -17,10 +46,6 @@ class Parameters extends VuexModule {
     return this.energy.kWPrice * this.energy.workHours
   }
 
-  farm = {
-    farmCost: 0,
-    cascadeCost: 0,
-  }
 
   get farmFullCost() {
     return 0

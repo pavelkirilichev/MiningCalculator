@@ -1,5 +1,5 @@
 <template>
-  <label class="toggler" :class="{ 'toggler--active': value }">
+  <label class="toggler" :class="{ 'toggler--active': value, 'toggler--mini': mini }">
     <div class="toggler__inner">
       <div class="toggler__replacer"></div>
       <span class="toggler__text">{{ text }}</span>
@@ -26,6 +26,7 @@ import { Component, Prop } from 'vue-property-decorator'
 })
 export default class UIToggler extends Vue {
   @Prop({ type: Boolean }) value!: boolean
+  @Prop({ type: Boolean }) mini!: boolean
 
   get togglerControl() {
     return this.value

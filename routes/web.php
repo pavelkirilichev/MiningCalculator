@@ -11,7 +11,13 @@ use App\Http\Controllers\CoinController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/{lang?}', function ($lang = '') {
+    if (! in_array($lang, ['en', '']))  {
+        abort(404);
+    }
+
+    App::setLocale($lang ? $lang : 'ru');
+
     return view('pages.homepage');
 });
 Route::get('/coin', [CoinController::class, 'show']);

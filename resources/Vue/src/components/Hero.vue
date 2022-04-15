@@ -3,12 +3,12 @@
     <div class="hero__inner container">
       <div class="hero__bg"></div>
       <div class="hero__content">
-        <div class="hero__main-text"><strong>Kriptek</strong> - самый точный майнинг калькулятор</div>
+        <div class="hero__main-text" v-html="$t('heroTitle')"></div>
 
         <ul class="hero__list">
-          <li class="hero__list-item">— Учитывайте <strong>рост</strong> сложности сети</li>
-          <li class="hero__list-item">— Изменяйте <strong>цену продажи</strong> валюты</li>
-          <li class="hero__list-item">— Настраивайте <strong>дополнительные</strong> платежи</li>
+          <li class="hero__list-item" v-html="$t('heroList[0]')"></li>
+          <li class="hero__list-item" v-html="$t('heroList[1]')"></li>
+          <li class="hero__list-item" v-html="$t('heroList[2]')"></li>
         </ul>
       </div>
     </div>

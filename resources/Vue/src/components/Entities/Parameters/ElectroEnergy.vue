@@ -1,25 +1,34 @@
 <template>
   <Card>
     <template #body>
+      <template v-if="isHashrateMode">
+        <CardRow>
+          <Row>
+            <RowText :text="$t('powerConsumption')"/>
+            <Input v-model="powerConsumptionControl"></Input>
+            <RowText text="MWh"/>
+          </Row>
+        </CardRow>
+      </template>
       <CardRow>
         <Row>
-          <RowText text="Цена за kW"/>
+          <RowText :text="$t('priceForKw')"/>
           <Input v-model="kWPriceControl"></Input>
           <RowText text="usd"/>
         </Row>
       </CardRow>
       <CardRow v-if="isAdvancedMode">
         <Row>
-          <RowText text="Часы работы"/>
+          <RowText :text="$t('workHours')"/>
           <Input v-model="hoursControl"></Input>
-          <RowText text="часов"/>
+          <RowText :text="$t('hours')"/>
         </Row>
       </CardRow>
     </template>
     <template #footer v-if="isAdvancedMode">
       <CardRow>
         <Row>
-          <RowText text="Сумма"/>
+          <RowText :text="$t('sum')"/>
           <Output promoted v-model="energySum"></Output>
           <RowText text="usd"/>
         </Row>
@@ -63,6 +72,14 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
   }
   set hoursControl(value: string) {
     parametersModule.updateParameter({ key: 'energy.workHours', value: value })
+  }
+
+  get powerConsumptionControl() {
+    return String(parametersModule.energy.powerConsumption)
+  }
+
+  set powerConsumptionControl(value: string) {
+    parametersModule.updateParameter({ key: 'energy.powerConsumption', value: value })
   }
 
   get kWPriceControl() {

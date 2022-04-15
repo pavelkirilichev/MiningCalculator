@@ -1,13 +1,24 @@
 .blocks {
-  margin-top: 50px;
+  margin-top: 40px;
+
+  @include lg() {
+    margin-top: 50px;
+  }
 
   &__col {
     width: 100%;
     max-width: 524px;
 
+    @include from-xs-to-lg() {
+      margin-top: 40px;
+    }
+
     .block {
       &:nth-child(n + 2) {
-        margin-top: 15px;
+        @include lg() {
+          margin-top: 15px;
+        }
+        margin-top: 40px;
       }
     }
   }
@@ -15,6 +26,10 @@
   &--row {
     display: flex;
     justify-content: space-between;
+
+    @include from-xs-to-lg() {
+      flex-direction: column;
+    }
   }
 
   &--center {
@@ -29,10 +44,17 @@
   width: 100%;
   max-width: 524px;
 
+  @include from-xs-to-lg() {
+    &:nth-child(n + 2) {
+      margin-top: 40px;
+    }
+  }
+
   &__head {
     width: 100%;
     display: flex;
     align-items: center;
+    min-height: 30px;
   }
 
   &__body {
@@ -79,16 +101,5 @@
 
   &--full {
     max-width: none;
-  }
-}
-
-.block-hint {
-  &__badge {
-    @include box(28px);
-    background-color: $color-gallery;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }

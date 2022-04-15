@@ -3,7 +3,10 @@
     <template v-if="inner">
       <slot name="default"></slot>
     </template>
-    <template v-else>{{ text }}</template>
+    <template v-else>
+      {{ text }} 
+      <span class="app-row__text-addon">{{ addon }}</span>  
+    </template>
   </span>
 </template>
 
@@ -14,6 +17,7 @@ import { Component, Prop } from 'vue-property-decorator';
 @Component
 export default class RowText extends Vue {
   @Prop({ type: String }) text!: string
+  @Prop({ type: String }) addon!: string
   @Prop({ type: Boolean, default: false }) center!: boolean
   @Prop({ type: Boolean, default: false }) inner!: boolean
 }

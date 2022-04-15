@@ -10,7 +10,9 @@
   }
 
   &__inner {
-    height: 96px;
+    @include lg() {
+      height: 96px;
+    }
     box-shadow: 0 0 4px 2px rgba($color-gray, 0.2);
     border-radius: 14px;
     display: flex;
@@ -26,11 +28,25 @@
     display: flex;
     align-items: center;
     min-width: 50%;
+
     padding: {
-      left: 30px;
-      right: 30px;
-      top: 23px;
-      bottom: 19px;
+      left: 5px;
+      right: 5px;
+      top: 16px;
+      bottom: 16px;
+    }
+
+    @include from-xs-to-lg() {
+      flex-wrap: wrap;
+    }
+
+    @include lg() {
+      padding: {
+        left: 30px;
+        right: 30px;
+        top: 23px;
+        bottom: 19px;
+      }
     }
   }
 
@@ -38,13 +54,17 @@
     background-color: $color-gallery;
     border-radius: 14px;
     flex-grow: 1;
-    display: flex;
-    align-items: center;
+
+    @include lg() {
+      padding: {
+        left: 30px;
+        right: 30px;
+      }
+    }
+
     padding: {
-      left: 30px;
-      right: 30px;
-      top: 23px;
-      bottom: 19px;
+      left: 6px;
+      right: 6px;
     }
   }
 
@@ -61,9 +81,17 @@
     // width: 100%;
     flex-grow: 1;
     // max-width: calc(100% / 5);
-    padding: {
-      left: 8px;
-      right: 15px;
+
+    @include from-xs-to-lg() {
+      width: 100%;
+      max-width: 50%;
+    }
+
+    @include lg() {
+      padding: {
+        left: 8px;
+        right: 15px;
+      }
     }
 
     &--inline {
@@ -74,8 +102,17 @@
 
     &--title {
       flex-shrink: 0;
-      width: 200px;
+      @include lg() {
+        width: 200px;
+      }
+      @include from-xs-to-lg() {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+      }
+      width: 100%;
       margin-right: auto;
+      max-width: 100%;
     }
 
     #{$block}--base & {
@@ -97,6 +134,11 @@
   &__title {
     display: inline-block;
 
+    @include from-xs-to-lg() {
+      display: inline-flex;
+      justify-content: center;
+    }
+
     font: {
       size: rem(15px);
     }
@@ -110,30 +152,87 @@
   }
 
   &--base {
+    #{$block}__inner {
+      @include from-xs-to-lg() {
+        flex-direction: column;
+      }
+    }
+
     #{$block}__col {
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
+      &--title {
+        justify-content: center;
+      }
     }
 
-    #{$block}__body,
-    #{$block}__footer {
+    #{$block}__body {
+      @include lg() {
+        padding: {
+          left: 30px;
+          right: 30px;
+          top: 8px;
+          bottom: 8px;
+        }
+      }
+
       padding: {
-        left: 30px;
-        right: 30px;
-        top: 17px;
-        bottom: 9px;
+        left: 6px;
+        right: 6px;
+        top: 14px;
+        bottom: 14px;
       }
     }
 
     #{$block}__body {
       #{$block}__col {
+
+        @include from-xs-to-lg() {
+          width: 100%;
+          max-width: 50%;
+        }
+
         &:nth-child(1),
         &:nth-child(2) {
           flex-direction: row;
           justify-content: initial;
+          @include from-xs-to-lg() {
+            max-width: none;
+          }
         }
+
+        &:nth-child(1) {
+          justify-content: center;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          max-width: 50%;
+        }
+      }
+
+      @include from-xs-to-lg() {
+        justify-content: center;
+
+        .app-col {
+          &__inner {
+            flex-direction: row;
+            align-items: center;
+          }
+
+          &__text {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+
+    #{$block}__text {
+      @include from-xs-to-lg() {
+        width: 100%;
       }
     }
   }

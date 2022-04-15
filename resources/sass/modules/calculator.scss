@@ -2,10 +2,18 @@
   &__title {
     display: block;
     text-align: center;
-    margin-top: 150px;
+
+    @include lg() {
+      margin-top: 150px;
+      font: {
+        size: rem(40px);
+      }
+    }
+
+    margin-top: 50px;
 
     font: {
-      size: rem(40px);
+      size: rem(25px);
       weight: 700;
     }
   }
@@ -20,7 +28,12 @@
     margin-top: 40px;
 
     &:nth-child(2) {
-      margin-top: 35px;
+
+      margin-top: 25px;
+
+      @include lg() {
+        margin-top: 35px;
+      }
     }
   }
 }

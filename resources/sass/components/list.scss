@@ -1,10 +1,6 @@
 .list {
   $block: &;
 
-  &__inner {
-    overflow-y: auto;
-  }
-
   &__list {
     @include reset-list();
     display: flex;
@@ -21,7 +17,18 @@
 
   &__item {
     cursor: pointer;
-    margin-top: 10px;
+
+    @include from-xs-to-lg() {
+      &:nth-child(n + 2) {
+        margin-top: 10px;
+      }
+    }
+
+    @include lg() {
+      &:nth-child(n + 1) {
+        margin-top: 10px;
+      }
+    }
     
     &--limited {
       max-width: 524px;
@@ -30,6 +37,7 @@
 
   &__button {
     background-color: $color-gallery;
+    padding: 0;
     border: none;
     border-radius: 15px;
     display: flex;
@@ -49,6 +57,12 @@
       font-size: rem(30px);
       color: #fff;
       margin-right: 15px;
+    }
+  }
+
+  &--scrollable {
+    #{$block}__inner {
+      overflow-y: auto;
     }
   }
 }

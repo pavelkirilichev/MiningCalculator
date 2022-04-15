@@ -8,8 +8,17 @@
     border: none;
     background-color: transparent;
     width: 100%;
-    padding-left: 62px;
+
+    @include lg() {
+      padding-left: 62px;
+    }
+
+    @include from-xs-to-lg() {
+      margin-bottom: 10px;
+    }
+    padding-left: 20px;
     border: 1px solid $color-alto;
+    font-size: rem(15px);
 
     &:focus {
       outline: none;

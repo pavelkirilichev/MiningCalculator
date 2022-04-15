@@ -8,10 +8,7 @@
       </template>
       <span class="block__title" :class="{ 'block__title--spacing': hint }">{{ title }}</span>
       <template v-if="hint">
-        <div class="block__hint block-hint">
-          <div class="block-hint__badge">?</div>
-          <div class="block-hint__content"></div>
-        </div>
+        <UIHint class="block__hint" />
       </template>
     </div>
     <div class="block__body">
@@ -24,6 +21,7 @@
 import Vue from 'vue'
 
 import { Component } from 'vue-property-decorator'
+import UIHint from '../UI/Hint.vue'
 
 @Component({
   props: {
@@ -37,6 +35,9 @@ import { Component } from 'vue-property-decorator'
       type: Object,
       default: () => null
     }
+  },
+  components: {
+    UIHint
   }
 })
 export default class Block extends Vue {}

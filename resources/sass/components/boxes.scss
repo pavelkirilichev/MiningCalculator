@@ -1,18 +1,33 @@
 .boxes {
   &__inner {
     display: flex;
-    margin: {
-      left: -18px;
-      right: -18px;
+
+    @include lg() {
+      margin: {
+        left: -18px;
+        right: -18px;
+      }
+    }
+    
+    @include from-xs-to-lg() {
+      flex-direction: column;
     }
   }
 
   &__item {
     width: 100%;
-    max-width: calc(100% / 3);
-    padding: {
-      left: 18px;
-      right: 18px;
+    @include lg() {
+      max-width: calc(100% / 3);
+      padding: {
+        left: 18px;
+        right: 18px;
+      }
+    }
+
+    @include from-xs-to-lg() {
+      &:nth-child(n + 2) {
+        margin-top: 10px;
+      }
     }
   }
 }

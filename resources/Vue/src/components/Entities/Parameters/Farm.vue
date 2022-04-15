@@ -3,14 +3,14 @@
     <template #body>
       <CardRow>
         <Row>
-          <RowText text="Стоимость фермы"/>
+          <RowText :text="$t('farmCost')"/>
           <Input v-model="farmCostControl"></Input>
           <RowText text="usd"/>
         </Row>
       </CardRow>
       <CardRow>
         <Row>
-          <RowText text="Стоимость каркаса"/>
+          <RowText :text="$t('frameCost')"/>
           <Input v-model="cascadeCostControl"></Input>
           <RowText text="usd"/>
         </Row>
@@ -19,7 +19,7 @@
     <template #footer>
       <CardRow>
         <Row>
-          <RowText text="Полная стоимость фермы"/>
+          <RowText :text="$t('fullFarmCost')"/>
           <Output promoted v-model="farmFullCost"></Output>
           <RowText text="usd"/>
         </Row>
@@ -30,7 +30,7 @@
     <template #body>
       <CardRow>
         <Row>
-          <RowText text="Общая коммиссия"/>
+          <RowText :text="$t('generalCommission')"/>
           <Input v-model="comissionControl"></Input>
           <RowText text="%"/>
         </Row>

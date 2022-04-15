@@ -2,11 +2,25 @@
   &__inner {
     min-height: 350px;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
   
   &__bg {
-    @include absolute($top: 0, $right: 0);
-    @include box(539px, 343px);
+    @include lg() {
+      @include absolute($top: 0, $right: 0);
+      @include box(539px, 343px);
+    }
+
+    @include from-xs-to-lg() {
+      order: 2;
+      margin-top: 10px;
+      width: 100%;
+      padding-bottom: calc(343% / 539 * 100);
+      background: {
+        size: 100% auto;
+      };
+    }
 
     background: {
       image: url("/build/img/bitcoin-bg.svg");
@@ -18,6 +32,10 @@
   &__content {
     position: relative;
     width: 100%;
+
+    @include from-xs-to-lg() {
+      order: 1;
+    }
   }
   
   &__main-text {
@@ -25,15 +43,27 @@
     strong {
       color: $color-primary;
       font: {
-        size: rem(50px);
+        size: rem(25px);
         //600
         weight: 700;
       }
     }
 
     font: {
-      size: rem(40px);
+      size: rem(25px);
       weight: 700;
+    }
+
+    @include lg() {
+      font: {
+        size: rem(40px);
+      }
+
+      strong {
+        font: {
+          size: rem(50px);
+        }
+      }
     }
   }
 
@@ -43,7 +73,13 @@
 
   &__list-item {
     font: {
-      size: rem(25px);
+      size: rem(15px);
+    }
+
+    @include lg() {
+      font: {
+        size: rem(25px);
+      }
     }
 
     strong {

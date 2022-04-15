@@ -3,8 +3,8 @@
     <template #body>
       <CardRow>
         <Row>
-          <RowText text="Действующий налог"/>
-          <Input :value="4"></Input>
+          <RowText :text="$t('currentTax')"/>
+          <Output :value="currentTaxControl"></Output>
           <RowText text="%"/>
         </Row>
       </CardRow>
@@ -41,5 +41,13 @@ const parametersModule = getModule(Parameters, store)
     Output
   }
 })
-export default class Taxes extends mixins(ModeMixin) {}
+export default class Taxes extends mixins(ModeMixin) {
+  get currentTaxControl() {
+    return String(parametersModule.taxes.current || '')
+  }
+
+  set currentTaxControl(value: string) {
+    parametersModule.updateParameter({ key: 'taxes.current', value })
+  }
+}
 </script>

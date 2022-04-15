@@ -3,16 +3,17 @@
     <template #body>
       <CardRow>
         <Row>
-          <RowText text="Действительная цена на криптовалюту"/>
-          <Output :value="1.4"></Output>
+          <RowText :text="$t('cryptoActualPrice')"/>
+          <Output :value="cryptoActualPriceControl"></Output>
           <RowText text="usd"/>
         </Row>
       </CardRow>
       <CardRow>
         <Row>
-          <RowText text="Процент роста стоиомости (месяц/год)"/>
-          <Output :value="6.5"></Output>
+          <RowText :text="$t('valueGrowthPercentage')" :addon="` (${$t('month')}/${$t('year')})`"/>
+          <Output :value="valueGrowthPercentageControl"></Output>
           <RowText text="usd"/>
+          <UIToggler :value="toggle" @change="toggle = !toggle" :text="$t('month')[0]" :textActive="$t('year')[0]" mini/>
         </Row>
       </CardRow>
     </template>
@@ -35,6 +36,7 @@ import RowText from '../../Elements/Row/Text.vue';
 import Input from '../../Elements/Input.vue';
 import Output from '../../Elements/Output.vue';
 import ModeMixin from '../../mixins/mode';
+import UIToggler from '../../UI/Toggler.vue';
 
 const parametersModule = getModule(Parameters, store)
 
@@ -45,8 +47,19 @@ const parametersModule = getModule(Parameters, store)
     Row,
     RowText,
     Input,
-    Output
+    Output,
+    UIToggler
   }
 })
-export default class CurrencyExchangeRate extends mixins(ModeMixin) {}
+export default class CurrencyExchangeRate extends mixins(ModeMixin) {
+  toggle = false
+
+  get cryptoActualPriceControl() {
+    return String(parametersModule.exchangeRate.actualPrice)
+  }
+
+  get valueGrowthPercentageControl() {
+    return String(parametersModule.exchangeRate.valueGrowthPercentage)
+  }
+}
 </script>

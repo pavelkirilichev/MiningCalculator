@@ -1,41 +1,47 @@
 <template>
   <Boxes>
-    <Box title="Выбранная криптовалюта">
-      <CryptoMiniItem v-if="currentCryptoItem" :item="currentCryptoItem"></CryptoMiniItem>
-    </Box>
-    <Box title="Прибыль" addText="USD" :cols="3">
-      <BoxItem>
-        <Col>
-          <ColText text="День"/>
-          <Output promoted big :value="getSum.day"></Output>
-        </Col>
-      </BoxItem>
-      <BoxItem>
-        <Col>
-          <ColText text="Неделя"/>
-          <Output promoted big :value="getSum.week"></Output></Col>
-      </BoxItem>
-      <BoxItem>
-        <Col>
-          <ColText text="Месяц"/>
-          <Output promoted big :value="getSum.month"></Output>
-        </Col>
-      </BoxItem>
-    </Box>
-    <Box title="Срок укупаемости фермы" :cols="2">
-      <BoxItem>
-        <Row>
-          <Output promoted big :value="0"></Output>
-          <RowText text="месяц"/>
-        </Row>
-      </BoxItem>
-      <BoxItem>
-        <Row>
-          <Output promoted big :value="0"></Output>
-          <RowText text="дней"/>
-        </Row>
-      </BoxItem>
-    </Box>
+    <BoxesItem>
+      <Box :title="$t('chosenCrypto')" staticHeight>
+        <CryptoMiniItem v-if="currentCryptoItem" :item="currentCryptoItem"></CryptoMiniItem>
+      </Box>
+    </BoxesItem>
+    <BoxesItem>
+      <Box :title="$t('earnings')" addText="USD" :cols="3" staticHeight>
+        <BoxItem>
+          <Col>
+            <ColText :text="$t('dayU')"/>
+            <Output promoted big :value="getSum.day"></Output>
+          </Col>
+        </BoxItem>
+        <BoxItem>
+          <Col>
+            <ColText :text="$t('weekU')"/>
+            <Output promoted big :value="getSum.week"></Output></Col>
+        </BoxItem>
+        <BoxItem>
+          <Col>
+            <ColText :text="$t('monthU')"/>
+            <Output promoted big :value="getSum.month"></Output>
+          </Col>
+        </BoxItem>
+      </Box>
+    </BoxesItem>
+    <BoxesItem>
+      <Box :title="$t('farmPaybackPeriod')" :cols="2" staticHeight>
+        <BoxItem>
+          <Row>
+            <Output promoted big :value="0"></Output>
+            <RowText :text="$t('month')"/>
+          </Row>
+        </BoxItem>
+        <BoxItem>
+          <Row>
+            <Output promoted big :value="0"></Output>
+            <RowText :text="$t('days')"/>
+          </Row>
+        </BoxItem>
+      </Box>
+    </BoxesItem>
   </Boxes>
 </template>
 
@@ -55,6 +61,7 @@ import { Crypto } from '../../store/modules/Crypto';
 import store from '../../store/main';
 import CryptoMiniItem from '../Entities/Crypto/MiniItem.vue';
 import { Sum } from '../../store/modules/Sum';
+import BoxesItem from '../Elements/Box/BoxesItem.vue';
 
 const cryptoModule = getModule(Crypto, store)
 const sumModule = getModule(Sum, store)
@@ -62,6 +69,7 @@ const sumModule = getModule(Sum, store)
 @Component({
   components: {
     Box,
+    BoxesItem,
     BoxItem,
     Boxes,
     Col,

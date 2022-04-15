@@ -2,6 +2,14 @@
   &__inner {
     display: flex;
     align-items: center;
+    padding: {
+      top: 8px;
+      bottom: 8px;
+    }
+
+    @include from-xs-to-lg() {
+      flex-wrap: wrap;
+    }
   }
 
   &__input,
@@ -14,7 +22,11 @@
     width: 52px;
     height: 28px;
     background-color: $color-gallery;
-    margin-right: 10px;
+    margin-right: 5px;
+
+    @include lg() {
+      margin-right: 10px;
+    }
     font: {
       size: rem(15px);
     }
@@ -38,16 +50,31 @@
 
   &__text {
     font: {
-      size: rem(15px);
+      size: rem(13px);
     }
-    margin-right: 20px;
 
-    &:last-of-type {
+    @include lg() {
+      font: {
+        size: rem(15px);
+      }
+    }
+
+    @include lg() {
+      margin-right: 20px;
+    }
+
+    margin-right: 8px;
+
+    &:last-child {
       margin-right: 0;
     }
 
     &--center {
       text-align: center;
+    }
+
+    &-addon {
+      color: $color-alto;
     }
   }
 }

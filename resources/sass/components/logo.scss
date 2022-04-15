@@ -1,5 +1,7 @@
 .logo {
-  @include box(70px);
+  @include box(44px);
+  @include lg() {
+    @include box(69px);
+  }
   background-color: $color-silver-dark;
-  border-radius: 20px;
 }

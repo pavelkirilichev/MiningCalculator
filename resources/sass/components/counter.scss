@@ -22,5 +22,14 @@
 
   &__text {
     text-align: center;
+    display: block;
+    width: calc(160px - 50px - 50px);
+    background: none;
+    border: none;
+    padding: 0;
+
+    &:focus {
+      outline: none;
+    }
   }
 }

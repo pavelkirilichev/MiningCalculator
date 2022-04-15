@@ -1,0 +1,35 @@
+.tabs {
+  &__inner {
+    margin-top: 15px;
+  }
+  
+  &__list {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.tab {
+  $block: &;
+
+  border-radius: 8px;
+  padding: 0 5px;
+
+  &__inner {
+    padding: 6px 10px;
+  }
+
+  &__text {
+    font: {
+      size: rem(15px);
+    }
+  }
+
+  &--active {
+    background-color: $color-primary;
+
+    #{$block}__text {
+      color: #fff;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 <template>
   <UIList :list="list" limited>
     <template #item="{ item }">
-      <InteractableItem @plus="changeHandler('plus', $event)" @minus="changeHandler('minus', $event)" :item="item"></InteractableItem>
+      <InteractableItem @plus="changeHandler('plus', { id: item.id })" @minus="changeHandler('minus', { id: item.id })" @input="changeHandler('input', { id: item.id, value: $event })" :item="item"></InteractableItem>
     </template>
     <template v-slot:append>
       <UIListItem limited v-if="addMode">
@@ -10,7 +10,7 @@
       <UIListItem limited v-if="isSelectable">
         <button class="list__button" @click="addMode = true">
           <div class="list__button-plus">+</div>
-          <span class="list__button-text">Добавить устройство</span>
+          <span class="list__button-text">{{ $t('addDevice') }}</span>
         </button>
       </UIListItem>
       <UIListItem limited v-if="list.length === 0 && !addMode">
@@ -58,8 +58,8 @@ export default class GPUList extends Vue {
 
   @Prop({ type: Boolean }) interactable!: boolean
 
-  changeHandler(type: 'plus' | 'minus', id: string) {
-    gpuModule.updateItemCount({ type, id })
+  changeHandler(type: 'plus' | 'minus' | 'input', { id, value = 0 }: { id: string, value: any }) {
+    gpuModule.updateItemCount({ type, id, value })
   }
 }
 </script>

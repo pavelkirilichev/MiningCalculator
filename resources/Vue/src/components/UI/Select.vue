@@ -4,7 +4,7 @@
       <div class="select__filter">
         <input class="select__input" :placeholder="placeholder" type="text" @input="$emit('filter', $event.target.value)">
       </div>
-      <UIList scrollable :list="list" @click:item="$emit('select', $event)">
+      <UIList scrollable :list="list" @click:item="$emit('select', $event)" interactable>
         <template #item="{ item }">
           <slot name="item" :item="item"></slot>
         </template>
