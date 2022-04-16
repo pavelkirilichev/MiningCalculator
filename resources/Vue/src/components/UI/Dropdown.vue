@@ -37,6 +37,7 @@ export default class UIDropdown extends Vue {
 
   @Prop({ type: Array }) list!: Array<any>
   @Prop({ type: String }) text!: string
+  @Prop({ type: String }) value!: any
 
   toggle() {
     this.opened = !this.opened

@@ -129,7 +129,7 @@ const messages = {
     crypto: 'crypt',
     fiat: 'fiat',
     contactUs: 'Contact us',
-    rights: '©Copyright 2022 Cryptotech LLC, 2022. All Rights Reserved<br>Cryptek Limited Liability Company',
+    rights: '©Copyright 2022 Cryptotech LLC, 2022. All Rights Reserved<br>Kriptek Limited Liability Company',
     powerConsumption: 'Power Consumption',
   }
 }

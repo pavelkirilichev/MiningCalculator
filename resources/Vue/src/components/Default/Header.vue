@@ -3,19 +3,18 @@
     <div class="header__inner container">
       <div class="header__block">
         <div class="header__logo">
-          <div class="logo header__logo-img"></div>
-          <div class="header__logo-text">MiningCalculator</div>
+          <img class="logo logo--full header__logo-img" :src="require('../../../../img/logo2.svg')"/>
         </div>
       </div>
       <div class="header__block">
         <div class="header__langs">
-          <UIDropdown :text="mockLangs[langActiveId - 1].title" @change="langActiveId = $event.id" :list="mockLangs"></UIDropdown>
+          <UIDropdown :text="mockLangs.find(lang => lang.id === langActiveId).title" @change="langActiveId = $event.id" :list="mockLangs"></UIDropdown>
         </div>
         <div class="header__currency">
           <div class="header__icon">
             <img src="/build/img/coins.svg" alt="" class="">
           </div>
-          <UIDropdown :text="mockCurrency[currActiveId - 1].title" @change="currActiveId = $event.id" :list="mockCurrency"></UIDropdown>
+          <UIDropdown :text="mockCurrency.find(curr => curr.id === currActiveId).title" @change="currActiveId = $event.id" :list="mockCurrency"></UIDropdown>
         </div>
       </div>
     </div>
@@ -36,12 +35,15 @@ import mockLangs from '../../mock/langs'
   }
 })
 export default class Header extends Vue {
+  @Prop({ type: Boolean }) scrolled!: boolean
   mockLangs = mockLangs
   mockCurrency = mockCurrency
 
   currActiveId = 1
   langActiveId = 1
 
-  @Prop({ type: Boolean }) scrolled!: boolean
+  created() {
+    this.langActiveId = this.mockLangs.find(lang => lang.key === document.documentElement.lang)!.id
+  }
 }
 </script>

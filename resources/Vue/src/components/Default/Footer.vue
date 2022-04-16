@@ -10,7 +10,7 @@
             </div>
           </div>
           <div class="footer__logo footer__logo--mobile">
-            <div class="logo footer__logo-img"></div>
+            <img class="logo footer__logo-img" :src="require('../../../../img/logo3.svg')"/>
           </div>
           <div class="footer__col">
             <div class="footer__block">
@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="footer__logo footer__logo--desktop">
-          <div class="logo footer__logo-img"></div>
+          <img class="logo footer__logo-img" :src="require('../../../../img/logo3.svg')"/>
         </div>
         <div class="footer__text footer__text--bottom" v-html="$t('rights')"></div>
       </div>

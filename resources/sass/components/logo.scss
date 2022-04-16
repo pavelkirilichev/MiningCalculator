@@ -3,5 +3,13 @@
   @include lg() {
     @include box(69px);
   }
-  background-color: $color-silver-dark;
+
+  &--full {
+    width: auto;
+    height: 44px;
+
+    @include lg() {
+      height: 69px;
+    }
+  }
 }
