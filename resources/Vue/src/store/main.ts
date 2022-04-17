@@ -21,8 +21,8 @@ enum DataMode {
 
 const store = new Vuex.Store({
   state: {
-    mode: Modes.BASE_MODE,
-    dataMode: DataMode.HASH_MODE
+    mode: Modes.ADVANCED_MODE,
+    dataMode: DataMode.BASE_MODE
   },
   modules: {
     GPU,

@@ -1,5 +1,5 @@
 <template>
-  <div class="counter">
+  <div class="counter" :class="{ 'counter--big': big }">
     <div class="counter__inner">
       <button class="counter__button counter__button--minus" @click="$emit('minus')">-</button>
       <input class="counter__text" v-model="countControl" />
@@ -15,6 +15,7 @@ import { Component, Prop } from 'vue-property-decorator';
 @Component
 export default class Counter extends Vue {
   @Prop({ type: [Number, String], required: true }) count!: number
+  @Prop({ type: Boolean }) big!: boolean
 
   get countControl(): string {
     return String(this.count)

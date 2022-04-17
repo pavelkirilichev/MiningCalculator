@@ -11,7 +11,7 @@
       <CardRow>
         <Row>
           <RowText :text="$t('frameCost')"/>
-          <Input v-model="cascadeCostControl"></Input>
+          <Input v-model="frameCostControl"></Input>
           <RowText text="usd"/>
         </Row>
       </CardRow>
@@ -76,12 +76,12 @@ export default class Farm extends mixins(ModeMixin) {
     parametersModule.updateParameter({ key: 'farm.farmCost', value: value })
   }
 
-  get cascadeCostControl() {
-    return String(parametersModule.farm.cascadeCost)
+  get frameCostControl() {
+    return String(parametersModule.farm.frameCost)
   }
 
-  set cascadeCostControl(value: string) {
-    parametersModule.updateParameter({ key: 'farm.cascadeCost', value: value })
+  set frameCostControl(value: string) {
+    parametersModule.updateParameter({ key: 'farm.frameCost', value: value })
   }
 
   get comissionControl() {

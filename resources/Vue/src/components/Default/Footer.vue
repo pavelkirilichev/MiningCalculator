@@ -23,6 +23,7 @@
           <img class="logo footer__logo-img" :src="require('../../../../img/logo3.svg')"/>
         </div>
         <div class="footer__text footer__text--bottom" v-html="$t('rights')"></div>
+        <a href="https://minerstat.com" target="_blank" class="footer__text footer__text--bottom">minerstat.com</a>
       </div>
     </div>
   </footer>

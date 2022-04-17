@@ -4,16 +4,17 @@
       <CardRow>
         <Row>
           <RowText :text="$t('cryptoActualPrice')"/>
-          <Output :value="cryptoActualPriceControl"></Output>
+          <Input v-model="cryptoActualPriceControl"></Input>
           <RowText text="usd"/>
         </Row>
       </CardRow>
       <CardRow>
         <Row>
           <RowText :text="$t('valueGrowthPercentage')" :addon="` (${$t('month')}/${$t('year')})`"/>
-          <Output :value="valueGrowthPercentageControl"></Output>
+          <Input v-if="isExchangeRateModeMonth" v-model="valueGrowthPercentageControlMonth"></Input>
+          <Input v-if="isExchangeRateModeYear" v-model="valueGrowthPercentageControlYear"></Input>
           <RowText text="usd"/>
-          <UIToggler :value="toggle" @change="toggle = !toggle" :text="$t('month')[0]" :textActive="$t('year')[0]" mini/>
+          <UIToggler :value="toggle" @change="toggleHandler" :text="$t('month')[0]" :textActive="$t('year')[0]" mini/>
         </Row>
       </CardRow>
     </template>
@@ -27,7 +28,7 @@ import { getModule } from 'vuex-module-decorators';
 import { mixins } from 'vue-class-component';
 
 import store, { Modes } from '../../../store/main';
-import { Parameters } from '../../../store/modules/Parameters';
+import { ExchangeRateModes, Parameters } from '../../../store/modules/Parameters';
 
 import Card from '../../Elements/Card.vue';
 import CardRow from '../../Elements/Card/Row.vue';
@@ -54,12 +55,47 @@ const parametersModule = getModule(Parameters, store)
 export default class CurrencyExchangeRate extends mixins(ModeMixin) {
   toggle = false
 
+  toggleHandler() {
+    this.toggle = !this.toggle
+
+    if(this.toggle) {
+      parametersModule.updateExchangeRateMode(ExchangeRateModes.YEAR)
+    }
+    else {
+      parametersModule.updateExchangeRateMode(ExchangeRateModes.MONTH)
+    }
+  }
+
+  get isExchangeRateModeMonth(): boolean {
+    return parametersModule.exchangeRate.mode === ExchangeRateModes.MONTH
+  }
+
+  get isExchangeRateModeYear(): boolean {
+    return parametersModule.exchangeRate.mode === ExchangeRateModes.YEAR
+  }
+
   get cryptoActualPriceControl() {
     return String(parametersModule.exchangeRate.actualPrice)
   }
 
-  get valueGrowthPercentageControl() {
-    return String(parametersModule.exchangeRate.valueGrowthPercentage)
+  set cryptoActualPriceControl(value: string) {
+    parametersModule.updateParameter({ key: 'exchangeRate.actualPrice', value })
+  }
+
+  get valueGrowthPercentageControlMonth() {
+    return String(parametersModule.exchangeRate.valueGrowthPercentageMonth)
+  }
+
+  set valueGrowthPercentageControlMonth(value: string) {
+    parametersModule.updateParameter({ key: 'exchangeRate.valueGrowthPercentageMonth', value })
+  }
+
+  get valueGrowthPercentageControlYear() {
+    return String(parametersModule.exchangeRate.valueGrowthPercentageYear)
+  }
+
+  set valueGrowthPercentageControlYear(value: string) {
+    parametersModule.updateParameter({ key: 'exchangeRate.valueGrowthPercentageYear', value })
   }
 }
 </script>

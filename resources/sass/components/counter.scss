@@ -1,5 +1,5 @@
 .counter {
-  width: 160px;
+  $block: &;
   
   &__inner {
     background-color: $color-gallery;
@@ -30,6 +30,12 @@
 
     &:focus {
       outline: none;
+    }
+  }
+
+  &--big {
+    #{$block}__text {
+      width: 120px;
     }
   }
 }

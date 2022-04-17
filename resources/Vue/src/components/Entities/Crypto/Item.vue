@@ -19,7 +19,7 @@
                 <br>
                 ({{ $t('crypto') }})
               </RowText>
-              <Output big promoted :value="0"></Output>
+              <Output big promoted :value="isHashrateMode ? gain24hAdvancedHashrate(item) : gain24hAdvancedGPU(item)"></Output>
               <RowText text="ETH" />
             </Row>
           </div>
@@ -32,7 +32,7 @@
                 <br>
                 ({{ $t('fiat') }})
               </RowText>
-              <Output big promoted :value="0"></Output>
+              <Output big promoted :value="isHashrateMode ? gain24hFiatAdvancedHashrate(item) : gain24hFiatAdvancedGPU(item)"></Output>
               <RowText text="USD" />
             </Row>
           </div>
@@ -45,7 +45,7 @@
                 <br>
                 ({{ $t('crypto') }})
               </RowText>
-              <Output big promoted :value="0"></Output>
+              <Output big promoted :value="isHashrateMode ? gainMonthAdvancedHashrate(item) : gainMonthAdvancedGPU(item)"></Output>
               <RowText text="ETH" />
             </Row>
           </div>
@@ -58,8 +58,8 @@
                 <br>
                 ({{ $t('fiat') }})
               </RowText>
-              <Output big promoted :value="0"></Output>
-              <RowText text="ETH" />
+              <Output big promoted :value="isHashrateMode ? gainMonthFiatAdvancedHashrate(item) : gainMonthFiatAdvancedGPU(item)"></Output>
+              <RowText text="USD" />
             </Row>
           </div>
         </div>
@@ -80,7 +80,7 @@
                 <br>
                 ({{ $t('crypto') }})
               </ColText>
-              <Output big promoted :value="isHashrateMode ? gain24hBaseHashrate(item) : gain24hBaseGPU(item) + ` ${item.reward_unit}`"></Output>
+              <Output big promoted :value="isHashrateMode ? gain24hHashrate(item) : gain24hGPU(item) + ` ${item.reward_unit}`"></Output>
             </Col>
           </div>
           <div class="crypto-item__col">
@@ -90,7 +90,7 @@
                 <br>
                 ({{ $t('fiat') }})
               </ColText>
-              <Output big promoted :value="isHashrateMode ? gain24hBaseHashrateFiat(item) : gain24hBaseGPUFiat(item) + ' USD'"></Output>
+              <Output big promoted :value="isHashrateMode ? gain24hFiatHashrate(item) : gain24hFiatGPU(item) + ' USD'"></Output>
             </Col>
           </div>
         </div>
@@ -99,18 +99,18 @@
             <BoxItem>
               <Col>
                 <ColText :text="$t('dayU')"/>
-                <Output promoted big :value="isHashrateMode ? gainDayBaseHashrateFiat(item) : gainDayBaseGPUFiat(item)"></Output>
+                <Output promoted big :value="isHashrateMode ? gainDayFiatHashrate(item) : gainDayFiatGPU(item)"></Output>
               </Col>
             </BoxItem>
             <BoxItem>
               <Col>
                 <ColText :text="$t('weekU')"/>
-                <Output promoted big :value="isHashrateMode ? gainWeekBaseHashrateFiat(item) : gainWeekBaseGPUFiat(item)"></Output></Col>
+                <Output promoted big :value="isHashrateMode ? gainWeekFiatHashrate(item) : gainWeekFiatGPU(item)"></Output></Col>
             </BoxItem>
             <BoxItem>
               <Col>
                 <ColText :text="$t('monthU')"/>
-                <Output promoted big :value="isHashrateMode ? gainMonthBaseHashrateFiat(item) : gainMonthBaseGPUFiat(item)"></Output>
+                <Output promoted big :value="isHashrateMode ? gainMonthFiatHashrate(item) : gainMonthFiatGPU(item)"></Output>
               </Col>
             </BoxItem>
           </Box>
@@ -182,44 +182,76 @@ const calcModule = getModule(Calculate, store)
 export default class CryptoItem extends mixins(ModeMixin) {
   @Prop({ type: Object }) item!: ICryptoItem
 
-  gain24hBaseGPU(coin: ICryptoItem) {
-    return (calcModule.gainBaseGPU24h(coin)).toFixed(6)
+  gain24hGPU(coin: ICryptoItem) {
+    return (calcModule.gain24hGPU(coin)).toFixed(6)
   }
 
-  gain24hBaseGPUFiat(coin: ICryptoItem) {
-    return (calcModule.gainBaseGPU24hFiat(coin)).toFixed(2)
+  gain24hFiatGPU(coin: ICryptoItem) {
+    return (calcModule.gain24hFiatGPU(coin)).toFixed(2)
   }
 
-  gainDayBaseGPUFiat(coin: ICryptoItem) {
-    return (calcModule.gainBaseGPUDay(coin)).toFixed(2)
+  gainDayFiatGPU(coin: ICryptoItem) {
+    return (calcModule.gainDayGPU(coin)).toFixed(2)
   }
 
-  gainWeekBaseGPUFiat(coin: ICryptoItem) {
-    return (calcModule.gainBaseGPUWeek(coin)).toFixed(2)
+  gainWeekFiatGPU(coin: ICryptoItem) {
+    return (calcModule.gainWeekGPU(coin)).toFixed(2)
   }
 
-  gainMonthBaseGPUFiat(coin: ICryptoItem) {
-    return (calcModule.gainBaseGPUMonth(coin)).toFixed(2)
+  gainMonthFiatGPU(coin: ICryptoItem) {
+    return (calcModule.gainMonthGPU(coin)).toFixed(2)
   }
 
-  gain24hBaseHashrate(coin: ISelectedCryptoItem) {
-    return (calcModule.gainBaseHashrate24h(coin)).toFixed(6)
+  gain24hHashrate(coin: ISelectedCryptoItem) {
+    return (calcModule.gain24hHashrate(coin)).toFixed(6)
   }
 
-  gain24hBaseHashrateFiat(coin: ISelectedCryptoItem) {
-    return (calcModule.gainBaseHashrate24hFiat(coin)).toFixed(2)
+  gain24hFiatHashrate(coin: ISelectedCryptoItem) {
+    return (calcModule.gain24hFiatHashrate(coin)).toFixed(2)
   }
 
-  gainDayBaseHashrateFiat(coin: ISelectedCryptoItem) {
-    return (calcModule.gainBaseHashrateDay(coin)).toFixed(2)
+  gainDayFiatHashrate(coin: ISelectedCryptoItem) {
+    return (calcModule.gainDayHashrate(coin)).toFixed(2)
   }
 
-  gainWeekBaseHashrateFiat(coin: ISelectedCryptoItem) {
-    return (calcModule.gainBaseHashrateWeek(coin)).toFixed(2)
+  gainWeekFiatHashrate(coin: ISelectedCryptoItem) {
+    return (calcModule.gainWeekHashrate(coin)).toFixed(2)
   }
 
-  gainMonthBaseHashrateFiat(coin: ISelectedCryptoItem) {
-    return (calcModule.gainBaseHashrateMonth(coin)).toFixed(2)
+  gainMonthFiatHashrate(coin: ISelectedCryptoItem) {
+    return (calcModule.gainMonthHashrate(coin)).toFixed(2)
+  }
+
+  gain24hAdvancedGPU(coin: ISelectedCryptoItem) {
+    return (calcModule.gain24hAdvancedGPU(coin).toFixed(6))
+  }
+
+  gain24hFiatAdvancedGPU(coin: ISelectedCryptoItem) {
+    return (calcModule.gain24hFiatAdvancedGPU(coin).toFixed(2))
+  }
+
+  gainMonthAdvancedGPU(coin: ISelectedCryptoItem) {
+    return (calcModule.gainMonthAdvancedGPU(coin).toFixed(6))
+  }
+
+  gainMonthFiatAdvancedGPU(coin: ISelectedCryptoItem) {
+    return (calcModule.gainMonthFiatAdvancedGPU(coin).toFixed(2))
+  }
+
+  gain24hAdvancedHashrate(coin: ISelectedCryptoItem) {
+    return (calcModule.gain24hAdvancedHashrate(coin).toFixed(6))
+  }
+
+  gain24hFiatAdvancedHashrate(coin: ISelectedCryptoItem) {
+    return (calcModule.gain24hFiatAdvancedHashrate(coin).toFixed(2))
+  }
+
+  gainMonthAdvancedHashrate(coin: ISelectedCryptoItem) {
+    return (calcModule.gainMonthAdvancedHashrate(coin).toFixed(6))
+  }
+
+  gainMonthFiatAdvancedHashrate(coin: ISelectedCryptoItem) {
+    return (calcModule.gainMonthFiatAdvancedHashrate(coin).toFixed(2))
   }
 }
 </script>

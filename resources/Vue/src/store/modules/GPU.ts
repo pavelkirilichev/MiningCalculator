@@ -78,7 +78,16 @@ export class GPU extends VuexModule {
         item.count++
         break;
       case 'input':
-        item.count = isNaN(value) ? 0 : Number(value)
+        if (value) {
+          item.count = isNaN(value) ? 0 : Number(value)
+        }
+        else return
+        break;
+    }
+
+    if (item.count === 0) {
+      const index = this.selected.findIndex(item => item.id === id)
+      this.selected.splice(index, 1)
     }
   }
 

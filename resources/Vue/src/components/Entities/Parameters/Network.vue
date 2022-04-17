@@ -1,26 +1,28 @@
 <template>
   <div>
     <UITabs :tabs="tabs" @change="changeHandler($event)" />
-    <Card v-if="activeTab === 1">
+    <Card>
       <template #body>
         <CardRow>
           <Row>
             <RowText :text="$t('initialDifficultyLevel')"/>
-            <Input placeholder="1.4" v-model="initialDifficultyLevelControl"></Input>
+            <Input placeholder="1.4" big v-model="initialDifficultyLevelControl"></Input>
             <RowText text="a"/>
           </Row>
         </CardRow>
         <CardRow>
           <Row>
             <RowText :text="$t('difficultyGrowth')"/>
-            <Output :value="growthInComplexityControl"></Output>
+            <Input v-model="growthInComplexityControl"></Input>
             <RowText text="%"/>
           </Row>
         </CardRow>
         <CardRow>
           <Row>
             <RowText :text="$t('networkGrowthTime')"/>
-            <Output :value="networkGwothTimeControl"></Output>
+            <Input v-if="activeTab === 1" v-model="networkGwothTimeControlDay"></Input>
+            <Input v-if="activeTab === 2" v-model="networkGwothTimeControlWeek"></Input>
+            <Input v-if="activeTab === 3" v-model="networkGwothTimeControlMonth"></Input>
             <RowText text="a"/>
           </Row>
         </CardRow>
@@ -95,8 +97,38 @@ export default class Network extends mixins(ModeMixin) {
     return String(parametersModule.network.growthInComplexity)
   }
 
-  get networkGwothTimeControl() {
-    return String(parametersModule.network.networkGwothTime)
+  set growthInComplexityControl(value: string) {
+    parametersModule.updateParameter({ key: 'network.growthInComplexity', value })
+  }
+
+  get networkGwothTimeControlDay() {
+    return String(parametersModule.network.networkGwothTimeDay)
+  }
+
+  set networkGwothTimeControlDay(value: string) {
+    value = String(Math.floor(Number(value)))
+
+    parametersModule.updateParameter({ key: 'network.networkGwothTimeDay', value })
+  }
+
+  get networkGwothTimeControlWeek() {
+    return String(parametersModule.network.networkGwothTimeWeek)
+  }
+
+  set networkGwothTimeControlWeek(value: string) {
+    value = String(Math.floor(Number(value)))
+    
+    parametersModule.updateParameter({ key: 'network.networkGwothTimeWeek', value })
+  }
+
+  get networkGwothTimeControlMonth() {
+    return String(parametersModule.network.networkGwothTimeMonth)
+  }
+
+  set networkGwothTimeControlMonth(value: string) {
+    value = String(Math.floor(Number(value)))
+    
+    parametersModule.updateParameter({ key: 'network.networkGwothTimeMonth', value })
   }
 }
 </script>

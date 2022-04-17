@@ -1,7 +1,7 @@
 <template>
   <Card>
     <template #body>
-      <template v-if="isHashrateMode">
+      <template v-if="isAdvancedMode">
         <CardRow>
           <Row>
             <RowText :text="$t('powerConsumption')"/>
@@ -22,6 +22,13 @@
           <RowText :text="$t('workHours')"/>
           <Input v-model="hoursControl"></Input>
           <RowText :text="$t('hours')"/>
+        </Row>
+      </CardRow>
+      <CardRow v-if="isHashrateMode && !isAdvancedMode">
+        <Row>
+          <RowText :text="$t('summaryEnergyComsumption')"/>
+          <Input v-model="summaryEnergyConsumptionControl"></Input>
+          <RowText text="kWh"/>
         </Row>
       </CardRow>
     </template>
@@ -87,6 +94,13 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
   }
   set kWPriceControl(value: string) {
     parametersModule.updateParameter({ key: 'energy.kWPrice', value: value })
+  }
+
+  get summaryEnergyConsumptionControl() {
+    return String(parametersModule.energy.kWPrice)
+  }
+  set summaryEnergyConsumptionControl(value: string) {
+    parametersModule.updateParameter({ key: 'energy.summaryPowerConsumption', value: value })
   }
 
   get energySum() {

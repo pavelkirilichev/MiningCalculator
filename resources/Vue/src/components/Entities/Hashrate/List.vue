@@ -1,7 +1,7 @@
 <template>
   <UIList :list="selected" limited>
     <template #item="{ item }">
-      <InteractableItem @plus="changeHandler('plus', { id: item.id })" @input="changeHandler('input', { id: item.id, value: $event }) " @minus="changeHandler('minus', { id: item.id })" :item="transform(item)">
+      <InteractableItem big @plus="changeHandler('plus', { id: item.id })" @input="changeHandler('input', { id: item.id, value: $event }) " @minus="changeHandler('minus', { id: item.id })" :item="transform(item)">
         <template #addon>
           Mh/S
         </template>
@@ -11,7 +11,7 @@
       <UIListItem limited v-if="addMode">
         <HashrateSelect class="list__select" @reset="addMode = false"/>
       </UIListItem>
-      <UIListItem limited v-if="!selected[0]">
+      <UIListItem limited v-if="!selected[0] && !addMode">
         <button class="list__button" @click="addMode = true">
           <div class="list__button-plus">+</div>
           <span class="list__button-text">{{ $t('addAlgorithm') }}</span>
@@ -35,7 +35,7 @@ import Item from '../../UI/Item.vue'
 import InteractableItem from '../../UI/InteractableItem.vue'
 import UIList from '../../UI/List.vue';
 import UIListItem from '../../UI/List/Item.vue';
-import { Crypto, ICryptoItem, ISelectedCryptoItem } from '../../../store/modules/Crypto';
+import { Crypto, ISelectedCryptoItem } from '../../../store/modules/Crypto';
 import HashrateSelect from './Select.vue';
 
 const gpuModule = getModule(Crypto, store)

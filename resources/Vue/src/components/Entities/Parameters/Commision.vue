@@ -11,16 +11,16 @@
       <CardRow>
         <Row>
           <RowText :text="$t('transactionCommission')" :addon="' (из ETH в USD)'"/>
-          <Output :value="transactionCommissionControl"></Output>
+          <Input v-model="transactionCommissionControl"></Input>
           <RowText text="%"/>
         </Row>
       </CardRow>
       <CardRow>
         <Row>
           <RowText :text="$t('transferCommission')"/>
-          <Output :value="transferCommissionControl"></Output>
+          <Input v-model="transferCommissionControl"></Input>
           <RowText text="%"/>
-          <Output :value="10"></Output>
+          <Input v-model="transferCommissionFixControl"></Input>
           <RowText text="usd"/>
           <UIHint />
         </Row>
@@ -28,7 +28,7 @@
       <CardRow>
         <Row>
           <RowText :text="$t('osSubscription')"/>
-          <Output :value="osSubscriptionControl"></Output>
+          <Input v-model="osSubscriptionControl"></Input>
           <RowText text="%"/>
         </Row>
       </CardRow>
@@ -80,12 +80,32 @@ export default class Commision extends mixins(ModeMixin) {
     return String(parametersModule.commissions.transactionCommission)
   }
 
+  set transactionCommissionControl(value: string) {
+    parametersModule.updateParameter({ key: 'commissions.transactionCommission', value: value })
+  }
+
   get transferCommissionControl() {
     return String(parametersModule.commissions.transferCommission)
   }
 
+  set transferCommissionControl(value: string) {
+    parametersModule.updateParameter({ key: 'commissions.transferCommission', value: value })
+  }
+
+  get transferCommissionFixControl() {
+    return String(parametersModule.commissions.transferCommissionFix)
+  }
+
+  set transferCommissionFixControl(value: string) {
+    parametersModule.updateParameter({ key: 'commissions.transactionCommissionFix', value: value })
+  }
+
   get osSubscriptionControl() {
     return String(parametersModule.commissions.subscription)
+  }
+
+  set osSubscriptionControl(value: string) {
+    parametersModule.updateParameter({ key: 'commissions.osSubscription', value: value })
   }
 }
 </script>

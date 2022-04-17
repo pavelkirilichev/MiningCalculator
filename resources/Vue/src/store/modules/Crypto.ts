@@ -77,6 +77,8 @@ class Crypto extends VuexModule {
       count: 1
     })
     this.activeId = id
+    // this.current = { ...item, count: 1, mhS: 1 }
+    // this.activeId = id
   }
 
   @Mutation
@@ -91,21 +93,32 @@ class Crypto extends VuexModule {
 
   @Mutation
   updateItemCount({ type, id, value }: { type: 'plus' | 'minus' | 'input', id: string, value: any }) {
-    const item = this.selected.find(o => o.id === id)
+    const item = this.selected.find(item => item.id === id)
     if (!item) return
+
+    console.log(item)
     
     switch (type) {
       case 'minus':
-        item.count
+        item.count--
         item.mhS--
         break;
       case 'plus':
-        item.count
+        item.count++
         item.mhS++
         break;
       case 'input':
-        item.count = isNaN(value) ? 0 : Number(value)
-        item.mhS = isNaN(value) ? 0 : Number(value)
+        if (value) {
+          item.count = isNaN(value) ? 0 : Number(value)
+          item.mhS = isNaN(value) ? 0 : Number(value)
+        }
+        else return
+        break;
+    }
+
+    if (item.count === 0) {
+      const index = this.selected.findIndex(item => item.id === id)
+      this.selected.splice(index, 1)
     }
   }
 

@@ -8,7 +8,7 @@
         </span>
       </span>
       <div class="item__counter">
-        <Counter :count="item.count" @plus="$emit('plus', item.id)" @input="$emit('input', $event)" @minus="$emit('minus', item.id)"></Counter>
+        <Counter :big="big" :count="item.count" @plus="$emit('plus', item.id)" @input="$emit('input', $event)" @minus="$emit('minus', item.id)"></Counter>
       </div>
     </div>
   </div>
@@ -27,5 +27,6 @@ import Counter from './Counter.vue'
 })
 export default class UIInteractableItem extends Vue {
   @Prop({ type: Object }) item!: { name: string, id: string }
+  @Prop({ type: Boolean }) big!: boolean
 }
 </script>

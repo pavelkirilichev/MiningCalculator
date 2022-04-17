@@ -1,6 +1,6 @@
 .header {
   @include lg() {
-    box-shadow: 0 0 1px 3px rgba($color-prototype-dark, 0.5);
+    box-shadow: 0 0 1px 3px rgba($color-gallery, 0.5);
   }
 
   &__inner {
@@ -65,6 +65,6 @@
   }
 
   &--shifted {
-    box-shadow: 0 0 1px 3px rgba($color-prototype-dark, 0.5);
+    box-shadow: 0 0 1px 3px rgba($color-gallery, 0.5);
   }
 }

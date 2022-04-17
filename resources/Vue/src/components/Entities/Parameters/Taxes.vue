@@ -4,7 +4,7 @@
       <CardRow>
         <Row>
           <RowText :text="$t('currentTax')"/>
-          <Output :value="currentTaxControl"></Output>
+          <Input :value="currentTaxControl"></Input>
           <RowText text="%"/>
         </Row>
       </CardRow>

@@ -10,18 +10,18 @@
         <BoxItem>
           <Col>
             <ColText :text="$t('dayU')"/>
-            <Output promoted big :value="getSum.day"></Output>
+            <Output promoted big :value="isHashrateMode ? earningDayAdvancedHashrate() : earningDayAdvancedGPU()"></Output>
           </Col>
         </BoxItem>
         <BoxItem>
           <Col>
             <ColText :text="$t('weekU')"/>
-            <Output promoted big :value="getSum.week"></Output></Col>
+            <Output promoted big :value="isHashrateMode ? earningWeekAdvancedHashrate() : earningWeekAdvancedGPU()"></Output></Col>
         </BoxItem>
         <BoxItem>
           <Col>
             <ColText :text="$t('monthU')"/>
-            <Output promoted big :value="getSum.month"></Output>
+            <Output promoted big :value="isHashrateMode ? earningMonthAdvancedHashrate() : earningMonthAdvancedGPU()"></Output>
           </Col>
         </BoxItem>
       </Box>
@@ -30,13 +30,13 @@
       <Box :title="$t('farmPaybackPeriod')" :cols="2" staticHeight>
         <BoxItem>
           <Row>
-            <Output promoted big :value="0"></Output>
+            <Output promoted big :value="isHashrateMode ? farmPaybackPeriodHashrate().month : farmPaybackPeriodGPU().month"></Output>
             <RowText :text="$t('month')"/>
           </Row>
         </BoxItem>
         <BoxItem>
           <Row>
-            <Output promoted big :value="0"></Output>
+            <Output promoted big :value="isHashrateMode ? farmPaybackPeriodHashrate().day : farmPaybackPeriodGPU().day"></Output>
             <RowText :text="$t('days')"/>
           </Row>
         </BoxItem>
@@ -57,14 +57,18 @@ import ColText from '../Elements/Col/Text.vue';
 import RowText from '../Elements/Row/Text.vue';
 import Row from '../Elements/Row.vue';
 import { getModule } from 'vuex-module-decorators';
-import { Crypto } from '../../store/modules/Crypto';
+import { Crypto, ISelectedCryptoItem } from '../../store/modules/Crypto';
 import store from '../../store/main';
 import CryptoMiniItem from '../Entities/Crypto/MiniItem.vue';
 import { Sum } from '../../store/modules/Sum';
 import BoxesItem from '../Elements/Box/BoxesItem.vue';
+import { Calculate } from '../../store/modules/Calculate';
+import { mixins } from 'vue-class-component';
+import ModeMixin from '../mixins/mode';
 
 const cryptoModule = getModule(Crypto, store)
 const sumModule = getModule(Sum, store)
+const calcModule = getModule(Calculate, store)
 
 @Component({
   components: {
@@ -80,13 +84,84 @@ const sumModule = getModule(Sum, store)
     CryptoMiniItem
   }
 })
-export default class Result extends Vue {
+export default class Result extends mixins(ModeMixin) {
   get currentCryptoItem() {
     return cryptoModule.current
   }
   
   get getSum() {
     return sumModule.getSum
+  }
+
+  
+  farmPaybackPeriodGPU() {
+    if(this.currentCryptoItem) {
+      return calcModule.farmPaybackPeriodGPU(this.currentCryptoItem)
+    }
+
+    return {
+      month: 0,
+      day: 0
+    }
+  }
+  
+  farmPaybackPeriodHashrate() {
+    if(this.currentCryptoItem) {
+      return calcModule.farmPaybackPeriodHashrate(this.currentCryptoItem)
+    }
+
+    return {
+      month: 0,
+      day: 0
+    }
+  }
+
+  earningDayAdvancedGPU() {
+    if(this.currentCryptoItem) {
+      return calcModule.earningDayAdvancedGPU(this.currentCryptoItem).toFixed(2)
+    }
+
+    return 0
+  }
+
+  earningWeekAdvancedGPU() {
+    if(this.currentCryptoItem) {
+      return calcModule.earningWeekAdvancedGPU(this.currentCryptoItem).toFixed(2)
+    }
+
+    return 0
+  }
+
+  earningMonthAdvancedGPU() {
+    if(this.currentCryptoItem) {
+      return calcModule.earningMonthAdvancedGPU(this.currentCryptoItem).toFixed(2)
+    }
+
+    return 0
+  }
+
+  earningDayAdvancedHashrate() {
+    if(this.currentCryptoItem) {
+      return calcModule.earningDayAdvancedHashrate(this.currentCryptoItem).toFixed(2)
+    }
+
+    return 0
+  }
+
+  earningWeekAdvancedHashrate() {
+    if(this.currentCryptoItem) {
+      return calcModule.earningWeekAdvancedHashrate(this.currentCryptoItem).toFixed(2)
+    }
+
+    return 0
+  }
+
+  earningMonthAdvancedHashrate() {
+    if(this.currentCryptoItem) {
+      return calcModule.earningMonthAdvancedHashrate(this.currentCryptoItem).toFixed(2)
+    }
+
+    return 0
   }
 }
 </script>
