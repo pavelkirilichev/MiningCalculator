@@ -31,7 +31,7 @@ const gpuModule = getModule(Crypto, store)
 })
 export default class HashrateSelect extends Vue {
   get filteredList() {
-    return gpuModule.filteredList
+    return gpuModule.listToSelect
   }
   selectHandler(id: string) {
     gpuModule.addSelected(id)

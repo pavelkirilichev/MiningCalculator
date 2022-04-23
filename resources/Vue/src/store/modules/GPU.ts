@@ -2,7 +2,9 @@ import { Module, Mutation, VuexModule, getModule, Action } from 'vuex-module-dec
 
 import gpu from '../../mock/gpu'
 import { GPUService } from '../../services/GPUService';
-import store from '../main';
+import store, { cryptoModule } from '../main';
+import { CryptoHelper } from './helpers/CryptoHelper';
+import { GPUHelper } from './helpers/GPUHelper';
 
 interface Algorithm {
   key: string
@@ -22,28 +24,16 @@ interface SelectedIGPUItem extends IGPUItem {
   count: number
 }
 
+let t: any;
 @Module({
   stateFactory: true,
   namespaced: true,
   name: 'GPU'
 })
 export class GPU extends VuexModule {
-  list: Array<IGPUItem> = gpu.map(gpu => {
-    return {
-      ...gpu,
-      algorithms: Object.entries(gpu.algorithms).map(([key, value]) => ({ ...value, key }))
-    }
-  })
+  list: Array<IGPUItem> = []
   selected: Array<SelectedIGPUItem> = []
   tmpFilter: string = ''
-
-  get filteredList() {
-    return this.filteredByName
-  }
-
-  get filteredByName() {
-    return this.listToSelect.filter(item => item.name.toLocaleLowerCase().includes(this.tmpFilter.toLocaleLowerCase()))
-  }
 
   get listToSelect() {
     return this.list.filter(item => !this.selected.find(_item => _item.id === item.id))
@@ -58,11 +48,23 @@ export class GPU extends VuexModule {
       ...item,
       count: 1
     })
+
+    const coins = CryptoHelper.findCoinByDevices(cryptoModule.list, this.selected)
+
+    if (coins.length === 1) {
+      cryptoModule.addSelected(coins[0].id)
+    }
   }
 
   @Mutation
-  updateFilter(value: string) {
+  updateFilterString(value: string) {
     this.tmpFilter = value
+  }
+
+  @Action
+  updateFilter(value: string) {
+    this.context.commit('updateFilterString', value)
+    this.context.dispatch('update', this.tmpFilter)
   }
 
   @Mutation
@@ -104,12 +106,20 @@ export class GPU extends VuexModule {
   }
 
   @Action
-  getAll() {
-    return new GPUService().getAll().then(res => {
+  update(search?: string) {
+    clearTimeout(t)
+    t = setTimeout(() => {
+      this.context.dispatch('getAll', search)
+    }, 500)
+  }
+
+  @Action
+  getAll(search?: string) {
+    return new GPUService().getAll(search).then(res => {
       if (res.status) {
         this.context.commit('setList', res.data)
       }
-    })
+    }).catch(err => {})
   }
 }
 

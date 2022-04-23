@@ -25,19 +25,15 @@ interface ISelectedCryptoItem extends ICryptoItem {
   count: number
 }
 
+let t: any
+
 @Module({
   stateFactory: true,
   namespaced: true,
   name: 'Crypto'
 })
 class Crypto extends VuexModule {
-  list: Array<ISelectedCryptoItem> = crypto.map(coin => {
-    return {
-      ...coin,
-      count: 1,
-      mhS: 1
-    }
-  })
+  list: Array<ISelectedCryptoItem> = []
   selected: ISelectedCryptoItem[] = []
   activeId: string = ''
   tmpFilter: string = ''
@@ -50,26 +46,20 @@ class Crypto extends VuexModule {
     return this.selected
   }
 
-  get filteredList() {
-    return this.filteredByName
-  }
-
-  get filteredByName() {
-    return this.listToSelect.filter(item => item.name.toLocaleLowerCase().includes(this.tmpFilter.toLocaleLowerCase()))
-  }
-
   get listToSelect() {
     return this.list.filter(item => this.selected[0]?.id !== item.id)
   }
 
   get current() {
-    return this.selected.find(coin => coin.id === this.activeId)
+    return this.list.find(coin => coin.id === this.activeId)
   }
 
   @Mutation
   addSelected(id: ICryptoItem['id']) {
     const item = this.list.find(item => item.id === id)
     if (!item) return
+
+    this.selected = []
     
     this.selected.push({
       ...item,
@@ -87,16 +77,20 @@ class Crypto extends VuexModule {
   }
 
   @Mutation
-  updateFilter(value: string) {
+  updateFilterString(value: string) {
     this.tmpFilter = value
+  }
+
+  @Action
+  updateFilter(value: string) {
+    this.context.commit('updateFilterString', value)
+    this.context.dispatch('update', this.tmpFilter)
   }
 
   @Mutation
   updateItemCount({ type, id, value }: { type: 'plus' | 'minus' | 'input', id: string, value: any }) {
     const item = this.selected.find(item => item.id === id)
     if (!item) return
-
-    console.log(item)
     
     switch (type) {
       case 'minus':
@@ -134,12 +128,20 @@ class Crypto extends VuexModule {
   }
 
   @Action
-  getAll() {
-    new CoinsService().getAll().then(res => {
+  update(search?: string) {
+    clearTimeout(t)
+    t = setTimeout(() => {
+      this.context.dispatch('getAll', search)
+    }, 500)
+  }
+
+  @Action
+  getAll(search?: string) {
+    new CoinsService().getAll(search).then(res => {
       if (res.status) {
         this.context.commit('setList', res.data)
       }
-    })
+    }).catch(err => {})
   }
 }
 

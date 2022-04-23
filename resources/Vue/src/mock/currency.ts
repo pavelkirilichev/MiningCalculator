@@ -14,9 +14,4 @@ export default [
     currency: 'RUB',
     title: 'RUB'
   },
-  {
-    id: 4,
-    currency: '???',
-    title: '???'
-  },
 ]

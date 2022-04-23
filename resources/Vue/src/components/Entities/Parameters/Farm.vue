@@ -6,6 +6,7 @@
           <RowText :text="$t('farmCost')"/>
           <Input v-model="farmCostControl"></Input>
           <RowText text="usd"/>
+          <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="farmCostEnable" />
         </Row>
       </CardRow>
       <CardRow>
@@ -20,7 +21,7 @@
       <CardRow>
         <Row>
           <RowText :text="$t('fullFarmCost')"/>
-          <Output promoted v-model="farmFullCost"></Output>
+          <Output promoted :value="getFarmFullCost()"></Output>
           <RowText text="usd"/>
         </Row>
       </CardRow>
@@ -44,7 +45,6 @@ import { Component } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
 
 import store from '../../../store/main';
-import { Parameters } from '../../../store/modules/Parameters';
 
 import Card from '../../Elements/Card.vue';
 import CardRow from '../../Elements/Card/Row.vue';
@@ -54,8 +54,14 @@ import Output from '../../Elements/Output.vue';
 import Row from '../../Elements/Row.vue';
 import { mixins } from 'vue-class-component';
 import ModeMixin from '../../mixins/mode';
+import { Parameters } from '../../../store/modules/Parameters';
+import { Calculate } from '../../../store/modules/Calculate';
+import { Crypto } from '../../../store/modules/Crypto';
+import MiniSwitcherUI from '../../UI/MiniButton.vue';
 
 const parametersModule = getModule(Parameters, store)
+const calcModule = getModule(Calculate, store)
+const cryptoModule = getModule(Crypto, store)
 
 @Component({
   components: {
@@ -64,7 +70,8 @@ const parametersModule = getModule(Parameters, store)
     Row,
     RowText,
     Input,
-    Output
+    Output,
+    MiniSwitcherUI
   }
 })
 export default class Farm extends mixins(ModeMixin) {
@@ -92,8 +99,16 @@ export default class Farm extends mixins(ModeMixin) {
     parametersModule.updateParameter({ key: 'comission', value: value })
   }
 
-  get farmFullCost() {
-    return parametersModule.farmFullCost
+  getFarmFullCost() {
+    return calcModule.farmFullCostAdvancedGPU().toFixed(2)
+  }
+
+  get farmCostEnable() {
+    return parametersModule.farm.isEnableFarmCost
+  }
+
+  set farmCostEnable(value: boolean) {
+    parametersModule.updateIsFormCostEnabled(value)
   }
 }
 </script>

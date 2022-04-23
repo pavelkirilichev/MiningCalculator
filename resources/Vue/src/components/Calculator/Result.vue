@@ -1,5 +1,5 @@
 <template>
-  <Boxes>
+  <Boxes v-if="currentCryptoItem">
     <BoxesItem>
       <Box :title="$t('chosenCrypto')" staticHeight>
         <CryptoMiniItem v-if="currentCryptoItem" :item="currentCryptoItem"></CryptoMiniItem>
@@ -96,7 +96,7 @@ export default class Result extends mixins(ModeMixin) {
   
   farmPaybackPeriodGPU() {
     if(this.currentCryptoItem) {
-      return calcModule.farmPaybackPeriodGPU(this.currentCryptoItem)
+      return calcModule.farmPaybackPeriodAdvancedGPU(this.currentCryptoItem)
     }
 
     return {

@@ -27,7 +27,7 @@ const gpuModule = getModule(GPU, store)
 })
 export default class GPUSelect extends Vue {
   get filteredList() {
-    return gpuModule.filteredList
+    return gpuModule.listToSelect
   }
   selectHandler(id: string) {
     gpuModule.addSelected(id)

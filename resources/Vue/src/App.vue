@@ -23,6 +23,14 @@ import "./api/client"
 
 import Calculator from './components/Calculator.vue';
 import AddInfo from './components/AddInfo.vue'
+import { getModule } from 'vuex-module-decorators'
+
+import store from './store/main'
+import { Crypto } from './store/modules/Crypto'
+import { GPU } from './store/modules/GPU'
+
+const cryptoModule = getModule(Crypto, store)
+const gpuModule = getModule(GPU, store)
 
 @Component({
   components: {
@@ -46,6 +54,9 @@ export default class App extends Vue {
       }
       else this.scrolled = false
     })
+
+    gpuModule.getAll()
+    cryptoModule.getAll()
   }
 }
 </script>

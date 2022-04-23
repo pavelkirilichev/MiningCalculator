@@ -2,11 +2,10 @@
   border-radius: 5px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  text-align: left;
   padding: {
-    left: 10px;
-    right: 10px;
+    left: 5px;
+    right: 5px;
   }
   min-width: 52px;
   min-height: 28px;
@@ -16,13 +15,22 @@
     size: rem(15px);
   }
 
+  &__text {
+    min-width: 100%;
+    display: block;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
   &--promoted {
     background-color: $color-primary;
     color: #fff;
   }
 
   &--big {
-    min-width: 66px;
+    width: 66px;
     min-height: 25px;
   }
 }

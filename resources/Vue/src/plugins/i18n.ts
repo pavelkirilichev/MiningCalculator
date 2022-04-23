@@ -67,7 +67,9 @@ const messages = {
     contactUs: 'Связаться с нами',
     rights: '©Copyright 2022 ООО «Криптек», 2022. All Rights Reserved<br>Общество с ограниченной ответственностью «Криптек»',
     powerConsumption: 'Энегргопотребление',
-    summaryEnergyComsumption: 'Суммарная потребляемая энергия'
+    summaryEnergyComsumption: 'Суммарная потребляемая энергия',
+    on: 'вкл',
+    off: 'выкл'
   },
   en: {
     mainTitle: 'Calculator selection',
@@ -132,7 +134,9 @@ const messages = {
     contactUs: 'Contact us',
     rights: '©Copyright 2022 Cryptotech LLC, 2022. All Rights Reserved<br>Kriptek Limited Liability Company',
     powerConsumption: 'Power Consumption',
-    summaryEnergyComsumption: 'Summary Energy Comsumption'
+    summaryEnergyComsumption: 'Summary Energy Comsumption',
+    on: 'on',
+    off: 'off'
   }
 }
 

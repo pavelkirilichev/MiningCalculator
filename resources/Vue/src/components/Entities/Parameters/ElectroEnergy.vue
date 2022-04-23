@@ -36,7 +36,7 @@
       <CardRow>
         <Row>
           <RowText :text="$t('sum')"/>
-          <Output promoted v-model="energySum"></Output>
+          <Output promoted :value="getEnergySum()"></Output>
           <RowText text="usd"/>
         </Row>
       </CardRow>
@@ -52,6 +52,8 @@ import { mixins } from 'vue-class-component';
 
 import store, { Modes } from '../../../store/main';
 import { Parameters } from '../../../store/modules/Parameters';
+import { Calculate } from '../../../store/modules/Calculate';
+import { Crypto } from '../../../store/modules/Crypto';
 
 import Card from '../../Elements/Card.vue';
 import CardRow from '../../Elements/Card/Row.vue';
@@ -62,6 +64,8 @@ import Output from '../../Elements/Output.vue';
 import ModeMixin from '../../mixins/mode';
 
 const parametersModule = getModule(Parameters, store)
+const calcModule = getModule(Calculate, store)
+const cryptoModule = getModule(Crypto, store)
 
 @Component({
   components: {
@@ -105,6 +109,14 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
 
   get energySum() {
     return parametersModule.energySum
+  }
+
+  getEnergySum() {
+    const current = cryptoModule.current
+    if(current) {
+      return calcModule.energyConsumptionSumAdvancedGPU(current).toFixed(2)
+    }
+    else return "0.00"
   }
 }
 </script>

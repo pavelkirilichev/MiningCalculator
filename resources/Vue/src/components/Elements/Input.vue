@@ -1,5 +1,5 @@
 <template>
-  <input type="text" class="app-input" :class="{ 'app-input--big': big }" :value="value" @input="$emit('input', $event.target.value)"/>
+  <input type="text" class="app-input" :class="{ 'app-input--big': big }" :title="value" :value="value" @input="$emit('input', $event.target.value)"/>
 </template>
 
 <script lang="ts">

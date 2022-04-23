@@ -1,5 +1,9 @@
 <template>
-  <span class="app-output" :class="{ 'app-output--promoted': promoted, 'app-output--big': big }">{{ value }}</span>
+  <div :class="{ 'app-output--promoted': promoted, 'app-output--big': big }" :title="value" class="app-output">
+    <span class="app-output__text">
+      {{ value }}
+    </span>
+  </div>
 </template>
 
 <script lang="ts">

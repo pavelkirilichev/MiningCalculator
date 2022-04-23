@@ -39,7 +39,7 @@ export default class CryptoVue extends mixins(ModeMixin) {
   }
 
   changeCryptoHandler(item: ICryptoItem) {
-    cryptoModule.updateActiveId(item.id)
+    cryptoModule.addSelected(item.id)
   }
 }
 </script>

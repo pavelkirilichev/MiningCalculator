@@ -150,6 +150,7 @@
 
 <script lang="ts">
 import { Prop, Component } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators';
 
 import { ICryptoItem, ISelectedCryptoItem } from '../../../store/modules/Crypto'
 import Row from '../../Elements/Row.vue';
@@ -159,7 +160,6 @@ import { mixins } from 'vue-class-component';
 import ModeMixin from '../../mixins/mode';
 import Col from '../../Elements/Col.vue';
 import ColText from '../../Elements/Col/Text.vue';
-import { getModule } from 'vuex-module-decorators';
 import store from '../../../store/main';
 import Box from '../../Elements/Box.vue';
 import BoxItem from '../../Elements/Box/Item.vue';

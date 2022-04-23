@@ -3,7 +3,7 @@
     <template #item="{ item }">
       <InteractableItem big @plus="changeHandler('plus', { id: item.id })" @input="changeHandler('input', { id: item.id, value: $event }) " @minus="changeHandler('minus', { id: item.id })" :item="transform(item)">
         <template #addon>
-          Mh/S
+          {{ item.type === 'pull' ? 'S/h' : 'Mh/S' }}
         </template>
       </InteractableItem>
     </template>

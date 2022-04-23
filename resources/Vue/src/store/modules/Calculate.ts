@@ -181,12 +181,14 @@ class CalcAdvancedGPU {
       month: [baseValue]
     }
 
-    for (let i = 1; i < 1024; i++) {
+    for (let i = 1; i < 2048; i++) {
       networkDifficulty_c032.base[i] = baseValue
-      networkDifficulty_c032.day[i] = (((1 - networkGrowthInComplexity_u319) * 0.01) / networkGrowthTime_u319_1) * networkDifficulty_c032.day[i - 1]
-      networkDifficulty_c032.week[i] = (((1 - networkGrowthInComplexity_u319) * 0.01) / (networkGrowthTime_u319_2 * 7)) * networkDifficulty_c032.week[i - 1]
-      networkDifficulty_c032.month[i] = (((1 - networkGrowthInComplexity_u319) * 0.01) / (networkGrowthTime_u319_3 * 30)) * networkDifficulty_c032.month[i - 1]
+      networkDifficulty_c032.day[i] = (((Math.abs(100 + networkGrowthInComplexity_u319) * 0.01) / networkGrowthTime_u319_1) * networkDifficulty_c032.day[i - 1])
+      networkDifficulty_c032.week[i] = (((Math.abs(100 + networkGrowthInComplexity_u319) * 0.01) / (networkGrowthTime_u319_2 * 7)) * networkDifficulty_c032.week[i - 1])
+      networkDifficulty_c032.month[i] = (((Math.abs(100 + networkGrowthInComplexity_u319) * 0.01) / (networkGrowthTime_u319_3 * 30)) * networkDifficulty_c032.month[i - 1])
     }
+
+    // console.log("сложность", networkDifficulty_c032)
     return networkDifficulty_c032
   }
 
@@ -196,6 +198,7 @@ class CalcAdvancedGPU {
 
     const findBlocksCount_c033 = networkDifficulty_c032.base.map(value => (hashrate_c031 * 86400) / value)
 
+    // console.log("найдено блоков", findBlocksCount_c033)
     return findBlocksCount_c033
   }
 
@@ -203,6 +206,7 @@ class CalcAdvancedGPU {
     const findBlocksCount_c033 = this.getFindBlocksCount(coin)
     const coinsCount_c034 = findBlocksCount_c033.map(value => value * coin.reward_block)
 
+    // console.log("получено монет", coinsCount_c034)
     return coinsCount_c034
   }
 
@@ -210,6 +214,7 @@ class CalcAdvancedGPU {
     const devicesCount_u32 = DataPort.getDevices().length
     const kWConsumption_c035 = this.getSummaryPowerConsumption(coin) * devicesCount_u32 / 1000
 
+    console.log("потребление энергии", kWConsumption_c035)
     return kWConsumption_c035
   }
 
@@ -219,38 +224,42 @@ class CalcAdvancedGPU {
     const baseValue = isUserInput ? DataPort.getActualCryptoPrice() : coin.price
 
     const valueGrowthPercentageMonth_u315 = DataPort.getValueGrowthPercentageMonth()
-    const valueGrowthPercentageMonth_u316 = DataPort.getValueGrowthPercentageYear()
+    const valueGrowthPercentageYear_u316 = DataPort.getValueGrowthPercentageYear()
+    
     const coinPrice_c037: { base: number[], month: number[], year: number[] } = {
       base: [baseValue],
       month: [baseValue],
       year: [baseValue]
     }
 
-    for (let i = 1; i < 1024; i++) {
+    for (let i = 1; i < 2048; i++) {
       coinPrice_c037.base[i] = baseValue
-      coinPrice_c037.month[i] = (((1 - valueGrowthPercentageMonth_u315) * 0.01) / 30) * coinPrice_c037.month[i - 1]
-      coinPrice_c037.year[i] = (((1 - valueGrowthPercentageMonth_u316) * 0.01) / 365) * coinPrice_c037.year[i - 1]
+      coinPrice_c037.month[i] = (((Math.abs(100 + valueGrowthPercentageMonth_u315 / 30) * 0.01)) * coinPrice_c037.month[i - 1])
+      coinPrice_c037.year[i] = (((Math.abs(100 + valueGrowthPercentageYear_u316 / 365) * 0.01)) * coinPrice_c037.year[i - 1])
     }
 
+    // console.log("цена монеты", coinPrice_c037)
     return coinPrice_c037
   }
 
-  getSum(coin: ICryptoItem) {
+  getPowerConsumptionSum(coin: ICryptoItem) {
     const workHours_u34 = DataPort.getWorkHours()
     const kWhPrice_u33 = DataPort.getkwHPrice()
     const kWConsumption_c035 = this.getKWConsumption(coin)
 
-    const sum_c31 = kWConsumption_c035 * kWhPrice_u33 * workHours_u34
+    const powerConsumptionSum_c31 = kWConsumption_c035 * kWhPrice_u33 * workHours_u34
 
-    return sum_c31
+    console.log("сумма", powerConsumptionSum_c31)
+    return powerConsumptionSum_c31
   }
 
-  getFullFarmCost(coin: ICryptoItem) {
-    const farmCost_u36 = DataPort.getFarmCost()
+  getFullFarmCost() {
+    const farmCost_u36 = DataPort.getIsEnabledFarmCost() ? DataPort.getFarmCost() : 1
     const farmFrameCost_u37 = DataPort.getFarmFrameCost()
 
     const fullFarmCost_c32 = farmCost_u36 * farmFrameCost_u37
 
+    console.log("полная стоимость фермы", fullFarmCost_c32)
     return fullFarmCost_c32
   }
 
@@ -260,6 +269,7 @@ class CalcAdvancedGPU {
 
     const gain24h_c33 = (coinsCount_c034[0] / 24) * workHours_u34
 
+    console.log("24 часа", gain24h_c33)
     return gain24h_c33
   }
 
@@ -271,6 +281,7 @@ class CalcAdvancedGPU {
     
     const gain24hFiat_c34 = gain24h_c33 * coinPrice
 
+    console.log("24 часа фиат", gain24hFiat_c34)
     return gain24hFiat_c34
   }
 
@@ -280,15 +291,18 @@ class CalcAdvancedGPU {
 
     const gainMonth_c35 = coinsCount_c034.map(c034 => (c034 / 24) * workHours_u34).reduce((prev, curr) => prev + curr, 0)
 
+    console.log("месяц", gainMonth_c35)
     return gainMonth_c35
   }
 
   gainMonthFiat(coin: ICryptoItem) {
     const coinsCount_c034 = this.getCoinsCount(coin).filter((_, i) => i < 30)
     const coinPrice_c037 = this.getCoinPrice(coin)
+    const workHours_u34 = DataPort.getWorkHours()
 
-    const gainMonthFiat_c36 = coinsCount_c034.map((c034, index) => c034 * coinPrice_c037.month[index]).reduce((prev, curr) => prev + curr, 0)
+    const gainMonthFiat_c36 = coinsCount_c034.map((c034, index) => ((c034 / 24) * workHours_u34) * coinPrice_c037.month[index]).reduce((prev, curr) => prev + curr, 0)
 
+    console.log("месяц фиат", gainMonthFiat_c36)
     return gainMonthFiat_c36
   }
 
@@ -296,15 +310,17 @@ class CalcAdvancedGPU {
     const coinsCount_c034 = this.getCoinsCount(coin)
     const coinPrice_c037 = this.getCoinPrice(coin)
     const workHours_u34 = DataPort.getWorkHours()
-    const pullCommission_u39 = DataPort.getPullComission() / 100
-    const transactionCommission_u310 = DataPort.getTransactionCommission() / 100
-    const transferCommission_u311 = DataPort.getTransferCommission() / 100
-    const currentTax_u317 = DataPort.getCurrentTax() / 100
+    const pullCommission_u39 = DataPort.getPullComission()
+    const transactionCommission_u310 = DataPort.getTransactionCommission()
+    const transferCommission_u311 = DataPort.getTransferCommission()
+    const currentTax_u317 = DataPort.getCurrentTax()
     const transferCommissionFix_u312 = DataPort.getTransferCommissionFix()
-    const sum_c31 = this.getSum(coin)
+    const powerConsumptionSum_c31 = this.getPowerConsumptionSum(coin)
+    
+    // TODO
+    const earnings_c038 = coinsCount_c034.map((c034, index) => (c034 / 24) * workHours_u34 * coinPrice_c037.base[index] * (Math.abs(100 - pullCommission_u39) * 0.01) * (Math.abs(100 - transactionCommission_u310) * 0.01) * (Math.abs(100 - transferCommission_u311) * 0.01) * (Math.abs(100 - currentTax_u317) * 0.01) - transferCommissionFix_u312 - powerConsumptionSum_c31)
 
-    const earnings_c038 = coinsCount_c034.map((c034, index) => ((c034 / 24) * workHours_u34 * coinPrice_c037.base[index] * ((1 - pullCommission_u39) * 0.01) * ((1 - transactionCommission_u310) * 0.01) * ((1 - transferCommission_u311) * 0.01) * ((1 - currentTax_u317) * 0.01) - transferCommissionFix_u312 - sum_c31))
-
+    console.log("прибыль", earnings_c038)
     return earnings_c038
   }
 
@@ -313,6 +329,7 @@ class CalcAdvancedGPU {
 
     const earningDay_c37 = earnings_c038[0]
 
+    console.log("прибыль день", earningDay_c37)
     return earningDay_c37
   }
 
@@ -321,6 +338,7 @@ class CalcAdvancedGPU {
 
     const earningWeek_c38 = earnings_c038.filter((_, i) => i < 7).reduce((prev, curr) => prev + curr, 0)
 
+    console.log("прибыль неделя", earningWeek_c38)
     return earningWeek_c38
   }
 
@@ -329,31 +347,38 @@ class CalcAdvancedGPU {
 
     const earningMonth_c39 = earnings_c038.filter((_, i) => i < 30).reduce((prev, curr) => prev + curr, 0)
 
+    console.log("прибыль месяц", earningMonth_c39)
     return earningMonth_c39
   }
 
   getFarmPaybackPeriod(coin: ICryptoItem) {
-    const earnings_c038 = this.getEarnings(coin)
-    const fullFarmCost_c032 = this.getFullFarmCost(coin)
+    const earnings_c038 = [...this.getEarnings(coin), 0]
+    const fullFarmCost_c032 = this.getFullFarmCost()
 
-    let paybackMonth_c310 = 0
-    let paybackDay_c311 = 0
+    let day = 2049;
+    let paybackMonth_c310 = 2049
+    let paybackDay_c311 = 2049
 
     for (let i = 0; i < earnings_c038.length; i++) {
       const sum = earnings_c038.filter((_, j) => j <= i).reduce((prev, curr) => prev + curr, 0)
-      if (sum > fullFarmCost_c032 || i === earnings_c038.length - 1) {
-        const day = i + 1
-
+      if (sum >= fullFarmCost_c032) {
+        day = i + 1
+        
         paybackMonth_c310 = Math.floor(day / 30)
-        paybackMonth_c310 = day % 30
+        paybackDay_c311 = day % 30
+        
+        console.log(day, sum, fullFarmCost_c032)
 
         break
       }
+      
     }
     
+    console.log("срок окупаемости", { month: paybackMonth_c310, day: paybackDay_c311 })
+
     return {
-      month: paybackMonth_c310,
-      day: paybackDay_c311
+      month: day < 2049 ? String(paybackMonth_c310) : "∞",
+      day: day < 2049 ? String(paybackDay_c311): "∞"
     }
   }
 }
@@ -393,11 +418,11 @@ class CalcAdvancedHashrate {
       month: [baseValue]
     }
 
-    for (let i = 1; i < 1024; i++) {
+    for (let i = 1; i < 2048; i++) {
       networkDifficulty_c042.base[i] = baseValue
-      networkDifficulty_c042.day[i] = (((1 - networkGrowthInComplexity_u419) * 0.01) / networkGrowthTime_u419_1) * networkDifficulty_c042.day[i - 1]
-      networkDifficulty_c042.week[i] = (((1 - networkGrowthInComplexity_u419) * 0.01) / (networkGrowthTime_u419_2 * 7)) * networkDifficulty_c042.week[i - 1]
-      networkDifficulty_c042.month[i] = (((1 - networkGrowthInComplexity_u419) * 0.01) / (networkGrowthTime_u419_3 * 30)) * networkDifficulty_c042.month[i - 1]
+      networkDifficulty_c042.day[i] = (((Math.abs(1 - networkGrowthInComplexity_u419) * 0.01) / networkGrowthTime_u419_1) * networkDifficulty_c042.day[i - 1]) + networkDifficulty_c042.day[i]
+      networkDifficulty_c042.week[i] = (((Math.abs(1 - networkGrowthInComplexity_u419) * 0.01) / (networkGrowthTime_u419_2)) * networkDifficulty_c042.week[i - 1]) + networkDifficulty_c042.week[i]
+      networkDifficulty_c042.month[i] = (((Math.abs(1 - networkGrowthInComplexity_u419) * 0.01) / (networkGrowthTime_u419_3)) * networkDifficulty_c042.month[i - 1]) + networkDifficulty_c042.month[i]
     }
     return networkDifficulty_c042
   }
@@ -437,10 +462,10 @@ class CalcAdvancedHashrate {
       year: [baseValue]
     }
 
-    for (let i = 1; i < 1024; i++) {
+    for (let i = 1; i < 2048; i++) {
       coinPrice_c047.base[i] = baseValue
-      coinPrice_c047.month[i] = (((1 - valueGrowthPercentageMonth_u415) * 0.01) / 30) * coinPrice_c047.month[i - 1]
-      coinPrice_c047.year[i] = (((1 - valueGrowthPercentageMonth_u416) * 0.01) / 365) * coinPrice_c047.year[i - 1]
+      coinPrice_c047.month[i] = (((Math.abs(1 - valueGrowthPercentageMonth_u415) * 0.01)) * coinPrice_c047.month[i - 1]) + coinPrice_c047.month[i]
+      coinPrice_c047.year[i] = (((Math.abs(1 - valueGrowthPercentageMonth_u416) * 0.01) / 365) * coinPrice_c047.year[i - 1]) + coinPrice_c047.year[i]
     }
 
     return coinPrice_c047
@@ -497,8 +522,9 @@ class CalcAdvancedHashrate {
   gainMonthFiat(coin: ICryptoItem) {
     const coinsCount_c044 = this.getCoinsCount(coin).filter((_, i) => i < 30)
     const coinPrice_c047 = this.getCoinPrice(coin)
+    const workHours_u44 = DataPort.getWorkHours()
 
-    const gainMonthFiat_c46 = coinsCount_c044.map((c044, index) => c044 * coinPrice_c047.month[index]).reduce((prev, curr) => prev + curr, 0)
+    const gainMonthFiat_c46 = coinsCount_c044.map((c044, index) => ((c044 / 24) * workHours_u44) * coinPrice_c047.month[index]).reduce((prev, curr) => prev + curr, 0)
 
     return gainMonthFiat_c46
   }
@@ -507,14 +533,14 @@ class CalcAdvancedHashrate {
     const coinsCount_c044 = this.getCoinsCount(coin)
     const coinPrice_c047 = this.getCoinPrice(coin)
     const workHours_u44 = DataPort.getWorkHours()
-    const pullCommission_u49 = DataPort.getPullComission() / 100
-    const transactionCommission_u410 = DataPort.getTransactionCommission() / 100
-    const transferCommission_u411 = DataPort.getTransferCommission() / 100
-    const currentTax_u417 = DataPort.getCurrentTax() / 100
+    const pullCommission_u49 = DataPort.getPullComission()
+    const transactionCommission_u410 = DataPort.getTransactionCommission()
+    const transferCommission_u411 = DataPort.getTransferCommission()
+    const currentTax_u417 = DataPort.getCurrentTax()
     const transferCommissionFix_u412 = DataPort.getTransferCommissionFix()
     const sum_c41 = this.getSum(coin)
 
-    const earnings_c048 = coinsCount_c044.map((c044, index) => ((c044 / 24) * workHours_u44 * coinPrice_c047.base[index] * ((1 - pullCommission_u49) * 0.01) * ((1 - transactionCommission_u410) * 0.01) * ((1 - transferCommission_u411) * 0.01) * ((1 - currentTax_u417) * 0.01) - transferCommissionFix_u412 - sum_c41))
+    const earnings_c048 = coinsCount_c044.map((c044, index) => ((c044 / 24) * workHours_u44 * coinPrice_c047.base[index] * (Math.abs(1 - pullCommission_u49) * 0.01) * (Math.abs(1 - transactionCommission_u410) * 0.01) * (Math.abs(1 - transferCommission_u411) * 0.01) * (Math.abs(1 - currentTax_u417) * 0.01) - transferCommissionFix_u412 - sum_c41))
 
     return earnings_c048
   }
@@ -711,7 +737,23 @@ class Calculate extends VuexModule {
     }
   }
 
-  get farmPaybackPeriodGPU() {
+  get farmFullCostAdvancedGPU() {
+    return () => {
+      const calcAdvancedGPU = new CalcAdvancedGPU()
+
+      return calcAdvancedGPU.getFullFarmCost()
+    } 
+  }
+
+  get energyConsumptionSumAdvancedGPU() {
+    return (coin: ISelectedCryptoItem) => {
+      const calcAdvancedGPU = new CalcAdvancedGPU()
+
+      return calcAdvancedGPU.getPowerConsumptionSum(coin)
+    } 
+  }
+
+  get farmPaybackPeriodAdvancedGPU() {
     return (coin: ISelectedCryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
   

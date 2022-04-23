@@ -41,6 +41,10 @@ class DataPort {
     return parametersModule.farm.farmCost
   }
 
+  static getIsEnabledFarmCost() {
+    return parametersModule.farm.isEnableFarmCost
+  }
+
   static getFarmFrameCost() {
     return parametersModule.farm.frameCost
   }

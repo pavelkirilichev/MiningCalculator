@@ -2,7 +2,7 @@
   <div class="select">
     <div class="select__inner">
       <div class="select__filter">
-        <input class="select__input" :placeholder="placeholder" type="text" @input="$emit('filter', $event.target.value)">
+        <input class="select__input" :disabled="disabled" :placeholder="placeholder" type="text" @input="filterHandle">
       </div>
       <UIList scrollable :list="list" @click:item="$emit('select', $event)" interactable>
         <template #item="{ item }">
@@ -30,5 +30,11 @@ import UIList from './List.vue';
 export default class UISelect<T> extends Vue {
   @Prop({ type: Array }) list!: Array<T>
   @Prop({ type: String }) placeholder!: string
+  @Prop({ type: Boolean }) disabled!: boolean
+  @Prop({ type: Number }) time!: number
+
+  filterHandle($event: Event & { target: HTMLInputElement }) {
+    this.$emit('filter', $event.target.value)
+  }
 }
 </script>

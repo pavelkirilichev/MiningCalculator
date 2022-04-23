@@ -28,7 +28,9 @@ export default class DataToggler extends Vue {
   }
 
   changeHandler() {
-    this.$store.commit('setDataMode', this.mode === DataMode.BASE_MODE ? DataMode.HASH_MODE : DataMode.BASE_MODE)
+    // TODO
+    
+    // this.$store.commit('setDataMode', this.mode === DataMode.BASE_MODE ? DataMode.HASH_MODE : DataMode.BASE_MODE)
   }
 }
 </script>

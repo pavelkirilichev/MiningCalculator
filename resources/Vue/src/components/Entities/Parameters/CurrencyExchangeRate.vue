@@ -4,7 +4,7 @@
       <CardRow>
         <Row>
           <RowText :text="$t('cryptoActualPrice')"/>
-          <Input v-model="cryptoActualPriceControl"></Input>
+          <Input placeholder="1.4" v-model="cryptoActualPriceControl"></Input>
           <RowText text="usd"/>
         </Row>
       </CardRow>
@@ -29,6 +29,7 @@ import { mixins } from 'vue-class-component';
 
 import store, { Modes } from '../../../store/main';
 import { ExchangeRateModes, Parameters } from '../../../store/modules/Parameters';
+import { Crypto } from '../../../store/modules/Crypto';
 
 import Card from '../../Elements/Card.vue';
 import CardRow from '../../Elements/Card/Row.vue';
@@ -40,6 +41,7 @@ import ModeMixin from '../../mixins/mode';
 import UIToggler from '../../UI/Toggler.vue';
 
 const parametersModule = getModule(Parameters, store)
+const cryptoModule = getModule(Crypto, store)
 
 @Component({
   components: {
@@ -75,7 +77,11 @@ export default class CurrencyExchangeRate extends mixins(ModeMixin) {
   }
 
   get cryptoActualPriceControl() {
-    return String(parametersModule.exchangeRate.actualPrice)
+    const hasActual = parametersModule.register.some(token => token === 'exchangeRate.actualPrice')
+    if(hasActual) {
+      return String(parametersModule.exchangeRate.actualPrice)
+    }
+    else return String(cryptoModule.current?.price || "")
   }
 
   set cryptoActualPriceControl(value: string) {

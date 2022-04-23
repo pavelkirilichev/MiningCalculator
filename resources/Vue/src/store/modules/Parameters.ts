@@ -49,6 +49,7 @@ class Parameters extends VuexModule {
   
   farm = {
     farmCost: 0,
+    isEnableFarmCost: true,
     frameCost: 0,
   }
   
@@ -83,6 +84,11 @@ class Parameters extends VuexModule {
   @Mutation
   updateExchangeRateMode(mode: ExchangeRateModes) {
     this.exchangeRate.mode = mode
+  }
+
+  @Mutation
+  updateIsFormCostEnabled(value: boolean) {
+    this.farm.isEnableFarmCost = value
   }
 }
 
