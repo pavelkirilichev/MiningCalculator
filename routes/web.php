@@ -12,8 +12,15 @@ use App\Http\Controllers\HardWareController;
 |
 */
 
-Route::get('/coin', 'CoinController@show');
-Route::get('/hardware', 'HardWareController@show');
+Route::get('/coins', 'CoinController@index');
+Route::get('/coins/filter/{search}', 'CoinController@getByName');
+Route::post('/coins/algorithm', 'CoinController@getByAlgorithmsName');
+
+Route::get('/hardware', 'HardWareController@index');
+Route::get('/hardware/filter/{search}', 'HardWareController@getByName');
+
+Route::post('/algorithm/hardware', 'HardWareAlgController@getByHardwareId');
+
 Route::get('/{lang?}', function ($lang = '') {
     if (! in_array($lang, ['en', '']))  {
         abort(404);

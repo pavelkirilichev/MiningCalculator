@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
  
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
  
 
@@ -16,8 +16,21 @@ class CoinController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function show() {
+    public function index() {
         $users = DB::table('coins')->limit(30)->get();
+        return $users;
+    }
+
+    public function getByName($search) {
+        $users = DB::table('coins')->where('name', 'LIKE', '%'.$search.'%')->limit(30)->get();
+
+        return $users;
+    }
+
+    public function getByAlgorithmsName(Request $request) {
+        $ids = $request->post('algorithm');
+        $users = DB::table('coins')->whereIn('algorithm', $ids ?? [])->get();
+
         return $users;
     }
 }

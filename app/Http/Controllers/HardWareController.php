@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
  
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
- 
 
- 
 class HardWareController extends Controller
 {
     /**
@@ -16,10 +14,14 @@ class HardWareController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function show(Request $request) {
-        dd($request->all());
-        $arr = $request->get('id');
-        $users = DB::table('hardware_alg')->whereIn('hardware_id', $arr)->get();
+    public function index() {
+        $users = DB::table('hardware')->limit(30)->get();
+        return $users;
+    }
+
+    public function getByName($search) {
+        $users = DB::table('hardware')->where('name', 'LIKE', '%'.$search.'%')->limit(30)->get();
+
         return $users;
     }
 }
