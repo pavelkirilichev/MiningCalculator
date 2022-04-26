@@ -66,7 +66,7 @@ class Parameters extends VuexModule {
     const keyMap = key.split(".")
     keyMap.forEach((_key, index) => {
       if (index === keyMap.length - 1) {
-        if(isNaN(Number(value))) return
+        // if(isNaN(Number(value))) return
 
         tmp[_key] = Number(value)
         this.register.push(key)

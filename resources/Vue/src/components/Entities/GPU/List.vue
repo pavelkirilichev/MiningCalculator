@@ -53,7 +53,7 @@ export default class GPUList extends Vue {
   }
 
   get isSelectable() {
-    return gpuModule.listToSelect.length
+    return gpuModule.listToSelect.length || gpuModule.list.length === 0
   }
 
   @Prop({ type: Boolean }) interactable!: boolean

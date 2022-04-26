@@ -12,4 +12,10 @@
       height: 69px;
     }
   }
+
+  &--big {
+    @include from-xs-to-lg() {
+      @include box(69px);
+    }
+  }
 }

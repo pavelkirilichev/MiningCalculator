@@ -63,7 +63,7 @@ interface ISelectedCryptoItem extends ICryptoItem {
   name: 'Crypto'
 })
 class Crypto extends VuexModule {
-  list: Array<ICryptoItem> = crypto
+  list: Array<ICryptoItem> = []
   current: ICryptoItem | null = null
 
   @Action
@@ -100,8 +100,14 @@ class Crypto extends VuexModule {
   @Action
   update(params: string[]) {
     this.getByAlgorithms(params).then(() => {
-      this.updateHandle()
+      this.context.commit('updateHandle')
     })
+  }
+
+  @Mutation
+  reset() {
+    this.current = null
+    this.list = []
   }
 
   @Mutation

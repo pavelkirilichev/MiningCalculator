@@ -10,19 +10,19 @@
       </div>
       <div class="calculator__main">
         <Blocks>
-          <Block full :title="$t('chooseDevice')">
+          <Block full :title="isHashrateMode ? $t('chooseAlgorithm') : $t('chooseDevice')">
             <HashrateVue v-if="isHashrateMode" />
             <GPUVue v-else/>
           </Block>
         </Blocks>
         <Blocks>
-          <Block :title="$t('electricity')" icon="lighting" :hint="{}">
+          <Block :title="$t('electricity')" icon="flash_1" :hint="{}">
             <ElectroEnergy />
           </Block>
-          <Block v-if="isAdvancedMode" :title="$t('farmCost')" icon="lighting" :hint="{}">
+          <Block v-if="isAdvancedMode" :title="$t('farmCost')" icon="price-tag_1" :hint="{}">
             <Farm></Farm>
           </Block>
-          <Block v-else :title="$t('commissions')" icon="lighting" :hint="{}">
+          <Block v-else :title="$t('commissions')" icon="percentage_1" :hint="{}">
             <Commision />
           </Block>
         </Blocks>
@@ -32,25 +32,25 @@
           </Block>
         </Blocks>
         <Blocks>
-          <Block v-if="isAdvancedMode" :title="$t('commissions')" spec icon="lighting" :hint="{}">
+          <Block v-if="isAdvancedMode" :title="$t('commissions')" spec icon="percentage_1" :hint="{}">
             <Commision />
           </Block>
           <div class="blocks__col">
-            <Block v-if="isAdvancedMode" :title="$t('exchangeRate')" icon="lighting" :hint="{}">
+            <Block v-if="isAdvancedMode" :title="$t('exchangeRate')" icon="currency-exchange_1" :hint="{}">
               <CurrencyExchangeRate />
             </Block>
-            <Block v-if="isAdvancedMode" :title="$t('taxes')" icon="lighting" :hint="{}">
+            <Block v-if="isAdvancedMode" :title="$t('taxes')" icon="bag_1" :hint="{}">
               <Taxes />
             </Block>
           </div>
         </Blocks>
         <Blocks v-if="isAdvancedMode" center>
-          <Block :title="$t('networkComplexity')" center icon="lighting" :hint="{}">
+          <Block :title="$t('networkComplexity')" center icon="data-complexity_1" :hint="{}">
             <Network />
           </Block>
         </Blocks>
         <Blocks v-if="isAdvancedMode && currentCrypto" center>
-          <Block :title="$t('result')" full center icon="lighting" :hint="{}">
+          <Block :title="$t('result')" full center :hint="{}">
             <Result></Result>
           </Block>
         </Blocks>

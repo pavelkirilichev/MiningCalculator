@@ -5,6 +5,7 @@ import { Parameters } from './modules/Parameters'
 import { Crypto } from './modules/Crypto'
 import { Sum } from './modules/Sum'
 import { Hashrate } from './modules/Hashrate'
+import { Currency } from './modules/Currency'
 import { Calculate } from './modules/Calculate'
 import { getModule } from 'vuex-module-decorators';
 
@@ -32,7 +33,8 @@ const store = new Vuex.Store({
     Crypto,
     Sum,
     Calculate,
-    Hashrate
+    Hashrate,
+    Currency
   },
   getters: {
     mode: ({ mode }) => mode,
@@ -58,10 +60,12 @@ const gpuModule = getModule(GPU, store)
 const cryptoModule = getModule(Crypto, store)
 const parametersModule = getModule(Parameters, store)
 const hashrateModule = getModule(Hashrate, store)
+const currencyModule = getModule(Currency, store)
 
 export {
   gpuModule,
   cryptoModule,
   parametersModule,
-  hashrateModule
+  hashrateModule,
+  currencyModule
 }

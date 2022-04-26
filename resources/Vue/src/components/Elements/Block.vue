@@ -3,7 +3,7 @@
     <div class="block__head">
       <template v-if="icon">
         <div class="block__icon-wrap">
-          <svg class="block__icon"></svg>
+          <img :src="require(`../../../../img/${icon}.png`)" class="block__icon" />
         </div>
       </template>
       <span class="block__title" :class="{ 'block__title--spacing': hint }">{{ title }}</span>

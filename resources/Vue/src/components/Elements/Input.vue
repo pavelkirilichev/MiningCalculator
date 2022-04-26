@@ -18,6 +18,9 @@ export default class Input extends Vue {
         $event.target.value = "100"
       }
     }
+
+    if(isNaN(Number($event.target.value))) return 
+    
     this.$emit('input', $event.target.value)
   }
 }

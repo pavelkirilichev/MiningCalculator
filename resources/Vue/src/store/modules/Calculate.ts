@@ -57,7 +57,7 @@ class CalcBaseGPU {
   gain24hFiat(coin: ICryptoItem) {
     const coinsCount = this.gain24h(coin)
 
-    const c12 = coinsCount * coin.price
+    const c12 = coinsCount * (coin.price * DataPort.getCurrencyRate())
 
     return c12
   }
@@ -108,7 +108,7 @@ class CalcBaseHashrate {
 
   gain24hFiat(coin: ICryptoItem) {
     const c21 = this.gain24h(coin)    
-    const c22 = c21 * coin.price
+    const c22 = c21 * (coin.price * DataPort.getCurrencyRate())
     
     return c22
   }
@@ -228,7 +228,7 @@ class CalcAdvancedGPU {
   getCoinPrice(coin: ICryptoItem) {
     const isUserInput = DataPort.getParametersRegister().some(token => token === "exchangeRate.actualPrice") && DataPort.getActualCryptoPrice()
 
-    const baseValue = isUserInput ? DataPort.getActualCryptoPrice() : coin.price
+    const baseValue = isUserInput ? (DataPort.getActualCryptoPrice() * DataPort.getCurrencyRate()) : (coin.price * DataPort.getCurrencyRate())
 
     const valueGrowthPercentageMonth_u315 = DataPort.getValueGrowthPercentageMonth()
     const valueGrowthPercentageYear_u316 = DataPort.getValueGrowthPercentageYear()
@@ -283,7 +283,7 @@ class CalcAdvancedGPU {
     const isUserInput = DataPort.getParametersRegister().some(token => token === 'exchangeRate.actualPrice') && DataPort.getActualCryptoPrice()
     const gain24h_c33 = this.gain24h(coin)
 
-    const coinPrice = isUserInput ? DataPort.getActualCryptoPrice() : coin.price
+    const coinPrice = isUserInput ? (DataPort.getActualCryptoPrice() * DataPort.getCurrencyRate()) : (coin.price * DataPort.getCurrencyRate())
     
     const gain24hFiat_c34 = gain24h_c33 * coinPrice
 
@@ -463,7 +463,7 @@ class CalcAdvancedHashrate {
   getCoinPrice(coin: ICryptoItem) {
     const isUserInput = DataPort.getParametersRegister().some(token => token === "exchangeRate.actualPrice") && DataPort.getActualCryptoPrice()
 
-    const baseValue = isUserInput ? DataPort.getActualCryptoPrice() : coin.price
+    const baseValue = isUserInput ? (DataPort.getActualCryptoPrice() * DataPort.getCurrencyRate()) : (coin.price * DataPort.getCurrencyRate())
 
     const valueGrowthPercentageMonth_u415 = DataPort.getValueGrowthPercentageMonth()
     const valueGrowthPercentageMonth_u416 = DataPort.getValueGrowthPercentageYear()
@@ -513,7 +513,7 @@ class CalcAdvancedHashrate {
     const isUserInput = DataPort.getParametersRegister().some(token => token === 'exchangeRate.actualPrice') && DataPort.getActualCryptoPrice()
     const gain24h_c43 = this.gain24h(coin)
 
-    const coinPrice = isUserInput ? DataPort.getActualCryptoPrice() : coin.price
+    const coinPrice = isUserInput ? (DataPort.getActualCryptoPrice() * DataPort.getCurrencyRate()) : (coin.price * DataPort.getCurrencyRate())
     
     const gain24hFiat_c44 = gain24h_c43 * coinPrice
 

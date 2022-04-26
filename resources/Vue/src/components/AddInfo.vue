@@ -1,6 +1,6 @@
 <template>
   <div class="info">
-    <div class="info__inner container">
+    <!-- <div class="info__inner container">
       <div class="info__tabs">
         <div class="info-tab info__tab" :class="{ 'info__tab--active': current === tab.id }" v-for="tab in tabs" :key="tab.id" @click="current = tab.id">{{ tab.title }}</div>
       </div>
@@ -23,7 +23,7 @@
           </template>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

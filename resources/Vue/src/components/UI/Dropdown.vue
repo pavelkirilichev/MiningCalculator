@@ -8,7 +8,7 @@
     </button>
     <div class="dropdown__menu">
       <div class="dropdown__menu-inner">
-        <UIListVue :list="list" @click:item="changeHandler(item)">
+        <UIListVue :list="list" @click:item="changeHandler">
           <template #item="{ item }">
             <a v-if="item.url" :href="item.url" class="dropdown__item">{{ item.title }}</a>
             <span v-else class="dropdown__item">{{ item.title }}</span>

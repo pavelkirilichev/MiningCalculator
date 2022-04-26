@@ -94,7 +94,8 @@ export class GPU extends VuexModule {
     }
 
     if (item.count === 0) {
-      this.remove(item.id)
+      const index = this.selected.findIndex(item => item.id === id)
+      this.selected.splice(index, 1)
 
       const algorithmSet = new Set<string>()
 
@@ -104,7 +105,7 @@ export class GPU extends VuexModule {
         })
       })
 
-      cryptoModule.update([])
+      cryptoModule.update(Array.from(algorithmSet))
     }
   }
 
@@ -115,8 +116,7 @@ export class GPU extends VuexModule {
 
   @Mutation
   remove(id: string) {
-    const index = this.selected.findIndex(item => item.id === id)
-    this.selected.splice(index, 1)
+    
   }
 
   @Action

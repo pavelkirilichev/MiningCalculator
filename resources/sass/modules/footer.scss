@@ -19,10 +19,11 @@
   &__row {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     width: 100%;
+    margin-bottom: 15px;
 
     @include from-xs-to-lg() {
-      flex-direction: column;
     }
   }
 
@@ -77,7 +78,7 @@
 
     @include from-xs-to-lg() {
       margin: {
-        top: 10px;
+        top: 0px;
         bottom: 10px;
       }
     }
@@ -116,18 +117,29 @@
       margin-left: 1rem;
     }
 
-    &--bottom {
-      @include from-xs-to-lg() {
-        margin-top: 40px;
-      }
-    }
-
     &--row {
+      @include lg() {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        margin-top: 5px;
+        display: flex;
+        justify-content: center;
+
+        span {
+          &:nth-child(1) {
+            margin-right: 50px;
+          }
+          &:nth-child(2) {
+            margin-left: 50px;
+          }
+        }
+      }
+
       @include from-xs-to-lg() {
-        margin-top: 15px;
         text-align: initial;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
       }
     }
   }

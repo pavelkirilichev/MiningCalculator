@@ -14,7 +14,7 @@
           <div class="header__icon">
             <img src="/build/img/coins.svg" alt="" class="">
           </div>
-          <UIDropdown :text="mockCurrency.find(curr => curr.id === currActiveId).title" @change="currActiveId = $event.id" :list="mockCurrency"></UIDropdown>
+          <UIDropdown :text="currentCurrency.title" @change="currencyHandler" :list="mockCurrency"></UIDropdown>
         </div>
       </div>
     </div>
@@ -28,6 +28,11 @@ import UIDropdown from '../UI/Dropdown.vue';
 
 import mockCurrency from '../../mock/currency'
 import mockLangs from '../../mock/langs'
+import { getModule } from 'vuex-module-decorators';
+import { Currency } from '../../store/modules/Currency';
+import store from '../../store/main';
+
+const currencyModule = getModule(Currency, store)
 
 @Component({
   components: {
@@ -37,10 +42,21 @@ import mockLangs from '../../mock/langs'
 export default class Header extends Vue {
   @Prop({ type: Boolean }) scrolled!: boolean
   mockLangs = mockLangs
-  mockCurrency = mockCurrency
+
+  get mockCurrency() {
+    return currencyModule.list
+  }
+
+  get currentCurrency() {
+    return currencyModule.current
+  }
 
   currActiveId = 1
   langActiveId = 1
+
+  currencyHandler(item: any) {
+    currencyModule.updateCurrent(item.id)
+  }
 
   created() {
     this.langActiveId = this.mockLangs.find(lang => lang.key === document.documentElement.lang)!.id

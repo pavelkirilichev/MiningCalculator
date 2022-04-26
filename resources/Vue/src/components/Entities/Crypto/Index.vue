@@ -3,11 +3,11 @@
     <template #item="{ item, index }">
       <template v-if="index === 0">
         <CryptoItem :item="item" />
-        <div class="crypto-item">
+        <!-- <div class="crypto-item">
           <div class="crypto-item__inner">
             <img width="100%" src="https://sun9-7.userapi.com/s/v1/ig2/ydGYuHlXKxQTC3neuuO6c_NKlZiJZAI4rKkZqcTH8CUa3PTGy46YOaJrUWoO8K9lPWRUAi-_bNxqKNJ74g4R1SmT.jpg?size=799x279&quality=96&type=album" alt="">
           </div>
-        </div>
+        </div> -->
       </template>
       <template v-else>
         <CryptoItem :item="item" />

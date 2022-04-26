@@ -1,4 +1,4 @@
-import { cryptoModule, gpuModule, hashrateModule, parametersModule } from '../../main';
+import { cryptoModule, gpuModule, hashrateModule, parametersModule, currencyModule } from '../../main';
 
 class DataPort {
   static getDevices() {
@@ -7,6 +7,13 @@ class DataPort {
 
   static getCoins() {
     return cryptoModule.list
+  }
+
+  static getCurrencyRate() {
+    const currency = currencyModule.current
+    if (currency && currency.key !== 'USD') return currency.rate
+    
+    return 1
   }
 
   static getCurrentCoin() {

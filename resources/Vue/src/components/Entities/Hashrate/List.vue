@@ -17,6 +17,9 @@
           <span class="list__button-text">{{ $t('addAlgorithm') }}</span>
         </button>
       </UIListItem>
+      <UIListItem limited v-if="list.length === 0 && !addMode">
+        <Item :class="['item--ghost']" :item="{ hashrate_measurement: 'Тут будет ваше оборудование', name: 'Тут будет ваше оборудование', id: -1 }"></Item>
+      </UIListItem>
     </template>
   </UIList>
 </template>

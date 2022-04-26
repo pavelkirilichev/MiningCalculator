@@ -73,6 +73,8 @@ class Hashrate extends VuexModule {
 
     if (item.count === 0) {
       this.current = null
+
+      cryptoModule.reset()
     }
   }
 
@@ -80,7 +82,7 @@ class Hashrate extends VuexModule {
   remove() {
     this.current = null
 
-    cryptoModule.update([])
+    cryptoModule.reset()
   }
 
   @Mutation

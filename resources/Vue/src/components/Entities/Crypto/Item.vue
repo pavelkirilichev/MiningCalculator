@@ -20,7 +20,7 @@
                 ({{ $t('crypto') }})
               </RowText>
               <Output big promoted :value="isHashrateMode ? gain24hAdvancedHashrate(item) : gain24hAdvancedGPU(item)"></Output>
-              <RowText text="ETH" />
+              <RowText :text="item.reward_unit" />
             </Row>
           </div>
           <div class="crypto-item__col">
@@ -33,7 +33,7 @@
                 ({{ $t('fiat') }})
               </RowText>
               <Output big promoted :value="isHashrateMode ? gain24hFiatAdvancedHashrate(item) : gain24hFiatAdvancedGPU(item)"></Output>
-              <RowText text="USD" />
+              <RowText :text="currentCurrency.title" />
             </Row>
           </div>
           <div class="crypto-item__col">
@@ -46,7 +46,7 @@
                 ({{ $t('crypto') }})
               </RowText>
               <Output big promoted :value="isHashrateMode ? gainMonthAdvancedHashrate(item) : gainMonthAdvancedGPU(item)"></Output>
-              <RowText text="ETH" />
+              <RowText :text="item.reward_unit" />
             </Row>
           </div>
           <div class="crypto-item__col">
@@ -59,7 +59,7 @@
                 ({{ $t('fiat') }})
               </RowText>
               <Output big promoted :value="isHashrateMode ? gainMonthFiatAdvancedHashrate(item) : gainMonthFiatAdvancedGPU(item)"></Output>
-              <RowText text="USD" />
+              <RowText :text="currentCurrency.title" />
             </Row>
           </div>
         </div>
@@ -90,12 +90,12 @@
                 <br>
                 ({{ $t('fiat') }})
               </ColText>
-              <Output big promoted :value="isHashrateMode ? gain24hFiatHashrate(item) : gain24hFiatGPU(item) + ' USD'"></Output>
+              <Output big promoted :value="isHashrateMode ? gain24hFiatHashrate(item) : gain24hFiatGPU(item) + ' ' + currentCurrency.title"></Output>
             </Col>
           </div>
         </div>
         <div class="crypto-item__footer">
-          <Box :title="$t('gain')" addText="USD" :cols="3" row>
+          <Box :title="$t('gain')" :addText="currentCurrency.title" :cols="3" row>
             <BoxItem>
               <Col>
                 <ColText :text="$t('dayU')"/>
@@ -165,9 +165,11 @@ import Box from '../../Elements/Box.vue';
 import BoxItem from '../../Elements/Box/Item.vue';
 import { Calculate } from '../../../store/modules/Calculate';
 import { Crypto } from '../../../store/modules/Crypto';
+import { Currency } from '../../../store/modules/Currency';
 
 const calcModule = getModule(Calculate, store)
 const cryptoModule = getModule(Crypto, store)
+const currencyModule = getModule(Currency, store)
 
 @Component({
   components: {
@@ -186,6 +188,10 @@ export default class CryptoItem extends mixins(ModeMixin) {
 
   get isActive() {
     return this.item.id === cryptoModule.current?.id
+  }
+
+  get currentCurrency() {
+    return currencyModule.current
   }
 
   gain24hGPU(coin: ICryptoItem) {
