@@ -1,6 +1,12 @@
 .list {
   $block: &;
 
+  &__inner {
+    &--scrollable {
+      overflow-y: auto;
+    }
+    -webkit-overflow-scrolling: touch;
+  }
   &__list {
     @include reset-list();
     display: flex;

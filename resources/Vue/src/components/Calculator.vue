@@ -110,7 +110,7 @@ const cryptoModule = getModule(Crypto, store)
 })
 export default class Calculator extends mixins(ModeMixin) {
   get cryptoLength() {
-    return cryptoModule.filteredByDevices.length || cryptoModule.current
+    return cryptoModule.list.length || cryptoModule.current
   }
 
   get currentCrypto() {

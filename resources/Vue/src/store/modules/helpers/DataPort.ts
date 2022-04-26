@@ -1,4 +1,4 @@
-import { cryptoModule, gpuModule, parametersModule } from '../../main';
+import { cryptoModule, gpuModule, hashrateModule, parametersModule } from '../../main';
 
 class DataPort {
   static getDevices() {
@@ -6,7 +6,7 @@ class DataPort {
   }
 
   static getCoins() {
-    return cryptoModule.selected
+    return cryptoModule.list
   }
 
   static getCurrentCoin() {
@@ -34,7 +34,7 @@ class DataPort {
   }
 
   static getAlgorithm() {
-    return cryptoModule.current
+    return hashrateModule.current
   }
 
   static getFarmCost() {

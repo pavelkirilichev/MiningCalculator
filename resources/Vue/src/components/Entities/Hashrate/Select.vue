@@ -1,5 +1,5 @@
 <template>
-  <UISelect :list="filteredList" limited @filter="filterHandler" @select="selectHandler($event.id)" :placeholder="$t('chooseAlgorithm')">
+  <UISelect scrollable :list="filteredList" limited @filter="filterHandler" @select="selectHandler($event.id)" :placeholder="$t('chooseAlgorithm')">
     <template #item="{ item }">
       <Item :item="transform(item)" interactable>
         <template #addon>
@@ -20,8 +20,9 @@ import UISelect from '../../UI/Select.vue';
 
 import Item from '../../UI/Item.vue'
 import { Crypto, ICryptoItem } from '../../../store/modules/Crypto';
+import { Hashrate } from '../../../store/modules/Hashrate';
 
-const gpuModule = getModule(Crypto, store)
+const hashrateModule = getModule(Hashrate, store)
 
 @Component({
   components: {
@@ -31,15 +32,15 @@ const gpuModule = getModule(Crypto, store)
 })
 export default class HashrateSelect extends Vue {
   get filteredList() {
-    return gpuModule.listToSelect
+    return hashrateModule.list
   }
   selectHandler(id: string) {
-    gpuModule.addSelected(id)
-    gpuModule.updateFilter('')
+    hashrateModule.updateCurrent(id)
+    hashrateModule.updateFilter('')
     this.$emit('reset')
   }
   filterHandler(value: string) {
-    gpuModule.updateFilter(value)
+    hashrateModule.updateFilter(value)
   }
 
   transform(item: ICryptoItem) {

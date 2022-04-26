@@ -11,7 +11,10 @@ import { Component } from 'vue-property-decorator'
 @Component
 export default class Blocks extends Vue {
   get isRow() {
-    return this.$slots.default!.length > 1
+    if(this.$slots.default) {
+      return this.$slots.default.length > 1
+    }
+    else return false
   }
 }
 </script>

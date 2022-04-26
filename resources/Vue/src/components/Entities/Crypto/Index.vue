@@ -40,16 +40,11 @@ const cryptoModule = getModule(Crypto, store)
 })
 export default class CryptoVue extends mixins(ModeMixin) {
   get list() {
-    if(this.isHashrateMode) {
-      return cryptoModule.filteredByActive
-    }
-    else {
-      return cryptoModule.filteredByDevices
-    }
+    return cryptoModule.list
   }
 
   changeCryptoHandler(item: ICryptoItem) {
-    cryptoModule.addSelected(item.id)
+    cryptoModule.updateCurrent(item.id)
   }
 }
 </script>

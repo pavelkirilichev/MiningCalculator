@@ -1,5 +1,5 @@
 import { VuexModule, Module } from 'vuex-module-decorators';
-import { ICryptoItem, ISelectedCryptoItem } from './Crypto';
+import { ICryptoItem } from './Crypto';
 
 import { DataPort } from './helpers/DataPort'
 import { GPUHelper } from './helpers/GPUHelper';
@@ -87,13 +87,15 @@ class CalcBaseGPU {
 }
 
 class CalcBaseHashrate {
-  getHashrate(coin: ISelectedCryptoItem) {
-    const hashrate_c021 = coin.mhS
+  getHashrate(coin: ICryptoItem) {
+    const algrorithm = DataPort.getAlgorithm()
+
+    const hashrate_c021 = algrorithm ? algrorithm.mhS : 0
 
     return hashrate_c021
   }
 
-  gain24h(coin: ISelectedCryptoItem) {
+  gain24h(coin: ICryptoItem) {
     const hashrate_c021 = this.getHashrate(coin)
     const diffculty_c022 = coin.difficulty
     const findBlocksCount_c023 = (hashrate_c021 * 86400) / diffculty_c022
@@ -104,14 +106,14 @@ class CalcBaseHashrate {
     return c21
   }
 
-  gain24hFiat(coin: ISelectedCryptoItem) {
+  gain24hFiat(coin: ICryptoItem) {
     const c21 = this.gain24h(coin)    
     const c22 = c21 * coin.price
     
     return c22
   }
   
-  getDayGain(coin: ISelectedCryptoItem) {
+  getDayGain(coin: ICryptoItem) {
     const summaryPowerConsumption_c025 = DataPort.getSummaryPowerConsumption()
     const generalCommission_u25 = DataPort.getGeneralCommission()
     const kwHPrice_u23 = DataPort.getkwHPrice()
@@ -123,7 +125,7 @@ class CalcBaseHashrate {
     return c23
   }
 
-  getWeekGain(coin: ISelectedCryptoItem) {
+  getWeekGain(coin: ICryptoItem) {
     const c23 = this.getDayGain(coin)
 
     const c24 = c23 * 7
@@ -131,7 +133,7 @@ class CalcBaseHashrate {
     return c24
   }
 
-  getMonthGain(coin: ISelectedCryptoItem) {
+  getMonthGain(coin: ICryptoItem) {
     const c23 = this.getDayGain(coin)
 
     const c25 = c23 * 30
@@ -667,7 +669,7 @@ class Calculate extends VuexModule {
   }
 
   get gain24hHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcBaseHashrate = new CalcBaseHashrate()
   
       return calcBaseHashrate.gain24h(coin)
@@ -675,7 +677,7 @@ class Calculate extends VuexModule {
   }
 
   get gain24hFiatHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcBaseHashrate = new CalcBaseHashrate()
   
       return calcBaseHashrate.gain24hFiat(coin)
@@ -683,7 +685,7 @@ class Calculate extends VuexModule {
   }
 
   get gainDayHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcBaseHashrate = new CalcBaseHashrate()
 
       return calcBaseHashrate.getDayGain(coin)
@@ -691,7 +693,7 @@ class Calculate extends VuexModule {
   }
 
   get gainWeekHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcBaseHashrate = new CalcBaseHashrate()
 
       return calcBaseHashrate.getWeekGain(coin)
@@ -699,7 +701,7 @@ class Calculate extends VuexModule {
   }
 
   get gainMonthHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcBaseHashrate = new CalcBaseHashrate()
 
       return calcBaseHashrate.getMonthGain(coin)
@@ -707,7 +709,7 @@ class Calculate extends VuexModule {
   }
 
   get devicesPowerConsumptionAdvancedGPU() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
 
       return calcAdvancedGPU.getSummaryPowerConsumption(coin)
@@ -715,7 +717,7 @@ class Calculate extends VuexModule {
   }
 
   get gain24hAdvancedGPU() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
       
       return calcAdvancedGPU.gain24h(coin)
@@ -723,7 +725,7 @@ class Calculate extends VuexModule {
   }
 
   get gain24hFiatAdvancedGPU() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
       
       return calcAdvancedGPU.gain24hFiat(coin)
@@ -731,7 +733,7 @@ class Calculate extends VuexModule {
   }
 
   get gainMonthAdvancedGPU() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
       
       return calcAdvancedGPU.gainMonth(coin)
@@ -739,7 +741,7 @@ class Calculate extends VuexModule {
   }
 
   get gainMonthFiatAdvancedGPU() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
       
       return calcAdvancedGPU.gainMonthFiat(coin)
@@ -747,7 +749,7 @@ class Calculate extends VuexModule {
   }
 
   get earningDayAdvancedGPU() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
 
       return calcAdvancedGPU.getEarningDay(coin)
@@ -755,7 +757,7 @@ class Calculate extends VuexModule {
   }
 
   get earningWeekAdvancedGPU() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
 
       return calcAdvancedGPU.getEarningWeek(coin)
@@ -763,7 +765,7 @@ class Calculate extends VuexModule {
   }
 
   get earningMonthAdvancedGPU() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
 
       return calcAdvancedGPU.getEarningMonth(coin)
@@ -779,7 +781,7 @@ class Calculate extends VuexModule {
   }
 
   get energyConsumptionSumAdvancedGPU() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
 
       return calcAdvancedGPU.getPowerConsumptionSum(coin)
@@ -787,7 +789,7 @@ class Calculate extends VuexModule {
   }
 
   get farmPaybackPeriodAdvancedGPU() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
   
       return calcAdvancedGPU.getFarmPaybackPeriod(coin)
@@ -795,7 +797,7 @@ class Calculate extends VuexModule {
   }
 
   get gain24hAdvancedHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedHashrate = new CalcAdvancedHashrate()
       
       return calcAdvancedHashrate.gain24h(coin)
@@ -803,7 +805,7 @@ class Calculate extends VuexModule {
   }
 
   get gain24hFiatAdvancedHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedHashrate = new CalcAdvancedHashrate()
       
       return calcAdvancedHashrate.gain24hFiat(coin)
@@ -811,7 +813,7 @@ class Calculate extends VuexModule {
   }
 
   get gainMonthAdvancedHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedHashrate = new CalcAdvancedHashrate()
       
       return calcAdvancedHashrate.gainMonth(coin)
@@ -819,7 +821,7 @@ class Calculate extends VuexModule {
   }
 
   get gainMonthFiatAdvancedHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedHashrate = new CalcAdvancedHashrate()
       
       return calcAdvancedHashrate.gainMonthFiat(coin)
@@ -827,7 +829,7 @@ class Calculate extends VuexModule {
   }
 
   get earningDayAdvancedHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedHashrate = new CalcAdvancedHashrate()
 
       return calcAdvancedHashrate.getEarningDay(coin)
@@ -835,7 +837,7 @@ class Calculate extends VuexModule {
   }
 
   get earningWeekAdvancedHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedHashrate = new CalcAdvancedHashrate()
 
       return calcAdvancedHashrate.getEarningWeek(coin)
@@ -843,7 +845,7 @@ class Calculate extends VuexModule {
   }
 
   get earningMonthAdvancedHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedHashrate = new CalcAdvancedHashrate()
 
       return calcAdvancedHashrate.getEarningMonth(coin)
@@ -851,7 +853,7 @@ class Calculate extends VuexModule {
   }
 
   get farmPaybackPeriodHashrate() {
-    return (coin: ISelectedCryptoItem) => {
+    return (coin: ICryptoItem) => {
       const calcAdvancedHashrate = new CalcAdvancedHashrate()
   
       return calcAdvancedHashrate.getFarmPaybackPeriod(coin)

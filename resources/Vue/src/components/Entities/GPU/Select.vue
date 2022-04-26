@@ -1,5 +1,5 @@
 <template>
-  <UISelect :list="filteredList" limited @filter="filterHandler" @select="selectHandler($event.id)" :placeholder="$t('printGpuAsic')">
+  <UISelect scrollable :list="filteredList" limited @filter="filterHandler" @select="selectHandler($event.id)" :placeholder="$t('printGpuAsic')">
     <template #item="{ item }">
       <Item :item="item" interactable></Item>
     </template>

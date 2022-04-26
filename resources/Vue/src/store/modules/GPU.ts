@@ -1,9 +1,8 @@
-import { Module, Mutation, VuexModule, getModule, Action } from 'vuex-module-decorators';
+import { Module, Mutation, VuexModule, Action } from 'vuex-module-decorators';
 
-import gpu from '../../mock/gpu'
 import { GPUService } from '../../services/GPUService';
+import { AlgorithmService } from '../../services/AlgorithmService';
 import { cryptoModule } from '../main';
-import { CryptoHelper } from './helpers/CryptoHelper';
 
 interface Algorithm {
   key: string
@@ -30,10 +29,11 @@ let t: any;
   name: 'GPU'
 })
 export class GPU extends VuexModule {
-  list: Array<IGPUItem> = gpu.map(device => ({
-    ...device,
-    algorithms: Object.entries(device.algorithms).map(([key, value]) => ({ ...value, key }))
-  }))
+  // list: Array<IGPUItem> = gpu.map(device => ({
+  //   ...device,
+  //   algorithms: Object.entries(device.algorithms).map(([key, value]) => ({ ...value, key }))
+  // }))
+  list: IGPUItem[] = []
   selected: Array<SelectedIGPUItem> = []
   tmpFilter: string = ''
 
@@ -51,11 +51,15 @@ export class GPU extends VuexModule {
       count: 1
     })
 
-    const coins = CryptoHelper.findCoinByDevices(cryptoModule.list, this.selected)
+    const algorithmSet = new Set<string>()
 
-    if (coins.length === 1) {
-      cryptoModule.addSelected(coins[0].id)
-    }
+    this.selected.forEach(device => {
+      device.algorithms.forEach(alg => {
+        algorithmSet.add(alg.key)
+      })
+    })
+
+    cryptoModule.update(Array.from(algorithmSet))
   }
 
   @Mutation
@@ -90,21 +94,29 @@ export class GPU extends VuexModule {
     }
 
     if (item.count === 0) {
-      const index = this.selected.findIndex(item => item.id === id)
-      this.selected.splice(index, 1)
+      this.remove(item.id)
+
+      const algorithmSet = new Set<string>()
+
+      this.selected.forEach(device => {
+        device.algorithms.forEach(alg => {
+          algorithmSet.add(alg.key)
+        })
+      })
+
+      cryptoModule.update([])
     }
   }
 
   @Mutation
   setList(data: IGPUItem[]) {
-    this.list = data.map(device => {
-      const algorithms = device.algorithms
-      
-      return {
-        ...device,
-        algorithms: Object.entries(algorithms).map(([key, value]) => ({ ...value, key }))
-      }
-    })
+    this.list = data
+  }
+
+  @Mutation
+  remove(id: string) {
+    const index = this.selected.findIndex(item => item.id === id)
+    this.selected.splice(index, 1)
   }
 
   @Action
@@ -117,11 +129,26 @@ export class GPU extends VuexModule {
 
   @Action
   getAll(search?: string) {
-    return new GPUService().getAll(search).then(res => {
+    const gpuReq = new GPUService().getAll(search).then(res => {
       if (res.status) {
-        this.context.commit('setList', res.data)
+        const gpuData = res.data
+
+        new AlgorithmService().getByIdArray(gpuData.map(item => item.id)).then(_res => {
+          if (_res.status) {
+            const algorithms = _res.data
+            this.context.commit('setList', gpuData.map(item => ({
+              ...item,
+              algorithms: algorithms.filter(alg => alg.hardware_id === item.id).map(alg => ({
+                ...alg,
+                key: alg.hardware_name
+              }))
+            })))
+          }
+        }).catch(err => { })
       }
     }).catch(err => {})
+    
+    return gpuReq
   }
 }
 

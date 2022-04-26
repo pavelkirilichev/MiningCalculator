@@ -26,10 +26,10 @@ import AddInfo from './components/AddInfo.vue'
 import { getModule } from 'vuex-module-decorators'
 
 import store from './store/main'
-import { Crypto } from './store/modules/Crypto'
+import { Hashrate } from './store/modules/Hashrate'
 import { GPU } from './store/modules/GPU'
 
-const cryptoModule = getModule(Crypto, store)
+const hashrateModule = getModule(Hashrate, store)
 const gpuModule = getModule(GPU, store)
 
 @Component({
@@ -56,7 +56,7 @@ export default class App extends Vue {
     })
 
     gpuModule.getAll()
-    cryptoModule.getAll()
+    hashrateModule.getAll()
   }
 }
 </script>

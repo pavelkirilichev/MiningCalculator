@@ -4,6 +4,7 @@ import { GPU } from './modules/GPU';
 import { Parameters } from './modules/Parameters'
 import { Crypto } from './modules/Crypto'
 import { Sum } from './modules/Sum'
+import { Hashrate } from './modules/Hashrate'
 import { Calculate } from './modules/Calculate'
 import { getModule } from 'vuex-module-decorators';
 
@@ -22,14 +23,16 @@ enum DataMode {
 const store = new Vuex.Store({
   state: {
     mode: Modes.ADVANCED_MODE,
-    dataMode: DataMode.BASE_MODE
+    dataMode: DataMode.BASE_MODE,
+    loading: false,
   },
   modules: {
     GPU,
     Parameters,
     Crypto,
     Sum,
-    Calculate
+    Calculate,
+    Hashrate
   },
   getters: {
     mode: ({ mode }) => mode,
@@ -54,9 +57,11 @@ export {
 const gpuModule = getModule(GPU, store)
 const cryptoModule = getModule(Crypto, store)
 const parametersModule = getModule(Parameters, store)
+const hashrateModule = getModule(Hashrate, store)
 
 export {
   gpuModule,
   cryptoModule,
-  parametersModule
+  parametersModule,
+  hashrateModule
 }
