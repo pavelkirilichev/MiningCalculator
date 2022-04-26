@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
  
 
  
-class CoinController extends Controller
+class HardWareController extends Controller
 {
     /**
      * Show the profile for a given user.
@@ -16,8 +16,10 @@ class CoinController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function show() {
-        $users = DB::table('coins')->limit(30)->get();
+    public function show(Request $request) {
+        dd($request->all());
+        $arr = $request->get('id');
+        $users = DB::table('hardware_alg')->whereIn('hardware_id', $arr)->get();
         return $users;
     }
 }

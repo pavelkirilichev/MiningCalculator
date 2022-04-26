@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\CoinController;
+use App\Http\Controllers\HardWareController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +12,8 @@ use App\Http\Controllers\CoinController;
 |
 */
 
+Route::get('/coin', 'CoinController@show');
+Route::get('/hardware', 'HardWareController@show');
 Route::get('/{lang?}', function ($lang = '') {
     if (! in_array($lang, ['en', '']))  {
         abort(404);
@@ -20,4 +23,4 @@ Route::get('/{lang?}', function ($lang = '') {
 
     return view('pages.homepage');
 });
-Route::get('/coin', [CoinController::class, 'show']);
+
