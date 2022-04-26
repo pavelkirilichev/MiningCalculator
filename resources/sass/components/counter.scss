@@ -35,7 +35,9 @@
 
   &--big {
     #{$block}__text {
-      width: 120px;
+      @include lg() {
+        width: 120px;
+      }
     }
   }
 }

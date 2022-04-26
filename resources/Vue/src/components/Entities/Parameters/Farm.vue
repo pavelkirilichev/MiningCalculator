@@ -4,7 +4,7 @@
       <CardRow>
         <Row>
           <RowText :text="$t('farmCost')"/>
-          <Input v-model="farmCostControl"></Input>
+          <Input :disabled="!farmCostEnable" v-model="farmCostControl"></Input>
           <RowText text="usd"/>
           <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="farmCostEnable" />
         </Row>
@@ -12,7 +12,7 @@
       <CardRow>
         <Row>
           <RowText :text="$t('frameCost')"/>
-          <Input v-model="frameCostControl"></Input>
+          <Input :disabled="!farmCostEnable" v-model="frameCostControl"></Input>
           <RowText text="usd"/>
         </Row>
       </CardRow>
@@ -91,20 +91,12 @@ export default class Farm extends mixins(ModeMixin) {
     parametersModule.updateParameter({ key: 'farm.frameCost', value: value })
   }
 
-  get comissionControl() {
-    return String(parametersModule.comission)
-  }
-  
-  set comissionControl(value: string) {
-    parametersModule.updateParameter({ key: 'comission', value: value })
-  }
-
   getFarmFullCost() {
     return calcModule.farmFullCostAdvancedGPU().toFixed(2)
   }
 
   get farmCostEnable() {
-    return parametersModule.farm.isEnableFarmCost
+    return parametersModule.farm.isEnable
   }
 
   set farmCostEnable(value: boolean) {

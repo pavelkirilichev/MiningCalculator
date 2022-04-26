@@ -41,6 +41,7 @@ const store = new Vuex.Store({
     },
     setDataMode(state, mode: string) {
       state.dataMode = mode
+      state.Parameters.energy.isEnable = true
     }
   }
 })

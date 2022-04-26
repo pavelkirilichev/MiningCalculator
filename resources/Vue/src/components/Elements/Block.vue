@@ -1,5 +1,5 @@
 <template>
-  <div class="block" :class="{ 'block--center': $attrs.center !== undefined, 'block--full': $attrs.full !== undefined }">
+  <div class="block" :class="{ 'block--center': $attrs.center !== undefined, 'block--full': $attrs.full !== undefined, 'block--spec': $attrs.spec !== undefined }">
     <div class="block__head">
       <template v-if="icon">
         <div class="block__icon-wrap">

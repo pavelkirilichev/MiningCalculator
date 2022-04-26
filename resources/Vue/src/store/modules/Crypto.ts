@@ -33,7 +33,11 @@ let t: any
   name: 'Crypto'
 })
 class Crypto extends VuexModule {
-  list: Array<ISelectedCryptoItem> = []
+  list: Array<ISelectedCryptoItem> = crypto.map(coin => ({
+    ...coin,
+    mhS: 1,
+    count: 1
+  }))
   selected: ISelectedCryptoItem[] = []
   activeId: string = ''
   tmpFilter: string = ''
@@ -51,7 +55,7 @@ class Crypto extends VuexModule {
   }
 
   get current() {
-    return this.list.find(coin => coin.id === this.activeId)
+    return this.selected.find(coin => coin.id === this.activeId)
   }
 
   @Mutation

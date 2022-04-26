@@ -6,24 +6,25 @@
         <CardRow>
           <Row>
             <RowText :text="$t('initialDifficultyLevel')"/>
-            <Input placeholder="1.4" big v-model="initialDifficultyLevelControl"></Input>
-            <RowText text="a"/>
+            <Input :disabled="!networkEnable" big v-model="initialDifficultyLevelControl"></Input>
+            <RowText text="mH/S"/>
+            <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="networkEnable" />
           </Row>
         </CardRow>
         <CardRow>
           <Row>
             <RowText :text="$t('difficultyGrowth')"/>
-            <Input v-model="growthInComplexityControl"></Input>
+            <Input percentage :disabled="!networkEnable" v-model="growthInComplexityControl"></Input>
             <RowText text="%"/>
           </Row>
         </CardRow>
         <CardRow>
           <Row>
             <RowText :text="$t('networkGrowthTime')"/>
-            <Input v-if="activeTab === 1" v-model="networkGwothTimeControlDay"></Input>
-            <Input v-if="activeTab === 2" v-model="networkGwothTimeControlWeek"></Input>
-            <Input v-if="activeTab === 3" v-model="networkGwothTimeControlMonth"></Input>
-            <RowText text="a"/>
+            <Input :disabled="!networkEnable" v-if="activeTab === 1" v-model="networkGwothTimeControlDay"></Input>
+            <Input :disabled="!networkEnable" v-if="activeTab === 2" v-model="networkGwothTimeControlWeek"></Input>
+            <Input :disabled="!networkEnable" v-if="activeTab === 3" v-model="networkGwothTimeControlMonth"></Input>
+            <RowText :text="getNetworkGrowthTimeTitle()"/>
           </Row>
         </CardRow>
       </template>
@@ -38,6 +39,7 @@ import { mixins } from 'vue-class-component';
 
 import store, { Modes } from '../../../store/main';
 import { Parameters } from '../../../store/modules/Parameters';
+import { Crypto } from '../../../store/modules/Crypto';
 
 import Card from '../../Elements/Card.vue';
 import CardRow from '../../Elements/Card/Row.vue';
@@ -47,8 +49,10 @@ import Input from '../../Elements/Input.vue';
 import Output from '../../Elements/Output.vue';
 import ModeMixin from '../../mixins/mode';
 import UITabs from '../../UI/Tabs.vue';
+import MiniSwitcherUI from '../../UI/MiniButton.vue';
 
 const parametersModule = getModule(Parameters, store)
+const cryptoModule = getModule(Crypto, store)
 
 @Component({
   components: {
@@ -58,7 +62,8 @@ const parametersModule = getModule(Parameters, store)
     RowText,
     Input,
     Output,
-    UITabs
+    UITabs,
+    MiniSwitcherUI
   }
 })
 export default class Network extends mixins(ModeMixin) {
@@ -85,8 +90,18 @@ export default class Network extends mixins(ModeMixin) {
     this.activeTab = id
   }
 
+  getNetworkGrowthTimeTitle() {
+    if(this.activeTab === 1) return this.$t('days')
+    if(this.activeTab === 2) return this.$t('week')
+    if(this.activeTab === 3) return this.$t('month')
+  }
+
   get initialDifficultyLevelControl() {
-    return String(parametersModule.network.difficultyLevel || '')
+    const hasActual = parametersModule.register.some(token => token === 'network.difficultyLevel')
+    if(hasActual) {
+      return String(parametersModule.network.difficultyLevel)
+    }
+    else return String(cryptoModule.current?.difficulty || 0)
   }
 
   set initialDifficultyLevelControl(value: string) {
@@ -129,6 +144,14 @@ export default class Network extends mixins(ModeMixin) {
     value = String(Math.floor(Number(value)))
     
     parametersModule.updateParameter({ key: 'network.networkGwothTimeMonth', value })
+  }
+
+  get networkEnable() {
+    return parametersModule.network.isEnable
+  }
+
+  set networkEnable(value: boolean) {
+    parametersModule.updateNetworkIsEnable(value)
   }
 }
 </script>

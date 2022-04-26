@@ -4,8 +4,9 @@
       <CardRow>
         <Row>
           <RowText :text="$t('currentTax')"/>
-          <Input :value="currentTaxControl"></Input>
+          <Input percentage :disabled="!taxesEnable" v-model="currentTaxControl"></Input>
           <RowText text="%"/>
+          <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="taxesEnable" />
         </Row>
       </CardRow>
     </template>
@@ -28,6 +29,7 @@ import RowText from '../../Elements/Row/Text.vue';
 import Input from '../../Elements/Input.vue';
 import Output from '../../Elements/Output.vue';
 import ModeMixin from '../../mixins/mode';
+import MiniSwitcherUI from '../../UI/MiniButton.vue';
 
 const parametersModule = getModule(Parameters, store)
 
@@ -38,16 +40,25 @@ const parametersModule = getModule(Parameters, store)
     Row,
     RowText,
     Input,
-    Output
+    Output,
+    MiniSwitcherUI
   }
 })
 export default class Taxes extends mixins(ModeMixin) {
   get currentTaxControl() {
-    return String(parametersModule.taxes.current || '')
+    return String(parametersModule.taxes.current)
   }
 
   set currentTaxControl(value: string) {
     parametersModule.updateParameter({ key: 'taxes.current', value })
+  }
+
+  get taxesEnable() {
+    return parametersModule.taxes.isEnable
+  }
+
+  set taxesEnable(value: boolean) {
+    parametersModule.updateTaxIsEnable(value)
   }
 }
 </script>

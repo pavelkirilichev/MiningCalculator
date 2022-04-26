@@ -16,20 +16,20 @@ export default [
     volume: 18906207728.731
   },
   {
-    algorithm: "SHA-256",
-    coin: "BCH",
-    difficulty: 233392697706.12,
-    id: "627a53ff2ebe79d72a07208bb7e87231675828b8",
-    name: "Bitcoin Cash",
-    network_hashrate: 1714138291360548000,
-    price: 340.37011810055,
-    reward: 2.2445815716173e-17,
-    reward_block: 6.25,
+    algorithm: "Ethash",
+    coin: "ETH",
+    difficulty: 12857241691046290,
+    id: "31e1e1bcf3417b37586b0801d7a98d2341c9f30e",
+    name: "Ethereum II",
+    network_hashrate: 996447569575549,
+    price: 3027.9292023711,
+    reward: 5.8100075547723e-13,
+    reward_block: 2.0750186488476,
+    reward_unit: "ETH",
     mhS: 1,
-    reward_unit: "BCH",
     type: "coin",
-    updated: 1650005662,
-    volume: 513522567.96772
+    updated: 1650015040,
+    volume: 18906207728.731
   },
   {
     algorithm: "SHA-256",

@@ -4,16 +4,17 @@
       <CardRow>
         <Row>
           <RowText :text="$t('cryptoActualPrice')"/>
-          <Input placeholder="1.4" v-model="cryptoActualPriceControl"></Input>
+          <Input :disabled="!currencyRateEnable" v-model="cryptoActualPriceControl"></Input>
           <RowText text="usd"/>
+          <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="currencyRateEnable" />
         </Row>
       </CardRow>
       <CardRow>
         <Row>
           <RowText :text="$t('valueGrowthPercentage')" :addon="` (${$t('month')}/${$t('year')})`"/>
-          <Input v-if="isExchangeRateModeMonth" v-model="valueGrowthPercentageControlMonth"></Input>
-          <Input v-if="isExchangeRateModeYear" v-model="valueGrowthPercentageControlYear"></Input>
-          <RowText text="usd"/>
+          <Input percentage :disabled="!currencyRateEnable" v-if="isExchangeRateModeMonth" v-model="valueGrowthPercentageControlMonth"></Input>
+          <Input percentage :disabled="!currencyRateEnable" v-if="isExchangeRateModeYear" v-model="valueGrowthPercentageControlYear"></Input>
+          <RowText text="%"/>
           <UIToggler :value="toggle" @change="toggleHandler" :text="$t('month')[0]" :textActive="$t('year')[0]" mini/>
         </Row>
       </CardRow>
@@ -39,6 +40,7 @@ import Input from '../../Elements/Input.vue';
 import Output from '../../Elements/Output.vue';
 import ModeMixin from '../../mixins/mode';
 import UIToggler from '../../UI/Toggler.vue';
+import MiniSwitcherUI from '../../UI/MiniButton.vue';
 
 const parametersModule = getModule(Parameters, store)
 const cryptoModule = getModule(Crypto, store)
@@ -51,7 +53,8 @@ const cryptoModule = getModule(Crypto, store)
     RowText,
     Input,
     Output,
-    UIToggler
+    UIToggler,
+    MiniSwitcherUI
   }
 })
 export default class CurrencyExchangeRate extends mixins(ModeMixin) {
@@ -81,7 +84,7 @@ export default class CurrencyExchangeRate extends mixins(ModeMixin) {
     if(hasActual) {
       return String(parametersModule.exchangeRate.actualPrice)
     }
-    else return String(cryptoModule.current?.price || "")
+    else return String(cryptoModule.current?.price || 0)
   }
 
   set cryptoActualPriceControl(value: string) {
@@ -102,6 +105,14 @@ export default class CurrencyExchangeRate extends mixins(ModeMixin) {
 
   set valueGrowthPercentageControlYear(value: string) {
     parametersModule.updateParameter({ key: 'exchangeRate.valueGrowthPercentageYear', value })
+  }
+
+  get currencyRateEnable() {
+    return parametersModule.exchangeRate.isEnable
+  }
+
+  set currencyRateEnable(value: boolean) {
+    parametersModule.updateExchangeRateIsEnable(value)
   }
 }
 </script>

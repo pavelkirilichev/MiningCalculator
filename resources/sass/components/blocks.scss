@@ -102,4 +102,19 @@
   &--full {
     max-width: none;
   }
+
+  &--spec {
+    display: flex;
+    flex-direction: column;
+
+    #{$block}__body {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+
+      .app-card {
+        flex-grow: 1;
+      }
+    }
+  }
 }

@@ -1,26 +1,27 @@
 <template>
   <Card>
-    <template #body>
+    <template v-if="isAdvancedMode" #body>
       <CardRow>
         <Row>
           <RowText :text="$t('pullCommission')"/>
-          <Input v-model="pullCommissionControl" placeholder="1.4"></Input>
+          <Input percentage :disabled="!commissionEnable" v-model="pullCommissionControl"></Input>
           <RowText text="%"/>
+          <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="commissionEnable" />
         </Row>
       </CardRow>
       <CardRow>
         <Row>
           <RowText :text="$t('transactionCommission')" :addon="' (из ETH в USD)'"/>
-          <Input v-model="transactionCommissionControl"></Input>
+          <Input percentage :disabled="!commissionEnable" v-model="transactionCommissionControl"></Input>
           <RowText text="%"/>
         </Row>
       </CardRow>
       <CardRow>
         <Row>
           <RowText :text="$t('transferCommission')"/>
-          <Input v-model="transferCommissionControl"></Input>
+          <Input percentage :disabled="!commissionEnable" v-model="transferCommissionControl"></Input>
           <RowText text="%"/>
-          <Input v-model="transferCommissionFixControl"></Input>
+          <Input :disabled="!commissionEnable" v-model="transferCommissionFixControl"></Input>
           <RowText text="usd"/>
           <UIHint />
         </Row>
@@ -28,8 +29,18 @@
       <CardRow>
         <Row>
           <RowText :text="$t('osSubscription')"/>
-          <Input v-model="osSubscriptionControl"></Input>
+          <Input :disabled="!commissionEnable" v-model="osSubscriptionControl"></Input>
+          <RowText text="usd"/>
+        </Row>
+      </CardRow>
+    </template>
+    <template v-else #body>
+      <CardRow>
+        <Row>
+          <RowText :text="$t('generalCommission')"/>
+          <Input :disabled="!commissionEnable" v-model="comissionControl"></Input>
           <RowText text="%"/>
+          <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="commissionEnable" />
         </Row>
       </CardRow>
     </template>
@@ -53,6 +64,7 @@ import Input from '../../Elements/Input.vue';
 import Output from '../../Elements/Output.vue';
 import ModeMixin from '../../mixins/mode';
 import UIHint from '../../UI/Hint.vue';
+import MiniSwitcherUI from '../../UI/MiniButton.vue';
 
 const parametersModule = getModule(Parameters, store)
 
@@ -64,12 +76,13 @@ const parametersModule = getModule(Parameters, store)
     RowText,
     Input,
     Output,
-    UIHint
+    UIHint,
+    MiniSwitcherUI
   }
 })
 export default class Commision extends mixins(ModeMixin) {
   get pullCommissionControl() {
-    return String(parametersModule.commissions.pullCommission || '')
+    return String(parametersModule.commissions.pullCommission)
   }
 
   set pullCommissionControl(value: string) {
@@ -106,6 +119,22 @@ export default class Commision extends mixins(ModeMixin) {
 
   set osSubscriptionControl(value: string) {
     parametersModule.updateParameter({ key: 'commissions.osSubscription', value: value })
+  }
+
+  get comissionControl() {
+    return String(parametersModule.commissions.commission)
+  }
+  
+  set comissionControl(value: string) {
+    parametersModule.updateParameter({ key: 'comission', value: value })
+  }
+
+  get commissionEnable() {
+    return parametersModule.commissions.isEnable
+  }
+
+  set commissionEnable(value: boolean) {
+    parametersModule.updateCommissionIsEnable(value)
   }
 }
 </script>

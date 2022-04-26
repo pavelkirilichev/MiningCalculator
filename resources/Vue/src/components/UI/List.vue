@@ -3,8 +3,8 @@
     <div class="list__inner" ref="wrap" :class="{ 'list__inner--scrollable': scrollable }">
       <ul class="list__list">
         <slot name="prepend"></slot>
-        <UIListItem @click="$emit('click:item', item)" v-for="item in list" :key="item.id" :limited="limited" :interactable="interactable">
-          <slot name="item" :item="item"></slot>
+        <UIListItem @click="$emit('click:item', item)" v-for="item, index in list" :key="item.id" :limited="limited" :interactable="interactable">
+          <slot name="item" :item="item" :index="index"></slot>
         </UIListItem>
         <slot name="append"></slot>
       </ul>

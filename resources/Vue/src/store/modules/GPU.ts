@@ -2,9 +2,8 @@ import { Module, Mutation, VuexModule, getModule, Action } from 'vuex-module-dec
 
 import gpu from '../../mock/gpu'
 import { GPUService } from '../../services/GPUService';
-import store, { cryptoModule } from '../main';
+import { cryptoModule } from '../main';
 import { CryptoHelper } from './helpers/CryptoHelper';
-import { GPUHelper } from './helpers/GPUHelper';
 
 interface Algorithm {
   key: string
@@ -31,7 +30,10 @@ let t: any;
   name: 'GPU'
 })
 export class GPU extends VuexModule {
-  list: Array<IGPUItem> = []
+  list: Array<IGPUItem> = gpu.map(device => ({
+    ...device,
+    algorithms: Object.entries(device.algorithms).map(([key, value]) => ({ ...value, key }))
+  }))
   selected: Array<SelectedIGPUItem> = []
   tmpFilter: string = ''
 

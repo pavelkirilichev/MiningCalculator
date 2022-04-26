@@ -19,24 +19,27 @@
           <Block :title="$t('electricity')" icon="lighting" :hint="{}">
             <ElectroEnergy />
           </Block>
-          <Block :title="isAdvancedMode ? $t('farmCost') : $t('commissions')" icon="lighting" :hint="{}">
+          <Block v-if="isAdvancedMode" :title="$t('farmCost')" icon="lighting" :hint="{}">
             <Farm></Farm>
+          </Block>
+          <Block v-else :title="$t('commissions')" icon="lighting" :hint="{}">
+            <Commision />
           </Block>
         </Blocks>
         <Blocks>
-          <Block full center :title="$t('chooseCrypto')" :hint="{}">
+          <Block v-if="cryptoLength" full center :title="$t('chooseCrypto')" :hint="{}">
             <CryptoVue />
           </Block>
         </Blocks>
-        <Blocks v-if="isAdvancedMode">
-          <Block :title="$t('commissions')" icon="lighting" :hint="{}">
+        <Blocks>
+          <Block v-if="isAdvancedMode" :title="$t('commissions')" spec icon="lighting" :hint="{}">
             <Commision />
           </Block>
           <div class="blocks__col">
-            <Block :title="$t('exchangeRate')" icon="lighting" :hint="{}">
+            <Block v-if="isAdvancedMode" :title="$t('exchangeRate')" icon="lighting" :hint="{}">
               <CurrencyExchangeRate />
             </Block>
-            <Block :title="$t('taxes')" icon="lighting" :hint="{}">
+            <Block v-if="isAdvancedMode" :title="$t('taxes')" icon="lighting" :hint="{}">
               <Taxes />
             </Block>
           </div>
@@ -46,7 +49,7 @@
             <Network />
           </Block>
         </Blocks>
-        <Blocks v-if="isAdvancedMode" center>
+        <Blocks v-if="isAdvancedMode && currentCrypto" center>
           <Block :title="$t('result')" full center icon="lighting" :hint="{}">
             <Result></Result>
           </Block>
@@ -57,6 +60,7 @@
 </template>
 
 <script lang="ts">
+import { getModule } from 'vuex-module-decorators';
 import {Component} from 'vue-property-decorator';
 import ModeToggler from './Calculator/ModeToggler.vue';
 import DataToggler from './Calculator/DataToggler.vue';
@@ -76,6 +80,11 @@ import Network from './Entities/Parameters/Network.vue';
 import Taxes from './Entities/Parameters/Taxes.vue';
 import CurrencyExchangeRate from './Entities/Parameters/CurrencyExchangeRate.vue';
 import Commision from './Entities/Parameters/Commision.vue';
+
+import { Crypto } from '../store/modules/Crypto'
+import store from '../store/main';
+
+const cryptoModule = getModule(Crypto, store)
 
 @Component({
   components: {
@@ -99,5 +108,13 @@ import Commision from './Entities/Parameters/Commision.vue';
     //
   }
 })
-export default class Calculator extends mixins(ModeMixin) {}
+export default class Calculator extends mixins(ModeMixin) {
+  get cryptoLength() {
+    return cryptoModule.filteredByDevices.length || cryptoModule.current
+  }
+
+  get currentCrypto() {
+    return cryptoModule.current
+  }
+}
 </script>

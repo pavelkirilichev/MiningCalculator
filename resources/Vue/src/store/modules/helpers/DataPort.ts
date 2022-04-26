@@ -22,7 +22,7 @@ class DataPort {
   }
 
   static getGeneralCommission() {
-    return parametersModule.comission
+    return parametersModule.commissions.commission
   }
 
   static getSummaryPowerConsumption() {
@@ -42,7 +42,7 @@ class DataPort {
   }
 
   static getIsEnabledFarmCost() {
-    return parametersModule.farm.isEnableFarmCost
+    return parametersModule.farm.isEnable
   }
 
   static getFarmFrameCost() {

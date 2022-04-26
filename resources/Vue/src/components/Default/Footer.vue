@@ -5,8 +5,8 @@
         <div class="footer__row">
           <div class="footer__col footer__col--end">
             <div class="footer__block">
-              <div class="footer__text">Limited Liability Company «Kriptek»</div>
-              <div class="footer__text footer__text--row">ОГРН 1227700049851 <span>ИНН 9715413468</span></div>
+              <div class="footer__text">{{ $t('footerTop') }}</div>
+              <div v-if="$i18n.locale === 'ru'" class="footer__text footer__text--row">ОГРН 1227700049851<span>ИНН 9715413468</span></div>
             </div>
           </div>
           <div class="footer__logo footer__logo--mobile">
@@ -14,8 +14,8 @@
           </div>
           <div class="footer__col">
             <div class="footer__block">
-              <div class="footer__text">{{ $t('contactUs') }}: </div>
-              <div class="footer__text footer__text--row">Telegram: @Kriptek <span>Mail: info@kriptek.net</span></div>
+              <div class="footer__text footer__text--row">{{ $t('contactUs') }}: <span>Mail: info@kriptek.net</span></div>
+              <!-- <div class="footer__text footer__text--row"></div> -->
             </div>
           </div>
         </div>

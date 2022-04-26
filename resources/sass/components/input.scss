@@ -29,8 +29,16 @@
     outline: none;
     box-shadow: 0 0 3px 1px $color-gray;
   }
+  
+  &:disabled {
+    opacity: 0.4;
+  }
 
   &--big {
-    width: 100px;
+    @include lg() {
+      width: 100px;
+    }
+
+    // width: 70px;
   }
 }

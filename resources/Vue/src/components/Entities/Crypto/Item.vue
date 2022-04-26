@@ -1,5 +1,5 @@
 <template>
-  <div class="crypto-item" :class="{ 'crypto-item--base': !isAdvancedMode }">
+  <div class="crypto-item" :class="{ 'crypto-item--base': !isAdvancedMode, 'crypto-item--active': isActive }">
     <div class="crypto-item__inner">
       <template v-if="isAdvancedMode">
         <div class="crypto-item__body">
@@ -164,8 +164,10 @@ import store from '../../../store/main';
 import Box from '../../Elements/Box.vue';
 import BoxItem from '../../Elements/Box/Item.vue';
 import { Calculate } from '../../../store/modules/Calculate';
+import { Crypto } from '../../../store/modules/Crypto';
 
 const calcModule = getModule(Calculate, store)
+const cryptoModule = getModule(Crypto, store)
 
 @Component({
   components: {
@@ -181,6 +183,10 @@ const calcModule = getModule(Calculate, store)
 })
 export default class CryptoItem extends mixins(ModeMixin) {
   @Prop({ type: Object }) item!: ICryptoItem
+
+  get isActive() {
+    return this.item.id === cryptoModule.current?.id
+  }
 
   gain24hGPU(coin: ICryptoItem) {
     return (calcModule.gain24hGPU(coin)).toFixed(6)

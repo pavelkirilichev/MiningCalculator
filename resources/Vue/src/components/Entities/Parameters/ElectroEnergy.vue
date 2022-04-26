@@ -5,32 +5,34 @@
         <CardRow>
           <Row>
             <RowText :text="$t('powerConsumption')"/>
-            <Input v-model="powerConsumptionControl"></Input>
+            <Input :disabled="!energyEnable" v-model="powerConsumptionControl"></Input>
             <RowText text="MWh"/>
+            <MiniSwitcherUI v-if="!isHashrateMode" :activeText="$t('on')" :disableText="$t('off')" v-model="energyEnable" />
           </Row>
         </CardRow>
       </template>
       <CardRow>
         <Row>
           <RowText :text="$t('priceForKw')"/>
-          <Input v-model="kWPriceControl"></Input>
+          <Input :disabled="!energyEnable" v-model="kWPriceControl"></Input>
           <RowText text="usd"/>
+          <MiniSwitcherUI v-if="!isAdvancedMode" :activeText="$t('on')" :disableText="$t('off')" v-model="energyEnable" />
         </Row>
       </CardRow>
       <CardRow v-if="isAdvancedMode">
         <Row>
           <RowText :text="$t('workHours')"/>
-          <Input v-model="hoursControl"></Input>
+          <Input :disabled="!energyEnable" v-model="hoursControl"></Input>
           <RowText :text="$t('hours')"/>
         </Row>
       </CardRow>
-      <CardRow v-if="isHashrateMode && !isAdvancedMode">
+      <!-- <CardRow v-if="isHashrateMode && !isAdvancedMode">
         <Row>
           <RowText :text="$t('summaryEnergyComsumption')"/>
           <Input v-model="summaryEnergyConsumptionControl"></Input>
           <RowText text="kWh"/>
         </Row>
-      </CardRow>
+      </CardRow> -->
     </template>
     <template #footer v-if="isAdvancedMode">
       <CardRow>
@@ -62,6 +64,8 @@ import RowText from '../../Elements/Row/Text.vue';
 import Input from '../../Elements/Input.vue';
 import Output from '../../Elements/Output.vue';
 import ModeMixin from '../../mixins/mode';
+import MiniSwitcherUI from '../../UI/MiniButton.vue';
+import { DataPort } from '../../../store/modules/helpers/DataPort';
 
 const parametersModule = getModule(Parameters, store)
 const calcModule = getModule(Calculate, store)
@@ -74,7 +78,8 @@ const cryptoModule = getModule(Crypto, store)
     Row,
     RowText,
     Input,
-    Output
+    Output,
+    MiniSwitcherUI
   }
 })
 export default class ElectroEnergy extends mixins(ModeMixin) {
@@ -86,7 +91,18 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
   }
 
   get powerConsumptionControl() {
-    return String(parametersModule.energy.powerConsumption)
+    const hasActual = parametersModule.register.some(token => token === 'energy.powerConsumption')
+
+    if(hasActual || this.isHashrateMode) {
+      return String(parametersModule.energy.powerConsumption)
+    }
+    else {
+      if(cryptoModule.current) {
+        const devicesSummaryConsumption = calcModule.devicesPowerConsumptionAdvancedGPU(cryptoModule.current)
+        return (devicesSummaryConsumption / 1000000).toFixed(5)
+      }
+      else return "0"
+    }
   }
 
   set powerConsumptionControl(value: string) {
@@ -100,16 +116,12 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
     parametersModule.updateParameter({ key: 'energy.kWPrice', value: value })
   }
 
-  get summaryEnergyConsumptionControl() {
-    return String(parametersModule.energy.kWPrice)
-  }
-  set summaryEnergyConsumptionControl(value: string) {
-    parametersModule.updateParameter({ key: 'energy.summaryPowerConsumption', value: value })
-  }
-
-  get energySum() {
-    return parametersModule.energySum
-  }
+  // get summaryEnergyConsumptionControl() {
+  //   return String(parametersModule.energy.kWPrice)
+  // }
+  // set summaryEnergyConsumptionControl(value: string) {
+  //   parametersModule.updateParameter({ key: 'energy.summaryPowerConsumption', value: value })
+  // }
 
   getEnergySum() {
     const current = cryptoModule.current
@@ -117,6 +129,14 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
       return calcModule.energyConsumptionSumAdvancedGPU(current).toFixed(2)
     }
     else return "0.00"
+  }
+
+  get energyEnable() {
+    return parametersModule.energy.isEnable
+  }
+
+  set energyEnable(value: boolean) {
+    parametersModule.updateEnergyIsEnable(value)
   }
 }
 </script>
