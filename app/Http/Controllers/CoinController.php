@@ -22,7 +22,7 @@ class CoinController extends Controller
     }
 
     public function getByName($search) {
-        $users = DB::table('coins')->where('name', 'LIKE', '%'.$search.'%')->groupBy('account_id')->limit(30)->get();
+        $users = DB::table('coins')->where('algorithm', 'LIKE', '%'.$search.'%')->groupBy('algorithm')->limit(30)->get();
 
         return $users;
     }

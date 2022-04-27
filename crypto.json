@@ -1,0 +1,824 @@
+[
+  {
+    "title": "EZIL ETH mining",
+    "name": "EZIL ETH",
+    "img": "https://static-ssl.minerstat.farm/96/ezil.png",
+    "id": 0
+  },
+  {
+    "title": "ETH mining",
+    "name": "ETH",
+    "img": "https://static-ssl.minerstat.farm/96/eth.png",
+    "id": 1
+  },
+  {
+    "title": "SPIDER ETH mining",
+    "name": "SPIDER ETH",
+    "img": "https://static-ssl.minerstat.farm/96/spider.png",
+    "id": 2
+  },
+  {
+    "title": "FLEXPOOL ETH mining",
+    "name": "FLEXPOOL ETH",
+    "img": "https://static-ssl.minerstat.farm/96/flexpool.png",
+    "id": 3
+  },
+  {
+    "title": "F2POOL ETH mining",
+    "name": "F2POOL ETH",
+    "img": "https://static-ssl.minerstat.farm/96/f2pool.png",
+    "id": 4
+  },
+  {
+    "title": "HIVEON ETH mining",
+    "name": "HIVEON ETH",
+    "img": "https://static-ssl.minerstat.farm/96/hiveon.png",
+    "id": 5
+  },
+  {
+    "title": "NH Ethash mining",
+    "name": "NH Ethash",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 6
+  },
+  {
+    "title": "2MINERS ETH mining",
+    "name": "2MINERS ETH",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 7
+  },
+  {
+    "title": "POOLIN ETH mining",
+    "name": "POOLIN ETH",
+    "img": "https://static-ssl.minerstat.farm/96/poolin.png",
+    "id": 8
+  },
+  {
+    "title": "VIABTC ETH mining",
+    "name": "VIABTC ETH",
+    "img": "https://static-ssl.minerstat.farm/96/viabtc.png",
+    "id": 9
+  },
+  {
+    "title": "BINANCE ETH mining",
+    "name": "BINANCE ETH",
+    "img": "https://static-ssl.minerstat.farm/96/binance.png",
+    "id": 10
+  },
+  {
+    "title": "NANOPOOL ETH mining",
+    "name": "NANOPOOL ETH",
+    "img": "https://static-ssl.minerstat.farm/96/nanopool.png",
+    "id": 11
+  },
+  {
+    "title": "MINERPOOL RVN mining",
+    "name": "MINERPOOL RVN",
+    "img": "https://static-ssl.minerstat.farm/96/minerpool.png",
+    "id": 12
+  },
+  {
+    "title": "SERO mining",
+    "name": "SERO",
+    "img": "https://static-ssl.minerstat.farm/96/sero.png",
+    "id": 13
+  },
+  {
+    "title": "PROH Ethash mining",
+    "name": "PROH Ethash",
+    "img": "https://static-ssl.minerstat.farm/96/proh.png",
+    "id": 14
+  },
+  {
+    "title": "CFX mining",
+    "name": "CFX",
+    "img": "https://static-ssl.minerstat.farm/96/cfx.png",
+    "id": 15
+  },
+  {
+    "title": "UNM Ethash mining",
+    "name": "UNM Ethash",
+    "img": "https://static-ssl.minerstat.farm/96/unm.png",
+    "id": 16
+  },
+  {
+    "title": "2MINERS ERG mining",
+    "name": "2MINERS ERG",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 17
+  },
+  {
+    "title": "ZANO mining",
+    "name": "ZANO",
+    "img": "https://static-ssl.minerstat.farm/96/zano.png",
+    "id": 18
+  },
+  {
+    "title": "MRR Equihash(125,4) mining",
+    "name": "MRR Equihash(125,4)",
+    "img": "https://static-ssl.minerstat.farm/96/mrr.png",
+    "id": 19
+  },
+  {
+    "title": "F2POOL CFX mining",
+    "name": "F2POOL CFX",
+    "img": "https://static-ssl.minerstat.farm/96/f2pool.png",
+    "id": 20
+  },
+  {
+    "title": "ETC mining",
+    "name": "ETC",
+    "img": "https://static-ssl.minerstat.farm/96/etc.png",
+    "id": 21
+  },
+  {
+    "title": "ZP Etchash mining",
+    "name": "ZP Etchash",
+    "img": "https://static-ssl.minerstat.farm/96/zp.png",
+    "id": 22
+  },
+  {
+    "title": "MRR Etchash mining",
+    "name": "MRR Etchash",
+    "img": "https://static-ssl.minerstat.farm/96/mrr.png",
+    "id": 23
+  },
+  {
+    "title": "2MINERS RVN mining",
+    "name": "2MINERS RVN",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 24
+  },
+  {
+    "title": "ERG mining",
+    "name": "ERG",
+    "img": "https://static-ssl.minerstat.farm/96/erg.png",
+    "id": 25
+  },
+  {
+    "title": "NANOPOOL RVN mining",
+    "name": "NANOPOOL RVN",
+    "img": "https://static-ssl.minerstat.farm/96/nanopool.png",
+    "id": 26
+  },
+  {
+    "title": "RVN mining",
+    "name": "RVN",
+    "img": "https://static-ssl.minerstat.farm/96/rvn.png",
+    "id": 27
+  },
+  {
+    "title": "NH Octopus mining",
+    "name": "NH Octopus",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 28
+  },
+  {
+    "title": "F2POOL ERG mining",
+    "name": "F2POOL ERG",
+    "img": "https://static-ssl.minerstat.farm/96/f2pool.png",
+    "id": 29
+  },
+  {
+    "title": "NH KAWPOW mining",
+    "name": "NH KAWPOW",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 30
+  },
+  {
+    "title": "2MINERS FIRO mining",
+    "name": "2MINERS FIRO",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 31
+  },
+  {
+    "title": "NANOPOOL CFX mining",
+    "name": "NANOPOOL CFX",
+    "img": "https://static-ssl.minerstat.farm/96/nanopool.png",
+    "id": 32
+  },
+  {
+    "title": "FIRO mining",
+    "name": "FIRO",
+    "img": "https://static-ssl.minerstat.farm/96/firo.png",
+    "id": 33
+  },
+  {
+    "title": "NH Autolykos2 mining",
+    "name": "NH Autolykos2",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 34
+  },
+  {
+    "title": "CTXC mining",
+    "name": "CTXC",
+    "img": "https://static-ssl.minerstat.farm/96/ctxc.png",
+    "id": 35
+  },
+  {
+    "title": "2MINERS CTXC mining",
+    "name": "2MINERS CTXC",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 36
+  },
+  {
+    "title": "2MINERS CLO mining",
+    "name": "2MINERS CLO",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 37
+  },
+  {
+    "title": "F2POOL RVN mining",
+    "name": "F2POOL RVN",
+    "img": "https://static-ssl.minerstat.farm/96/f2pool.png",
+    "id": 38
+  },
+  {
+    "title": "2MINERS BEAM mining",
+    "name": "2MINERS BEAM",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 39
+  },
+  {
+    "title": "ZP Ethash mining",
+    "name": "ZP Ethash",
+    "img": "https://static-ssl.minerstat.farm/96/zp.png",
+    "id": 40
+  },
+  {
+    "title": "VIABTC ETC mining",
+    "name": "VIABTC ETC",
+    "img": "https://static-ssl.minerstat.farm/96/viabtc.png",
+    "id": 41
+  },
+  {
+    "title": "NANOPOOL ERG mining",
+    "name": "NANOPOOL ERG",
+    "img": "https://static-ssl.minerstat.farm/96/nanopool.png",
+    "id": 42
+  },
+  {
+    "title": "2MINERS AE mining",
+    "name": "2MINERS AE",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 43
+  },
+  {
+    "title": "EZIL ETC mining",
+    "name": "EZIL ETC",
+    "img": "https://static-ssl.minerstat.farm/96/ezil.png",
+    "id": 44
+  },
+  {
+    "title": "AION mining",
+    "name": "AION",
+    "img": "https://static-ssl.minerstat.farm/96/aion.png",
+    "id": 45
+  },
+  {
+    "title": "BINANCE ETC mining",
+    "name": "BINANCE ETC",
+    "img": "https://static-ssl.minerstat.farm/96/binance.png",
+    "id": 46
+  },
+  {
+    "title": "F2POOL ETC mining",
+    "name": "F2POOL ETC",
+    "img": "https://static-ssl.minerstat.farm/96/f2pool.png",
+    "id": 47
+  },
+  {
+    "title": "FLEXPOOL ETC mining",
+    "name": "FLEXPOOL ETC",
+    "img": "https://static-ssl.minerstat.farm/96/flexpool.png",
+    "id": 48
+  },
+  {
+    "title": "HIVEON ETC mining",
+    "name": "HIVEON ETC",
+    "img": "https://static-ssl.minerstat.farm/96/hiveon.png",
+    "id": 49
+  },
+  {
+    "title": "TON mining",
+    "name": "TON",
+    "img": "https://static-ssl.minerstat.farm/96/ton.png",
+    "id": 50
+  },
+  {
+    "title": "NANOPOOL ETC mining",
+    "name": "NANOPOOL ETC",
+    "img": "https://static-ssl.minerstat.farm/96/nanopool.png",
+    "id": 51
+  },
+  {
+    "title": "UNM KAWPOW mining",
+    "name": "UNM KAWPOW",
+    "img": "https://static-ssl.minerstat.farm/96/unm.png",
+    "id": 52
+  },
+  {
+    "title": "NH CuckooCycle mining",
+    "name": "NH CuckooCycle",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 53
+  },
+  {
+    "title": "BEAM mining",
+    "name": "BEAM",
+    "img": "https://static-ssl.minerstat.farm/96/beam.png",
+    "id": 54
+  },
+  {
+    "title": "QKC mining",
+    "name": "QKC",
+    "img": "https://static-ssl.minerstat.farm/96/qkc.png",
+    "id": 55
+  },
+  {
+    "title": "2MINERS ETC mining",
+    "name": "2MINERS ETC",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 56
+  },
+  {
+    "title": "BTCZ mining",
+    "name": "BTCZ",
+    "img": "https://static-ssl.minerstat.farm/96/btcz.png",
+    "id": 57
+  },
+  {
+    "title": "NH BeamHashIII mining",
+    "name": "NH BeamHashIII",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 58
+  },
+  {
+    "title": "AE mining",
+    "name": "AE",
+    "img": "https://static-ssl.minerstat.farm/96/ae.png",
+    "id": 59
+  },
+  {
+    "title": "PROH Etchash mining",
+    "name": "PROH Etchash",
+    "img": "https://static-ssl.minerstat.farm/96/proh.png",
+    "id": 60
+  },
+  {
+    "title": "NH Equihash(125,4) mining",
+    "name": "NH Equihash(125,4)",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 61
+  },
+  {
+    "title": "BTG mining",
+    "name": "BTG",
+    "img": "https://static-ssl.minerstat.farm/96/btg.png",
+    "id": 62
+  },
+  {
+    "title": "NH Zhash mining",
+    "name": "NH Zhash",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 63
+  },
+  {
+    "title": "MINERPOOL FLUX mining",
+    "name": "MINERPOOL FLUX",
+    "img": "https://static-ssl.minerstat.farm/96/minerpool.png",
+    "id": 64
+  },
+  {
+    "title": "MRR Ethash mining",
+    "name": "MRR Ethash",
+    "img": "https://static-ssl.minerstat.farm/96/mrr.png",
+    "id": 65
+  },
+  {
+    "title": "MPH Zhash mining",
+    "name": "MPH Zhash",
+    "img": "https://static-ssl.minerstat.farm/96/mph.png",
+    "id": 66
+  },
+  {
+    "title": "2MINERS FLUX mining",
+    "name": "2MINERS FLUX",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 67
+  },
+  {
+    "title": "UNM Etchash mining",
+    "name": "UNM Etchash",
+    "img": "https://static-ssl.minerstat.farm/96/unm.png",
+    "id": 68
+  },
+  {
+    "title": "CLO mining",
+    "name": "CLO",
+    "img": "https://static-ssl.minerstat.farm/96/clo.png",
+    "id": 69
+  },
+  {
+    "title": "2MINERS BTG mining",
+    "name": "2MINERS BTG",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 70
+  },
+  {
+    "title": "2MINERS EXP mining",
+    "name": "2MINERS EXP",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 71
+  },
+  {
+    "title": "FLUX mining",
+    "name": "FLUX",
+    "img": "https://static-ssl.minerstat.farm/96/flux.png",
+    "id": 72
+  },
+  {
+    "title": "ZCL mining",
+    "name": "ZCL",
+    "img": "https://static-ssl.minerstat.farm/96/zcl.png",
+    "id": 73
+  },
+  {
+    "title": "ZP Equihash(192,7) mining",
+    "name": "ZP Equihash(192,7)",
+    "img": "https://static-ssl.minerstat.farm/96/zp.png",
+    "id": 74
+  },
+  {
+    "title": "ZIL mining",
+    "name": "ZIL",
+    "img": "https://static-ssl.minerstat.farm/96/zil.png",
+    "id": 75
+  },
+  {
+    "title": "PGN mining",
+    "name": "PGN",
+    "img": "https://static-ssl.minerstat.farm/96/pgn.png",
+    "id": 76
+  },
+  {
+    "title": "ZP X21S mining",
+    "name": "ZP X21S",
+    "img": "https://static-ssl.minerstat.farm/96/zp.png",
+    "id": 77
+  },
+  {
+    "title": "zpool X21S mining",
+    "name": "zpool X21S",
+    "img": "https://static-ssl.minerstat.farm/96/zpool.png",
+    "id": 78
+  },
+  {
+    "title": "NH NeoScrypt mining",
+    "name": "NH NeoScrypt",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 79
+  },
+  {
+    "title": "FTC mining",
+    "name": "FTC",
+    "img": "https://static-ssl.minerstat.farm/96/ftc.png",
+    "id": 80
+  },
+  {
+    "title": "PROH NeoScrypt mining",
+    "name": "PROH NeoScrypt",
+    "img": "https://static-ssl.minerstat.farm/96/proh.png",
+    "id": 81
+  },
+  {
+    "title": "zpool NeoScrypt mining",
+    "name": "zpool NeoScrypt",
+    "img": "https://static-ssl.minerstat.farm/96/zpool.png",
+    "id": 82
+  },
+  {
+    "title": "2MINERS MWC mining",
+    "name": "2MINERS MWC",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 83
+  },
+  {
+    "title": "MWC mining",
+    "name": "MWC",
+    "img": "https://static-ssl.minerstat.farm/96/mwc.png",
+    "id": 84
+  },
+  {
+    "title": "MPH NeoScrypt mining",
+    "name": "MPH NeoScrypt",
+    "img": "https://static-ssl.minerstat.farm/96/mph.png",
+    "id": 85
+  },
+  {
+    "title": "KVA mining",
+    "name": "KVA",
+    "img": "https://static-ssl.minerstat.farm/96/kva.png",
+    "id": 86
+  },
+  {
+    "title": "NH cuckAToo31 mining",
+    "name": "NH cuckAToo31",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 87
+  },
+  {
+    "title": "GRIN mining",
+    "name": "GRIN",
+    "img": "https://static-ssl.minerstat.farm/96/grin.png",
+    "id": 88
+  },
+  {
+    "title": "NH X16Rv2 mining",
+    "name": "NH X16Rv2",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 89
+  },
+  {
+    "title": "NH cuckAToo32 mining",
+    "name": "NH cuckAToo32",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 90
+  },
+  {
+    "title": "EXCC mining",
+    "name": "EXCC",
+    "img": "https://static-ssl.minerstat.farm/96/excc.png",
+    "id": 91
+  },
+  {
+    "title": "NH X16R mining",
+    "name": "NH X16R",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 92
+  },
+  {
+    "title": "EPIC mining",
+    "name": "EPIC",
+    "img": "https://static-ssl.minerstat.farm/96/epic.png",
+    "id": 93
+  },
+  {
+    "title": "2MINERS GRIN mining",
+    "name": "2MINERS GRIN",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 94
+  },
+  {
+    "title": "NH Lyra2z mining",
+    "name": "NH Lyra2z",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 95
+  },
+  {
+    "title": "2MINERS XMR mining",
+    "name": "2MINERS XMR",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 96
+  },
+  {
+    "title": "QRL mining",
+    "name": "QRL",
+    "img": "https://static-ssl.minerstat.farm/96/qrl.png",
+    "id": 97
+  },
+  {
+    "title": "MRR RandomX mining",
+    "name": "MRR RandomX",
+    "img": "https://static-ssl.minerstat.farm/96/mrr.png",
+    "id": 98
+  },
+  {
+    "title": "XMR mining",
+    "name": "XMR",
+    "img": "https://static-ssl.minerstat.farm/96/xmr.png",
+    "id": 99
+  },
+  {
+    "title": "ZP RandomX mining",
+    "name": "ZP RandomX",
+    "img": "https://static-ssl.minerstat.farm/96/zp.png",
+    "id": 100
+  },
+  {
+    "title": "NH RandomX mining",
+    "name": "NH RandomX",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 101
+  },
+  {
+    "title": "NANOPOOL XMR mining",
+    "name": "NANOPOOL XMR",
+    "img": "https://static-ssl.minerstat.farm/96/nanopool.png",
+    "id": 102
+  },
+  {
+    "title": "UNM RandomX mining",
+    "name": "UNM RandomX",
+    "img": "https://static-ssl.minerstat.farm/96/unm.png",
+    "id": 103
+  },
+  {
+    "title": "NH Keccak mining",
+    "name": "NH Keccak",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 104
+  },
+  {
+    "title": "SMART mining",
+    "name": "SMART",
+    "img": "https://static-ssl.minerstat.farm/96/smart.png",
+    "id": 105
+  },
+  {
+    "title": "HASHC Keccak mining",
+    "name": "HASHC Keccak",
+    "img": "https://static-ssl.minerstat.farm/96/hashc.png",
+    "id": 106
+  },
+  {
+    "title": "MD Keccak mining",
+    "name": "MD Keccak",
+    "img": "https://static-ssl.minerstat.farm/96/md.png",
+    "id": 107
+  },
+  {
+    "title": "2MINERS ETP mining",
+    "name": "2MINERS ETP",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 108
+  },
+  {
+    "title": "BCD mining",
+    "name": "BCD",
+    "img": "https://static-ssl.minerstat.farm/96/bcd.png",
+    "id": 109
+  },
+  {
+    "title": "SCP mining",
+    "name": "SCP",
+    "img": "https://static-ssl.minerstat.farm/96/scp.png",
+    "id": 110
+  },
+  {
+    "title": "DCR mining",
+    "name": "DCR",
+    "img": "https://static-ssl.minerstat.farm/96/dcr.png",
+    "id": 111
+  },
+  {
+    "title": "POOLIN DCR mining",
+    "name": "POOLIN DCR",
+    "img": "https://static-ssl.minerstat.farm/96/poolin.png",
+    "id": 112
+  },
+  {
+    "title": "NH Blake (14r) mining",
+    "name": "NH Blake (14r)",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 113
+  },
+  {
+    "title": "F2POOL DCR mining",
+    "name": "F2POOL DCR",
+    "img": "https://static-ssl.minerstat.farm/96/f2pool.png",
+    "id": 114
+  },
+  {
+    "title": "ZP Blake (2b) mining",
+    "name": "ZP Blake (2b)",
+    "img": "https://static-ssl.minerstat.farm/96/zp.png",
+    "id": 115
+  },
+  {
+    "title": "zpool Blake (2b) mining",
+    "name": "zpool Blake (2b)",
+    "img": "https://static-ssl.minerstat.farm/96/zpool.png",
+    "id": 116
+  },
+  {
+    "title": "HNS mining",
+    "name": "HNS",
+    "img": "https://static-ssl.minerstat.farm/96/hns.png",
+    "id": 117
+  },
+  {
+    "title": "POOLIN HNS mining",
+    "name": "POOLIN HNS",
+    "img": "https://static-ssl.minerstat.farm/96/poolin.png",
+    "id": 118
+  },
+  {
+    "title": "VIABTC HNS mining",
+    "name": "VIABTC HNS",
+    "img": "https://static-ssl.minerstat.farm/96/viabtc.png",
+    "id": 119
+  },
+  {
+    "title": "F2POOL HNS mining",
+    "name": "F2POOL HNS",
+    "img": "https://static-ssl.minerstat.farm/96/f2pool.png",
+    "id": 120
+  },
+  {
+    "title": "NH Handshake mining",
+    "name": "NH Handshake",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 121
+  },
+  {
+    "title": "XVG mining",
+    "name": "XVG",
+    "img": "https://static-ssl.minerstat.farm/96/xvg.png",
+    "id": 122
+  },
+  {
+    "title": "NH Eaglesong mining",
+    "name": "NH Eaglesong",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 123
+  },
+  {
+    "title": "2MINERS CKB mining",
+    "name": "2MINERS CKB",
+    "img": "https://static-ssl.minerstat.farm/96/2miners.png",
+    "id": 124
+  },
+  {
+    "title": "POOLIN CKB mining",
+    "name": "POOLIN CKB",
+    "img": "https://static-ssl.minerstat.farm/96/poolin.png",
+    "id": 125
+  },
+  {
+    "title": "CKB mining",
+    "name": "CKB",
+    "img": "https://static-ssl.minerstat.farm/96/ckb.png",
+    "id": 126
+  },
+  {
+    "title": "F2POOL CKB mining",
+    "name": "F2POOL CKB",
+    "img": "https://static-ssl.minerstat.farm/96/f2pool.png",
+    "id": 127
+  },
+  {
+    "title": "VIABTC CKB mining",
+    "name": "VIABTC CKB",
+    "img": "https://static-ssl.minerstat.farm/96/viabtc.png",
+    "id": 128
+  },
+  {
+    "title": "NH Lyra2REv2 mining",
+    "name": "NH Lyra2REv2",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 129
+  },
+  {
+    "title": "XVG mining",
+    "name": "XVG",
+    "img": "https://static-ssl.minerstat.farm/96/xvg.png",
+    "id": 130
+  },
+  {
+    "title": "XVG mining",
+    "name": "XVG",
+    "img": "https://static-ssl.minerstat.farm/96/xvg.png",
+    "id": 131
+  },
+  {
+    "title": "ZP Blake (2s) mining",
+    "name": "ZP Blake (2s)",
+    "img": "https://static-ssl.minerstat.farm/96/zp.png",
+    "id": 132
+  },
+  {
+    "title": "MD Blake (2s) mining",
+    "name": "MD Blake (2s)",
+    "img": "https://static-ssl.minerstat.farm/96/md.png",
+    "id": 133
+  },
+  {
+    "title": "HASHC Blake (2s) mining",
+    "name": "HASHC Blake (2s)",
+    "img": "https://static-ssl.minerstat.farm/96/hashc.png",
+    "id": 134
+  },
+  {
+    "title": "zpool Blake (2s) mining",
+    "name": "zpool Blake (2s)",
+    "img": "https://static-ssl.minerstat.farm/96/zpool.png",
+    "id": 135
+  },
+  {
+    "title": "NH Blake (2s) mining",
+    "name": "NH Blake (2s)",
+    "img": "https://static-ssl.minerstat.farm/96/nh.png",
+    "id": 136
+  }
+]

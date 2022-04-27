@@ -5,10 +5,10 @@
         <div class="crypto-item__body">
           <div class="crypto-item__col crypto-item__col--inline crypto-item__col--title">
             <div class="crypto-item__img-wrap">
-              <img class="crypto-item__img" :src="item.img" :alt="item.name">
+              <img class="crypto-item__img" :src="item.img" :alt="item.coin">
             </div>
-            <span class="crypto-item__title">{{ item.name }}</span>
-            <span class="crypto-item__title crypto-item__title--additional">{{ item.name_abb }}</span>
+            <span class="crypto-item__title">{{ item.coin }}</span>
+            <!-- <span class="crypto-item__title crypto-item__title--additional">{{ item.reward_unit }}</span> -->
           </div>
           <div class="crypto-item__col">
             <Row>

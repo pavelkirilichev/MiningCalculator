@@ -8,7 +8,8 @@
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "api": "cross-env TS_NODE_PROJECT=./tsconfig.server.json ts-node api"
+        "api": "cross-env TS_NODE_PROJECT=./tsconfig.server.json ts-node api",
+        "parse": "cross-env TS_NODE_PROJECT=./tsconfig.server.json ts-node parse"
     },
     "devDependencies": {
         "axios": "^0.19.2",
@@ -33,6 +34,7 @@
         "artisan": "^0.1.2",
         "cors": "^2.8.5",
         "express": "^4.17.3",
+        "puppeteer": "^13.6.0",
         "svg-to-vue-component": "^0.3.8",
         "ts-node": "^10.7.0",
         "tslib": "^2.3.1",
