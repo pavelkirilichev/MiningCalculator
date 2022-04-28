@@ -5,10 +5,10 @@
         <div class="crypto-item__body">
           <div class="crypto-item__col crypto-item__col--inline crypto-item__col--title">
             <div class="crypto-item__img-wrap">
-              <img class="crypto-item__img" :src="item.img" :alt="item.coin">
+              <img class="crypto-item__img" :src="getImg(item)" :alt="item.coin">
             </div>
-            <span class="crypto-item__title">{{ item.coin }}</span>
-            <!-- <span class="crypto-item__title crypto-item__title--additional">{{ item.reward_unit }}</span> -->
+            <span class="crypto-item__title">{{ item.name }}</span>
+            <span class="crypto-item__title crypto-item__title--additional">{{ item.coin }}</span>
           </div>
           <div class="crypto-item__col">
             <Row>
@@ -192,6 +192,10 @@ export default class CryptoItem extends mixins(ModeMixin) {
 
   get currentCurrency() {
     return currencyModule.current
+  }
+
+  getImg(item: ICryptoItem) {
+    return `/uploads/crypto/${item.coin.toLowerCase()}.png`
   }
 
   gain24hGPU(coin: ICryptoItem) {

@@ -2,6 +2,7 @@
   $block: &;
 
   &__inner {
+    position: relative;
     @include box(100%);
 
     @include lg() {
@@ -34,22 +35,33 @@
 
   &__text {
     position: relative;
+    display: inline-block;
+
     font: {
       size: rem(15px);
     }
 
     &-addon {
-      @include center('vertical');
-
-      @include lg() {
-        left: 100px;
+      @include from-xs-to-lg() {
+        margin-left: 0.5rem;
       }
-      left: 80px;
+      margin-left: 1rem;
+      margin-right: auto;
       color: $color-silver;
       font: {
         weight: 700;
         size: 15px;
       }
+    }
+
+    &--addon {
+      width: 25%;
+      @include from-xs-to-lg() {
+        width: 20%;
+      }
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 

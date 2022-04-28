@@ -19,12 +19,22 @@ class Hashrate extends VuexModule {
   // }))
   list: ICryptoItem[] = []
   current: ISelectedCryptoItem | null = null
-  activeId: string = ''
   tmpFilter: string = ''
 
 
-  @Mutation
+  @Action
   updateCurrent(id: ICryptoItem['id']) {
+    this.context.commit("selectedMutation", id)
+    this.context.dispatch('updateCrypto')
+  }
+
+  @Mutation
+  resetCurrent() {
+    this.current = null
+  }
+
+  @Mutation
+  selectedMutation(id: string) {
     const item = this.list.find(item => item.id === id)
     if (!item) return
     
@@ -33,8 +43,11 @@ class Hashrate extends VuexModule {
       mhS: 1,
       count: 1
     }
+  }
 
-    cryptoModule.update([this.current.algorithm])
+  @Action
+  updateCrypto() {
+    cryptoModule.updateHashrate(this.current ? [this.current.algorithm] : [])
   }
 
   @Mutation
@@ -48,7 +61,7 @@ class Hashrate extends VuexModule {
     this.context.dispatch('update', this.tmpFilter)
   }
 
-  @Mutation
+  @Action
   updateItemCount({ type, id, value }: { type: 'plus' | 'minus' | 'input', id: string, value: any }) {
     const item = this.current
     if (!item) return
@@ -72,17 +85,9 @@ class Hashrate extends VuexModule {
     }
 
     if (item.count === 0) {
-      this.current = null
-
-      cryptoModule.reset()
+      this.context.commit('resetCurrent')
+      this.context.dispatch('updateCrypto')
     }
-  }
-
-  @Mutation
-  remove() {
-    this.current = null
-
-    cryptoModule.reset()
   }
 
   @Mutation

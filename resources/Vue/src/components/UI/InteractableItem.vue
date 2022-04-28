@@ -1,11 +1,11 @@
 <template>
   <div class="item">
     <div class="item__inner">
-      <span class="item__text">
+      <span class="item__text" :class="{ 'item__text--addon': $slots.addon !== undefined }">
         {{ item.name }}
-        <span class="item__text-addon" v-if="$slots.addon">
-          <slot name="addon"></slot>
-        </span>
+      </span>
+      <span class="item__text-addon" v-if="$slots.addon">
+        <slot name="addon"></slot>
       </span>
       <div class="item__counter">
         <Counter :big="big" :count="item.count" @plus="$emit('plus', item.id)" @input="$emit('input', $event)" @minus="$emit('minus', item.id)"></Counter>

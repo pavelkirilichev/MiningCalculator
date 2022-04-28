@@ -16,41 +16,41 @@
           </Block>
         </Blocks>
         <Blocks>
-          <Block :title="$t('electricity')" icon="flash_1" :hint="{}">
+          <Block :title="$t('electricity')" icon="flash_1">
             <ElectroEnergy />
           </Block>
-          <Block v-if="isAdvancedMode" :title="$t('farmCost')" icon="price-tag_1" :hint="{}">
+          <Block v-if="isAdvancedMode" :title="$t('farmCost')" icon="price-tag_1" >
             <Farm></Farm>
           </Block>
-          <Block v-else :title="$t('commissions')" icon="percentage_1" :hint="{}">
+          <Block v-else :title="$t('commissions')" icon="percentage_1" :hint="{ text: $t('generalCommissionTooltip').replace('/$currency/', currentCurrency.title) }">
             <Commision />
           </Block>
         </Blocks>
         <Blocks>
-          <Block v-if="cryptoLength" full center :title="$t('chooseCrypto')" :hint="{}">
+          <Block v-if="cryptoLength" full center :title="$t('chooseCrypto')">
             <CryptoVue />
           </Block>
         </Blocks>
         <Blocks>
-          <Block v-if="isAdvancedMode" :title="$t('commissions')" spec icon="percentage_1" :hint="{}">
+          <Block v-if="isAdvancedMode" :title="$t('commissions')" spec icon="percentage_1" :hint="{ text: $t('transactionCommissionTooltip') }">
             <Commision />
           </Block>
           <div class="blocks__col">
-            <Block v-if="isAdvancedMode" :title="$t('exchangeRate')" icon="currency-exchange_1" :hint="{}">
+            <Block v-if="isAdvancedMode" :title="$t('exchangeRate')" icon="currency-exchange_1">
               <CurrencyExchangeRate />
             </Block>
-            <Block v-if="isAdvancedMode" :title="$t('taxes')" icon="bag_1" :hint="{}">
+            <Block v-if="isAdvancedMode" :title="$t('taxes')" icon="bag_1">
               <Taxes />
             </Block>
           </div>
         </Blocks>
         <Blocks v-if="isAdvancedMode" center>
-          <Block :title="$t('networkComplexity')" center icon="data-complexity_1" :hint="{}">
+          <Block :title="$t('networkComplexity')" center icon="data-complexity_1" :hint="{ text: $t('networkComplexityTooltip') }">
             <Network />
           </Block>
         </Blocks>
         <Blocks v-if="isAdvancedMode && currentCrypto" center>
-          <Block :title="$t('result')" full center :hint="{}">
+          <Block :title="$t('result')" full center >
             <Result></Result>
           </Block>
         </Blocks>
@@ -82,7 +82,7 @@ import CurrencyExchangeRate from './Entities/Parameters/CurrencyExchangeRate.vue
 import Commision from './Entities/Parameters/Commision.vue';
 
 import { Crypto } from '../store/modules/Crypto'
-import store from '../store/main';
+import store, { currencyModule } from '../store/main';
 
 const cryptoModule = getModule(Crypto, store)
 
@@ -115,6 +115,10 @@ export default class Calculator extends mixins(ModeMixin) {
 
   get currentCrypto() {
     return cryptoModule.current
+  }
+
+  get currentCurrency() {
+    return currencyModule.current
   }
 }
 </script>

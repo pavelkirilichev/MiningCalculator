@@ -6,6 +6,12 @@ enum ExchangeRateModes {
   MONTH = 0,
   YEAR = 1
 }
+
+enum NetworkModes {
+  DAY = 0,
+  WEEK = 1,
+  MONTH = 2
+}
 @Module({
   stateFactory: true,
   namespaced: true,
@@ -51,6 +57,7 @@ class Parameters extends VuexModule {
     networkGwothTimeDay: 0,
     networkGwothTimeWeek: 0,
     networkGwothTimeMonth: 0,
+    mode: NetworkModes.DAY,
     isEnable: true,
   }
   
@@ -75,6 +82,11 @@ class Parameters extends VuexModule {
         tmp = tmp[_key]
       }
     })
+  }
+
+  @Mutation
+  updateNetworkMode(value: NetworkModes) {
+    this.network.mode = value
   }
 
   @Mutation
@@ -158,4 +170,4 @@ class Parameters extends VuexModule {
   }
 }
 
-export { Parameters, ExchangeRateModes }
+export { Parameters, ExchangeRateModes, NetworkModes }

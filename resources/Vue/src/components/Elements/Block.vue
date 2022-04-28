@@ -8,7 +8,7 @@
       </template>
       <span class="block__title" :class="{ 'block__title--spacing': hint }">{{ title }}</span>
       <template v-if="hint">
-        <UIHint class="block__hint" />
+        <UIHint :text="hint.text" class="block__hint" />
       </template>
     </div>
     <div class="block__body">
@@ -20,7 +20,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-import { Component } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
 import UIHint from '../UI/Hint.vue'
 
 @Component({
@@ -31,14 +31,12 @@ import UIHint from '../UI/Hint.vue'
     icon: {
       type: String
     },
-    hint: {
-      type: Object,
-      default: () => null
-    }
   },
   components: {
     UIHint
   }
 })
-export default class Block extends Vue {}
+export default class Block extends Vue {
+  @Prop({ type: Object }) hint!: { text: string }
+}
 </script>

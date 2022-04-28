@@ -30,7 +30,11 @@
   }
 
   &--big {
-    width: 66px;
+    width: 70px;
     min-height: 25px;
+  }
+
+  &--large {
+    width: 80px;
   }
 }

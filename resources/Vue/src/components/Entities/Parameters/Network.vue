@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UITabs :tabs="tabs" @change="changeHandler($event)" />
+    <UITabs :tabs="tabs" :active="networkMode" @change="changeHandler($event)" />
     <Card>
       <template #body>
         <CardRow>
@@ -16,15 +16,17 @@
             <RowText :text="$t('difficultyGrowth')"/>
             <Input percentage :disabled="!networkEnable" v-model="growthInComplexityControl"></Input>
             <RowText text="%"/>
+            <UIHint :text="$t('networkComplexityGrowthPercentageTooltip').replace('/$unit/', getNetworkGrowthTimeTitle())" />
           </Row>
         </CardRow>
         <CardRow>
           <Row>
             <RowText :text="$t('networkGrowthTime')"/>
-            <Input :disabled="!networkEnable" v-if="activeTab === 1" v-model="networkGwothTimeControlDay"></Input>
-            <Input :disabled="!networkEnable" v-if="activeTab === 2" v-model="networkGwothTimeControlWeek"></Input>
-            <Input :disabled="!networkEnable" v-if="activeTab === 3" v-model="networkGwothTimeControlMonth"></Input>
+            <Input :disabled="!networkEnable" v-if="isDay" v-model="networkGwothTimeControlDay"></Input>
+            <Input :disabled="!networkEnable" v-if="isWeek" v-model="networkGwothTimeControlWeek"></Input>
+            <Input :disabled="!networkEnable" v-if="isMonth" v-model="networkGwothTimeControlMonth"></Input>
             <RowText :text="getNetworkGrowthTimeTitle()"/>
+            <UIHint :text="$t('networkComplexityGrowthTimeTooltip').replace('/$unit/', getNetworkGrowthTimeTitle())" />
           </Row>
         </CardRow>
       </template>
@@ -38,7 +40,7 @@ import { getModule } from 'vuex-module-decorators';
 import { mixins } from 'vue-class-component';
 
 import store, { Modes } from '../../../store/main';
-import { Parameters } from '../../../store/modules/Parameters';
+import { NetworkModes, Parameters } from '../../../store/modules/Parameters';
 import { Crypto } from '../../../store/modules/Crypto';
 
 import Card from '../../Elements/Card.vue';
@@ -50,6 +52,7 @@ import Output from '../../Elements/Output.vue';
 import ModeMixin from '../../mixins/mode';
 import UITabs from '../../UI/Tabs.vue';
 import MiniSwitcherUI from '../../UI/MiniButton.vue';
+import UIHint from '../../UI/Hint.vue';
 
 const parametersModule = getModule(Parameters, store)
 const cryptoModule = getModule(Crypto, store)
@@ -63,37 +66,56 @@ const cryptoModule = getModule(Crypto, store)
     Input,
     Output,
     UITabs,
-    MiniSwitcherUI
+    MiniSwitcherUI,
+    UIHint
   }
 })
 export default class Network extends mixins(ModeMixin) {
-  activeTab = 1
-
   get tabs(){
     return [
       {
-        id: 1,
+        id: NetworkModes.DAY,
         text: this.$t('dayU')
       },
       {
-        id: 2,
+        id: NetworkModes.WEEK,
         text: this.$t('weekU')
       },
       {
-        id: 3,
+        id: NetworkModes.MONTH,
         text: this.$t('monthU')
       }
     ]
   }
 
-  changeHandler(id: number) {
-    this.activeTab = id
+  get networkModes() {
+    return NetworkModes
+  }
+
+  get networkMode() {
+    return parametersModule.network.mode
+  }
+
+  get isDay() {
+    return parametersModule.network.mode === NetworkModes.DAY
+  }
+
+  get isWeek() {
+    return parametersModule.network.mode === NetworkModes.WEEK
+  }
+
+  get isMonth() {
+    return parametersModule.network.mode === NetworkModes.MONTH
+  }
+
+  changeHandler(value: NetworkModes) {
+      parametersModule.updateNetworkMode(value)
   }
 
   getNetworkGrowthTimeTitle() {
-    if(this.activeTab === 1) return this.$t('days')
-    if(this.activeTab === 2) return this.$t('week')
-    if(this.activeTab === 3) return this.$t('month')
+    if(this.isDay) return this.$t('days')
+    if(this.isWeek) return this.$t('week2')
+    if(this.isMonth) return this.$t('month')
   }
 
   get initialDifficultyLevelControl() {

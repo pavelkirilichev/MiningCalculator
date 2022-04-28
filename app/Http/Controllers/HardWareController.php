@@ -22,6 +22,6 @@ class HardWareController extends Controller
     public function getByName($search) {
         $hardware = DB::table('hardware')->where('name', 'LIKE', '%'.$search.'%')->limit(30)->get();
         $hardware_dop = DB::table('hardware_dop')->where('name', 'LIKE', '%'.$search.'%')->limit(30)->get();
-        return $hardware + $hardware_dop;
+        return $hardware->concat($hardware_dop);
     }
 }

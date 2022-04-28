@@ -6,22 +6,22 @@
       </Box>
     </BoxesItem>
     <BoxesItem>
-      <Box :title="$t('earnings')" addText="USD" :cols="3" staticHeight>
+      <Box :title="$t('earnings')" :addText="currentCurrency.title" :cols="3" staticHeight>
         <BoxItem>
           <Col>
             <ColText :text="$t('dayU')"/>
-            <Output promoted big :value="isHashrateMode ? earningDayAdvancedHashrate() : earningDayAdvancedGPU()"></Output>
+            <Output promoted large :value="isHashrateMode ? earningDayAdvancedHashrate() : earningDayAdvancedGPU()"></Output>
           </Col>
         </BoxItem>
         <BoxItem>
           <Col>
-            <ColText :text="$t('weekU')"/>
-            <Output promoted big :value="isHashrateMode ? earningWeekAdvancedHashrate() : earningWeekAdvancedGPU()"></Output></Col>
+            <ColText :text="$t('week2U')"/>
+            <Output promoted large :value="isHashrateMode ? earningWeekAdvancedHashrate() : earningWeekAdvancedGPU()"></Output></Col>
         </BoxItem>
         <BoxItem>
           <Col>
             <ColText :text="$t('monthU')"/>
-            <Output promoted big :value="isHashrateMode ? earningMonthAdvancedHashrate() : earningMonthAdvancedGPU()"></Output>
+            <Output promoted large :value="isHashrateMode ? earningMonthAdvancedHashrate() : earningMonthAdvancedGPU()"></Output>
           </Col>
         </BoxItem>
       </Box>
@@ -58,7 +58,7 @@ import RowText from '../Elements/Row/Text.vue';
 import Row from '../Elements/Row.vue';
 import { getModule } from 'vuex-module-decorators';
 import { Crypto, ISelectedCryptoItem } from '../../store/modules/Crypto';
-import store from '../../store/main';
+import store, { currencyModule } from '../../store/main';
 import CryptoMiniItem from '../Entities/Crypto/MiniItem.vue';
 import { Sum } from '../../store/modules/Sum';
 import BoxesItem from '../Elements/Box/BoxesItem.vue';
@@ -87,6 +87,10 @@ const calcModule = getModule(Calculate, store)
 export default class Result extends mixins(ModeMixin) {
   get currentCryptoItem() {
     return cryptoModule.current
+  }
+
+  get currentCurrency() {
+    return currencyModule.current
   }
   
   get getSum() {

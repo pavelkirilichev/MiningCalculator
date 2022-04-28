@@ -1,11 +1,11 @@
 e<template>
   <div class="item" :class="{ 'item--interactable': interactable }">
     <div class="item__inner">
-      <span class="item__text">
+      <span class="item__text" :class="{ 'item__text--addon': $slots.addon !== undefined }">
         {{ item.name }}
-        <span class="item__text-addon" v-if="$slots.addon">
-          <slot name="addon"></slot>
-        </span>
+      </span>
+      <span class="item__text-addon" v-if="$slots.addon">
+        <slot name="addon"></slot>
       </span>
     </div>
   </div>

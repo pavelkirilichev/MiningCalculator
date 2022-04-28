@@ -119,6 +119,10 @@ class DataPort {
   static getNetworkGrowthTimeMonth() {
     return parametersModule.network.networkGwothTimeMonth
   }
+  
+  static getNetworkMode() {
+    return parametersModule.network.mode
+  }
 }
 
 export { DataPort }

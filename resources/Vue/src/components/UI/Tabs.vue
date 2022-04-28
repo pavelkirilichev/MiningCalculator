@@ -18,12 +18,10 @@ import { Component, Prop } from 'vue-property-decorator';
 
 @Component
 export default class UITabs extends Vue {
-  active = 1
+  @Prop({ type: Number }) active!: number
   @Prop({ type: Array }) tabs!: Array<{ id: number, text: string }>
 
   changeHandler(id: number) {
-    this.active = id
-
     this.$emit('change', id)
   }
 }

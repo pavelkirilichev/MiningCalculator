@@ -6,7 +6,7 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator';
 
-import { DataMode } from '../../store/main'
+import { cryptoModule, DataMode } from '../../store/main'
 import { mapGetters } from 'vuex';
 import UITogglerAdvanced from '../UI/TogglerAdvanced.vue';
 
@@ -29,6 +29,7 @@ export default class DataToggler extends Vue {
 
   changeHandler() {
     this.$store.commit('setDataMode', this.mode === DataMode.BASE_MODE ? DataMode.HASH_MODE : DataMode.BASE_MODE)
+    cryptoModule.switch()
   }
 }
 </script>

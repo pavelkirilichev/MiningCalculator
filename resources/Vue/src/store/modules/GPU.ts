@@ -41,16 +41,14 @@ export class GPU extends VuexModule {
     return this.list.filter(item => !this.selected.find(_item => _item.id === item.id))
   }
 
-  @Mutation
+  @Action
   addSelected(id: IGPUItem['id']) {
-    const item = this.list.find(item => item.id === id)
-    if (!item) return
-    
-    this.selected.push({
-      ...item,
-      count: 1
-    })
+    this.context.commit('selectedMutation', id)
+    this.context.dispatch('updateCrypto')
+  }
 
+  @Action
+  updateCrypto() {
     const algorithmSet = new Set<string>()
 
     this.selected.forEach(device => {
@@ -59,7 +57,18 @@ export class GPU extends VuexModule {
       })
     })
 
-    cryptoModule.update(Array.from(algorithmSet))
+    cryptoModule.updateGPU(Array.from(algorithmSet))
+  }
+
+  @Mutation
+  selectedMutation(id: string) {
+    const item = this.list.find(item => item.id === id)
+    if (!item) return
+    
+    this.selected.push({
+      ...item,
+      count: 1
+    })
   }
 
   @Mutation
@@ -73,7 +82,7 @@ export class GPU extends VuexModule {
     this.context.dispatch('update', this.tmpFilter)
   }
 
-  @Mutation
+  @Action
   updateItemCount({ type, id, value }: { type: 'plus' | 'minus' | 'input', id: string, value: any }) {
     const item = this.selected.find(o => o.id === id)
     if (!item) return
@@ -97,26 +106,13 @@ export class GPU extends VuexModule {
       const index = this.selected.findIndex(item => item.id === id)
       this.selected.splice(index, 1)
 
-      const algorithmSet = new Set<string>()
-
-      this.selected.forEach(device => {
-        device.algorithms.forEach(alg => {
-          algorithmSet.add(alg.key)
-        })
-      })
-
-      cryptoModule.update(Array.from(algorithmSet))
+      this.context.dispatch('updateCrypto')
     }
   }
 
   @Mutation
   setList(data: IGPUItem[]) {
     this.list = data
-  }
-
-  @Mutation
-  remove(id: string) {
-    
   }
 
   @Action
@@ -140,7 +136,7 @@ export class GPU extends VuexModule {
               ...item,
               algorithms: algorithms.filter(alg => alg.hardware_id === item.id).map(alg => ({
                 ...alg,
-                key: alg.hardware_name
+                key: alg.name
               }))
             })))
           }

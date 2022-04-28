@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'app-output--promoted': promoted, 'app-output--big': big }" :title="value" class="app-output">
+  <div :class="{ 'app-output--promoted': promoted, 'app-output--big': big, 'app-output--large': large }" :title="value" class="app-output">
     <span class="app-output__text">
       {{ value }}
     </span>
@@ -14,6 +14,7 @@ import { Component, Prop } from 'vue-property-decorator';
 export default class Output extends Vue {
   @Prop({ type: Boolean, default: false }) promoted!: boolean
   @Prop({ type: Boolean, default: false }) big!: boolean
+  @Prop({ type: Boolean, default: false }) large!: boolean
   @Prop({ type: [Number, String] }) value!: any
 }
 </script>

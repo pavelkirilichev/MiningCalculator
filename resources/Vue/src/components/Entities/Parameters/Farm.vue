@@ -27,17 +27,7 @@
       </CardRow>
     </template>
   </Card>
-  <Card v-else>
-    <template #body>
-      <CardRow>
-        <Row>
-          <RowText :text="$t('generalCommission')"/>
-          <Input v-model="comissionControl"></Input>
-          <RowText text="%"/>
-        </Row>
-      </CardRow>
-    </template>
-  </Card>
+  <Card v-else></Card>
 </template>
 
 <script lang="ts">

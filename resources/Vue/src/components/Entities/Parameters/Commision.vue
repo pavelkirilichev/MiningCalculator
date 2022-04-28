@@ -23,7 +23,7 @@
           <RowText text="%"/>
           <Input :disabled="!commissionEnable" v-model="transferCommissionFixControl"></Input>
           <RowText text="usd"/>
-          <UIHint />
+          <UIHint :text="$t('transferCommissionTooltip')" />
         </Row>
       </CardRow>
       <CardRow>
@@ -31,6 +31,7 @@
           <RowText :text="$t('osSubscription')"/>
           <Input :disabled="!commissionEnable" v-model="osSubscriptionControl"></Input>
           <RowText text="usd"/>
+          <UIHint :text="$t('subscriptionCommissionTooltip')" />
         </Row>
       </CardRow>
     </template>
@@ -110,7 +111,7 @@ export default class Commision extends mixins(ModeMixin) {
   }
 
   set transferCommissionFixControl(value: string) {
-    parametersModule.updateParameter({ key: 'commissions.transactionCommissionFix', value: value })
+    parametersModule.updateParameter({ key: 'commissions.transferCommissionFix', value: value })
   }
 
   get osSubscriptionControl() {
@@ -118,7 +119,7 @@ export default class Commision extends mixins(ModeMixin) {
   }
 
   set osSubscriptionControl(value: string) {
-    parametersModule.updateParameter({ key: 'commissions.osSubscription', value: value })
+    parametersModule.updateParameter({ key: 'commissions.subscription', value: value })
   }
 
   get comissionControl() {
@@ -126,7 +127,7 @@ export default class Commision extends mixins(ModeMixin) {
   }
   
   set comissionControl(value: string) {
-    parametersModule.updateParameter({ key: 'comission', value: value })
+    parametersModule.updateParameter({ key: 'commissions.commission', value: value })
   }
 
   get commissionEnable() {

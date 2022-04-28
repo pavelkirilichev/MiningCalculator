@@ -1,4 +1,9 @@
 .hint {
+  $block: &;
+
+  cursor: pointer;
+  position: relative;
+
   &__badge {
     @include box(28px);
     background-color: $color-gallery;
@@ -6,5 +11,50 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  &__content {
+    @include absolute($top: 0, $left: calc(100% + 5px));
+    z-index: 2;
+    display: none;
+    background-color: #fff;
+    opacity: 0;
+    border-radius: 15px;
+    padding: 10px;
+    min-width: 205px;
+    box-shadow: 0 0 4px 2px $color-gallery;
+    transition: $default-transition-time opacity;
+
+    font: {
+      size: rem(15px);
+    }
+    line-height: 1.5;
+  }
+
+  &--active {
+    #{$block}__content {
+      display: block;
+      opacity: 1;
+    }
+  }
+}
+
+.tooltip {
+  opacity: 1;
+
+  .arrow {
+    display: none;
+  }
+  &-inner {
+    background-color: #fff;
+    box-shadow: 0 0 4px 2px $color-gallery;
+    border-radius: 15px;
+    padding: 10px;
+    min-width: 205px;
+    color: $color-dark;
+    line-height: 1.5;
+    font: {
+      size: rem(15px);
+    }
   }
 }
