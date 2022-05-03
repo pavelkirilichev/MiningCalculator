@@ -6,7 +6,10 @@ import { i18n } from './src/plugins/i18n'
 import store from './src/store/main'
 
 import { VBTooltipPlugin } from 'bootstrap-vue'
+const VueInputMask = require('vue-inputmask').default
+
 Vue.use(VBTooltipPlugin)
+Vue.use(VueInputMask)
 
 const lang = document.documentElement.lang
 

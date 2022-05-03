@@ -44,6 +44,10 @@
   width: 100%;
   max-width: 524px;
 
+  @include lg() {
+    padding: 0 15px;
+  }
+
   @include from-xs-to-lg() {
     &:nth-child(n + 2) {
       margin-top: 40px;

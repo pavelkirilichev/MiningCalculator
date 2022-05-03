@@ -6,12 +6,12 @@
           <RowText :text="$t('pullCommission')"/>
           <Input percentage :disabled="!commissionEnable" v-model="pullCommissionControl"></Input>
           <RowText text="%"/>
-          <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="commissionEnable" />
+          <!-- <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="commissionEnable" /> -->
         </Row>
       </CardRow>
       <CardRow>
         <Row>
-          <RowText :text="$t('transactionCommission')" :addon="' (из ETH в USD)'"/>
+          <RowText :text="$t('transactionCommission')" :addon="` (из ${currentCryptoCurrency ? currentCryptoCurrency.coin : '???'} в ${currentCurrency.title})`"/>
           <Input percentage :disabled="!commissionEnable" v-model="transactionCommissionControl"></Input>
           <RowText text="%"/>
         </Row>
@@ -22,7 +22,7 @@
           <Input percentage :disabled="!commissionEnable" v-model="transferCommissionControl"></Input>
           <RowText text="%"/>
           <Input :disabled="!commissionEnable" v-model="transferCommissionFixControl"></Input>
-          <RowText text="usd"/>
+          <RowText :text="currentCurrency.title"/>
           <UIHint :text="$t('transferCommissionTooltip')" />
         </Row>
       </CardRow>
@@ -30,7 +30,7 @@
         <Row>
           <RowText :text="$t('osSubscription')"/>
           <Input :disabled="!commissionEnable" v-model="osSubscriptionControl"></Input>
-          <RowText text="usd"/>
+          <RowText :text="currentCurrency.title"/>
           <UIHint :text="$t('subscriptionCommissionTooltip')" />
         </Row>
       </CardRow>
@@ -41,7 +41,7 @@
           <RowText :text="$t('generalCommission')"/>
           <Input :disabled="!commissionEnable" v-model="comissionControl"></Input>
           <RowText text="%"/>
-          <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="commissionEnable" />
+          <!-- <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="commissionEnable" /> -->
         </Row>
       </CardRow>
     </template>
@@ -54,7 +54,7 @@ import { Component } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
 import { mixins } from 'vue-class-component';
 
-import store, { Modes } from '../../../store/main';
+import store, { cryptoModule, currencyModule, Modes } from '../../../store/main';
 import { Parameters } from '../../../store/modules/Parameters';
 
 import Card from '../../Elements/Card.vue';
@@ -82,8 +82,16 @@ const parametersModule = getModule(Parameters, store)
   }
 })
 export default class Commision extends mixins(ModeMixin) {
+  get currentCurrency() {
+    return currencyModule.current
+  }
+
+  get currentCryptoCurrency() {
+    return cryptoModule.current
+  }
+
   get pullCommissionControl() {
-    return String(parametersModule.commissions.pullCommission)
+    return String(parametersModule.getParameter("commissions.pullCommission"))
   }
 
   set pullCommissionControl(value: string) {
@@ -91,7 +99,7 @@ export default class Commision extends mixins(ModeMixin) {
   }
 
   get transactionCommissionControl() {
-    return String(parametersModule.commissions.transactionCommission)
+    return String(parametersModule.getParameter("commissions.transactionCommission"))
   }
 
   set transactionCommissionControl(value: string) {
@@ -99,7 +107,7 @@ export default class Commision extends mixins(ModeMixin) {
   }
 
   get transferCommissionControl() {
-    return String(parametersModule.commissions.transferCommission)
+    return String(parametersModule.getParameter("commissions.transferCommission"))
   }
 
   set transferCommissionControl(value: string) {
@@ -107,23 +115,23 @@ export default class Commision extends mixins(ModeMixin) {
   }
 
   get transferCommissionFixControl() {
-    return String(parametersModule.commissions.transferCommissionFix)
+    return String(parametersModule.getParameter("commissions.transferCommissionFix", true))
   }
 
   set transferCommissionFixControl(value: string) {
-    parametersModule.updateParameter({ key: 'commissions.transferCommissionFix', value: value })
+    parametersModule.updateParameter({ key: 'commissions.transferCommissionFix', value: value, isRate: true })
   }
 
   get osSubscriptionControl() {
-    return String(parametersModule.commissions.subscription)
+    return String(parametersModule.getParameter("commissions.subscription", true))
   }
 
   set osSubscriptionControl(value: string) {
-    parametersModule.updateParameter({ key: 'commissions.subscription', value: value })
+    parametersModule.updateParameter({ key: 'commissions.subscription', value: value, isRate: true })
   }
 
   get comissionControl() {
-    return String(parametersModule.commissions.commission)
+    return String(parametersModule.getParameter("commissions.commission"))
   }
   
   set comissionControl(value: string) {

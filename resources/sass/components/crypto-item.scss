@@ -70,6 +70,7 @@
 
   &__img-wrap {
     @include box(45px);
+    flex-shrink: 0;
     margin-right: 10px;
   }
 
@@ -254,6 +255,7 @@
 
   &__img-wrap {
     @include box(45px);
+    flex-shrink: 0;
     margin-right: 10px;
   }
 

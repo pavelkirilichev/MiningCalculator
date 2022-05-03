@@ -6,7 +6,7 @@
           <RowText :text="$t('currentTax')"/>
           <Input percentage :disabled="!taxesEnable" v-model="currentTaxControl"></Input>
           <RowText text="%"/>
-          <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="taxesEnable" />
+          <!-- <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="taxesEnable" /> -->
         </Row>
       </CardRow>
     </template>
@@ -46,7 +46,7 @@ const parametersModule = getModule(Parameters, store)
 })
 export default class Taxes extends mixins(ModeMixin) {
   get currentTaxControl() {
-    return String(parametersModule.taxes.current)
+    return String(parametersModule.getParameter("taxes.current"))
   }
 
   set currentTaxControl(value: string) {

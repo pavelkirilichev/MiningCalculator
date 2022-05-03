@@ -114,34 +114,6 @@
               </Col>
             </BoxItem>
           </Box>
-          <!-- <span class="crypto-item__text">
-            Прибыль
-          </span> -->
-          <!-- <div class="crypto-item__col">
-            <Col>
-              <ColText inner center>
-                В день
-              </ColText>
-              <Output big promoted :value="0 + ' USD'"></Output>
-            </Col>
-          </div>
-          <div class="crypto-item__col">
-            <Col>
-              <ColText inner center>
-                В неделю
-              </ColText>
-              <Output big promoted :value="0 + ' USD'"></Output>
-            </Col>
-          </div>
-          <div class="crypto-item__col">
-            <Col>
-              <ColText inner center>
-                В месяц
-              </ColText>
-              <Output big promoted :value="0 + ' USD'"></Output>
-            </Col>
-          </div> -->
-
         </div>
       </template>
     </div>  

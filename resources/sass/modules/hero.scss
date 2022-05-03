@@ -9,6 +9,10 @@
   &__bg {
     @include lg() {
       @include absolute($top: 0, $right: 0);
+      @include box(485px, 308px);
+    }
+
+    @include xl() {
       @include box(539px, 343px);
     }
 

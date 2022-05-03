@@ -268,10 +268,10 @@ class CalcAdvancedGPU {
   }
 
   getFullFarmCost() {
-    const farmCost_u36 = DataPort.getIsEnabledFarmCost() ? DataPort.getFarmCost() : 1
+    const farmCost_u36 = DataPort.getFarmCost()
     const farmFrameCost_u37 = DataPort.getFarmFrameCost()
 
-    const fullFarmCost_c32 = farmCost_u36 * farmFrameCost_u37
+    const fullFarmCost_c32 = farmCost_u36 + farmFrameCost_u37
 
     // console.log("полная стоимость фермы", fullFarmCost_c32)
     return fullFarmCost_c32
@@ -513,7 +513,7 @@ class CalcAdvancedHashrate {
     const farmCost_u46 = DataPort.getFarmCost()
     const farmFrameCost_u47 = DataPort.getFarmFrameCost()
 
-    const fullFarmCost_c42 = farmCost_u46 * farmFrameCost_u47
+    const fullFarmCost_c42 = farmCost_u46 + farmFrameCost_u47
 
     return fullFarmCost_c42
   }

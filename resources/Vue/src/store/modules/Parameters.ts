@@ -1,4 +1,5 @@
 import { VuexModule, Module, Mutation, getModule } from 'vuex-module-decorators';
+import { CurrencyHelper } from './helpers/CurrencyHelper';
 
 type Nullable<T> = T | null
 
@@ -30,9 +31,9 @@ class Parameters extends VuexModule {
 
   commissions = {
     commission: 0,
-    pullCommission: 0,
-    transactionCommission: 0,
-    transferCommission: 0,
+    pullCommission: 1,
+    transactionCommission: 0.1,
+    transferCommission: 2.5,
     transferCommissionFix: 0,
     subscription: 0,
     isEnable: true,
@@ -53,7 +54,7 @@ class Parameters extends VuexModule {
 
   network = {
     difficultyLevel: 0,
-    growthInComplexity: 0,
+    growthInComplexity: 1.3,
     networkGwothTimeDay: 0,
     networkGwothTimeWeek: 0,
     networkGwothTimeMonth: 0,
@@ -66,16 +67,35 @@ class Parameters extends VuexModule {
     frameCost: 0,
     isEnable: true,
   }
+
+  get getParameter() {
+    return (key: string, isRate: boolean = false) => {
+      let tmp = this as any
+      let answer: number = 0;
+  
+      const keyMap = key.split(".")
+      keyMap.forEach((_key, index) => {
+        if (index === keyMap.length - 1) {
+          answer = isRate ? CurrencyHelper.convertToCurrentCurrency(tmp[_key]) : tmp[_key]
+        }
+  
+        else {
+          tmp = tmp[_key]
+        }
+      })
+  
+      return answer
+    }
+  }
   
   @Mutation
-  updateParameter<T = string>({ key, value }: { key: string, value: T }) {
+  updateParameter<T extends string = string>({ key, value, isRate = false }: { key: string, value: T, isRate?: boolean }) {
     let tmp = this as any
     const keyMap = key.split(".")
     keyMap.forEach((_key, index) => {
       if (index === keyMap.length - 1) {
-        // if(isNaN(Number(value))) return
 
-        tmp[_key] = Number(value)
+        tmp[_key] = isRate ? CurrencyHelper.convertFromCurrentCurrency(Number(value)) : Number(value)
         this.register.push(key)
       }
       else {

@@ -5,8 +5,8 @@
         <Row>
           <RowText :text="$t('cryptoActualPrice')"/>
           <Input :disabled="!currencyRateEnable" v-model="cryptoActualPriceControl"></Input>
-          <RowText text="usd"/>
-          <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="currencyRateEnable" />
+          <RowText :text="currentCurrency.title"/>
+          <!-- <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="currencyRateEnable" /> -->
         </Row>
       </CardRow>
       <CardRow>
@@ -28,7 +28,7 @@ import { Component } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
 import { mixins } from 'vue-class-component';
 
-import store, { Modes } from '../../../store/main';
+import store, { currencyModule, Modes } from '../../../store/main';
 import { ExchangeRateModes, Parameters } from '../../../store/modules/Parameters';
 import { Crypto } from '../../../store/modules/Crypto';
 
@@ -60,6 +60,10 @@ const cryptoModule = getModule(Crypto, store)
 export default class CurrencyExchangeRate extends mixins(ModeMixin) {
   toggle = false
 
+  get currentCurrency() {
+    return currencyModule.current
+  }
+
   toggleHandler() {
     this.toggle = !this.toggle
 
@@ -82,17 +86,17 @@ export default class CurrencyExchangeRate extends mixins(ModeMixin) {
   get cryptoActualPriceControl() {
     const hasActual = parametersModule.register.some(token => token === 'exchangeRate.actualPrice')
     if(hasActual) {
-      return String(parametersModule.exchangeRate.actualPrice)
+      return String(parametersModule.getParameter("exchangeRate.actualPrice", true))
     }
     else return String(cryptoModule.current?.price || 0)
   }
 
   set cryptoActualPriceControl(value: string) {
-    parametersModule.updateParameter({ key: 'exchangeRate.actualPrice', value })
+    parametersModule.updateParameter({ key: 'exchangeRate.actualPrice', value, isRate: true })
   }
 
   get valueGrowthPercentageControlMonth() {
-    return String(parametersModule.exchangeRate.valueGrowthPercentageMonth)
+    return String(parametersModule.getParameter("exchangeRate.valueGrowthPercentageMonth"))
   }
 
   set valueGrowthPercentageControlMonth(value: string) {
@@ -100,7 +104,7 @@ export default class CurrencyExchangeRate extends mixins(ModeMixin) {
   }
 
   get valueGrowthPercentageControlYear() {
-    return String(parametersModule.exchangeRate.valueGrowthPercentageYear)
+    return String(parametersModule.getParameter("exchangeRate.valueGrowthPercentageYear"))
   }
 
   set valueGrowthPercentageControlYear(value: string) {

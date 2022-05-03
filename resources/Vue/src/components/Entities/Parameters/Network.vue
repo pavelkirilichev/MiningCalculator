@@ -8,7 +8,7 @@
             <RowText :text="$t('initialDifficultyLevel')"/>
             <Input :disabled="!networkEnable" big v-model="initialDifficultyLevelControl"></Input>
             <RowText text="mH/S"/>
-            <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="networkEnable" />
+            <!-- <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="networkEnable" /> -->
           </Row>
         </CardRow>
         <CardRow>
@@ -22,9 +22,9 @@
         <CardRow>
           <Row>
             <RowText :text="$t('networkGrowthTime')"/>
-            <Input :disabled="!networkEnable" v-if="isDay" v-model="networkGwothTimeControlDay"></Input>
-            <Input :disabled="!networkEnable" v-if="isWeek" v-model="networkGwothTimeControlWeek"></Input>
-            <Input :disabled="!networkEnable" v-if="isMonth" v-model="networkGwothTimeControlMonth"></Input>
+            <InputSimple :disabled="!networkEnable" v-if="isDay" v-model="networkGwothTimeControlDay"></InputSimple>
+            <InputSimple :disabled="!networkEnable" v-if="isWeek" v-model="networkGwothTimeControlWeek"></InputSimple>
+            <InputSimple :disabled="!networkEnable" v-if="isMonth" v-model="networkGwothTimeControlMonth"></InputSimple>
             <RowText :text="getNetworkGrowthTimeTitle()"/>
             <UIHint :text="$t('networkComplexityGrowthTimeTooltip').replace('/$unit/', getNetworkGrowthTimeTitle())" />
           </Row>
@@ -53,6 +53,7 @@ import ModeMixin from '../../mixins/mode';
 import UITabs from '../../UI/Tabs.vue';
 import MiniSwitcherUI from '../../UI/MiniButton.vue';
 import UIHint from '../../UI/Hint.vue';
+import InputSimple from '../../Elements/InputSimple.vue';
 
 const parametersModule = getModule(Parameters, store)
 const cryptoModule = getModule(Crypto, store)
@@ -64,6 +65,7 @@ const cryptoModule = getModule(Crypto, store)
     Row,
     RowText,
     Input,
+    InputSimple,
     Output,
     UITabs,
     MiniSwitcherUI,
@@ -121,7 +123,7 @@ export default class Network extends mixins(ModeMixin) {
   get initialDifficultyLevelControl() {
     const hasActual = parametersModule.register.some(token => token === 'network.difficultyLevel')
     if(hasActual) {
-      return String(parametersModule.network.difficultyLevel)
+      return String(parametersModule.getParameter("network.difficultyLevel"))
     }
     else return String(cryptoModule.current?.difficulty || 0)
   }
@@ -131,7 +133,7 @@ export default class Network extends mixins(ModeMixin) {
   }
 
   get growthInComplexityControl() {
-    return String(parametersModule.network.growthInComplexity)
+    return String(parametersModule.getParameter("network.growthInComplexity"))
   }
 
   set growthInComplexityControl(value: string) {
@@ -139,7 +141,7 @@ export default class Network extends mixins(ModeMixin) {
   }
 
   get networkGwothTimeControlDay() {
-    return String(parametersModule.network.networkGwothTimeDay)
+    return String(parametersModule.getParameter("network.networkGwothTimeDay"))
   }
 
   set networkGwothTimeControlDay(value: string) {
@@ -149,7 +151,7 @@ export default class Network extends mixins(ModeMixin) {
   }
 
   get networkGwothTimeControlWeek() {
-    return String(parametersModule.network.networkGwothTimeWeek)
+    return String(parametersModule.getParameter("network.networkGwothTimeWeek"))
   }
 
   set networkGwothTimeControlWeek(value: string) {
@@ -159,7 +161,7 @@ export default class Network extends mixins(ModeMixin) {
   }
 
   get networkGwothTimeControlMonth() {
-    return String(parametersModule.network.networkGwothTimeMonth)
+    return String(parametersModule.getParameter("network.networkGwothTimeMonth"))
   }
 
   set networkGwothTimeControlMonth(value: string) {

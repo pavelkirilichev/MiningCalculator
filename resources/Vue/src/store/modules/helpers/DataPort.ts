@@ -21,7 +21,7 @@ class DataPort {
   }
 
   static getkwHPrice() {
-    return parametersModule.energy.kWPrice
+    return parametersModule.getParameter("energy.kWPrice", true)
   }
 
   static getWorkHours() {
@@ -33,11 +33,11 @@ class DataPort {
   }
 
   static getSummaryPowerConsumption() {
-    return parametersModule.energy.summaryPowerConsumption
+    return parametersModule.getParameter("energy.summaryPowerConsumption", true)
   }
 
   static getPowerConsumption() {
-    return parametersModule.energy.powerConsumption
+    return parametersModule.getParameter("energy.powerConsumption", true)
   }
 
   static getAlgorithm() {
@@ -45,7 +45,7 @@ class DataPort {
   }
 
   static getFarmCost() {
-    return parametersModule.farm.farmCost
+    return parametersModule.getParameter("farm.farmCost", true)
   }
 
   static getIsEnabledFarmCost() {
@@ -53,7 +53,7 @@ class DataPort {
   }
 
   static getFarmFrameCost() {
-    return parametersModule.farm.frameCost
+    return parametersModule.getParameter("farm.frameCost", true)
   }
 
   static getPullComission() {
@@ -69,15 +69,15 @@ class DataPort {
   }
 
   static getTransferCommissionFix() {
-    return parametersModule.commissions.transferCommissionFix
+    return parametersModule.getParameter("commissions.transferCommissionFix", true)
   }
 
   static getOsSubscription() {
-    return parametersModule.commissions.subscription
+    return parametersModule.getParameter("commissions.subscription", true)
   }
 
   static getActualCryptoPrice() {
-    return parametersModule.exchangeRate.actualPrice
+    return parametersModule.getParameter("exchangeRate.actualPrice", true)
   }
 
   static getValueGrowthPercentageMode() {

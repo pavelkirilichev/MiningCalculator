@@ -7,7 +7,7 @@
             <RowText :text="$t('powerConsumption')"/>
             <Input :disabled="!energyEnable" v-model="powerConsumptionControl"></Input>
             <RowText text="MWh"/>
-            <MiniSwitcherUI v-if="!isHashrateMode" :activeText="$t('on')" :disableText="$t('off')" v-model="energyEnable" />
+            <!-- <MiniSwitcherUI v-if="!isHashrateMode" :activeText="$t('on')" :disableText="$t('off')" v-model="energyEnable" /> -->
           </Row>
         </CardRow>
       </template>
@@ -15,8 +15,8 @@
         <Row>
           <RowText :text="$t('priceForKw')"/>
           <Input :disabled="!energyEnable" v-model="kWPriceControl"></Input>
-          <RowText text="usd"/>
-          <MiniSwitcherUI v-if="!isAdvancedMode" :activeText="$t('on')" :disableText="$t('off')" v-model="energyEnable" />
+          <RowText :text="currentCurrency.title"/>
+          <!-- <MiniSwitcherUI v-if="!isAdvancedMode" :activeText="$t('on')" :disableText="$t('off')" v-model="energyEnable" /> -->
         </Row>
       </CardRow>
       <CardRow v-if="isAdvancedMode">
@@ -39,7 +39,7 @@
         <Row>
           <RowText :text="$t('sum')"/>
           <Output promoted :value="getEnergySum()"></Output>
-          <RowText text="usd"/>
+          <RowText :text="currentCurrency.title"/>
         </Row>
       </CardRow>
     </template>
@@ -52,7 +52,7 @@ import { Component } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
 import { mixins } from 'vue-class-component';
 
-import store, { Modes } from '../../../store/main';
+import store, { currencyModule, Modes } from '../../../store/main';
 import { Parameters } from '../../../store/modules/Parameters';
 import { Calculate } from '../../../store/modules/Calculate';
 import { Crypto } from '../../../store/modules/Crypto';
@@ -83,10 +83,15 @@ const cryptoModule = getModule(Crypto, store)
   }
 })
 export default class ElectroEnergy extends mixins(ModeMixin) {
+  get currentCurrency() {
+    return currencyModule.current
+  }
+  
   get hoursControl() {
     return String(parametersModule.energy.workHours)
   }
   set hoursControl(value: string) {
+    if(Number(value) > 24) value = "24"
     parametersModule.updateParameter({ key: 'energy.workHours', value: value })
   }
 
@@ -94,7 +99,7 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
     const hasActual = parametersModule.register.some(token => token === 'energy.powerConsumption')
 
     if(hasActual || this.isHashrateMode) {
-      return String(parametersModule.energy.powerConsumption)
+      return String(parametersModule.getParameter("energy.powerConsumption"))
     }
     else {
       if(cryptoModule.current) {
@@ -110,10 +115,10 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
   }
 
   get kWPriceControl() {
-    return String(parametersModule.energy.kWPrice)
+    return String(parametersModule.getParameter("energy.kWPrice", true))
   }
   set kWPriceControl(value: string) {
-    parametersModule.updateParameter({ key: 'energy.kWPrice', value: value })
+    parametersModule.updateParameter({ key: 'energy.kWPrice', value: value, isRate: true })
   }
 
   // get summaryEnergyConsumptionControl() {

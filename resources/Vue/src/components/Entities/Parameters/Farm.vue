@@ -5,7 +5,7 @@
         <Row>
           <RowText :text="$t('farmCost')"/>
           <Input :disabled="!farmCostEnable" v-model="farmCostControl"></Input>
-          <RowText text="usd"/>
+          <RowText :text="currentCurrency.title"/>
           <MiniSwitcherUI :activeText="$t('on')" :disableText="$t('off')" v-model="farmCostEnable" />
         </Row>
       </CardRow>
@@ -13,7 +13,7 @@
         <Row>
           <RowText :text="$t('frameCost')"/>
           <Input :disabled="!farmCostEnable" v-model="frameCostControl"></Input>
-          <RowText text="usd"/>
+          <RowText :text="currentCurrency.title"/>
         </Row>
       </CardRow>
     </template>
@@ -21,8 +21,9 @@
       <CardRow>
         <Row>
           <RowText :text="$t('fullFarmCost')"/>
-          <Output promoted :value="getFarmFullCost()"></Output>
-          <RowText text="usd"/>
+          <Output v-if="farmCostEnable" promoted :value="getFarmFullCost()"></Output>
+          <!-- <Input v-else :value="getFarmFullCost()"></Input> -->
+          <RowText :text="currentCurrency.title"/>
         </Row>
       </CardRow>
     </template>
@@ -34,7 +35,7 @@
 import { Component } from 'vue-property-decorator';
 import { getModule } from 'vuex-module-decorators';
 
-import store from '../../../store/main';
+import store, { currencyModule } from '../../../store/main';
 
 import Card from '../../Elements/Card.vue';
 import CardRow from '../../Elements/Card/Row.vue';
@@ -65,20 +66,24 @@ const cryptoModule = getModule(Crypto, store)
   }
 })
 export default class Farm extends mixins(ModeMixin) {
+  get currentCurrency() {
+    return currencyModule.current
+  }
+
   get farmCostControl() {
-    return String(parametersModule.farm.farmCost)
+    return String(parametersModule.getParameter("farm.farmCost", true))
   }
 
   set farmCostControl(value: string) {
-    parametersModule.updateParameter({ key: 'farm.farmCost', value: value })
+    parametersModule.updateParameter({ key: 'farm.farmCost', value: value, isRate: true })
   }
 
   get frameCostControl() {
-    return String(parametersModule.farm.frameCost)
+    return String(parametersModule.getParameter("farm.frameCost", true))
   }
 
   set frameCostControl(value: string) {
-    parametersModule.updateParameter({ key: 'farm.frameCost', value: value })
+    parametersModule.updateParameter({ key: 'farm.frameCost', value: value, isRate: true })
   }
 
   getFarmFullCost() {
