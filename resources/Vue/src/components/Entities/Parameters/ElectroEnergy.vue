@@ -5,16 +5,17 @@
         <CardRow>
           <Row>
             <RowText :text="$t('powerConsumption')"/>
-            <Input :disabled="!energyEnable" v-model="powerConsumptionControl"></Input>
+            <Input v-if="isHashrateMode" v-model="powerConsumptionControl"></Input>
+            <Input v-else :disabled="!energyEnable" v-model="powerConsumptionControl"></Input>
             <RowText text="MWh"/>
-            <!-- <MiniSwitcherUI v-if="!isHashrateMode" :activeText="$t('on')" :disableText="$t('off')" v-model="energyEnable" /> -->
+            <MiniSwitcherUI v-if="!isHashrateMode" :activeText="$t('on')" :disableText="$t('off')" v-model="energyEnable" />
           </Row>
         </CardRow>
       </template>
       <CardRow>
         <Row>
           <RowText :text="$t('priceForKw')"/>
-          <Input :disabled="!energyEnable" v-model="kWPriceControl"></Input>
+          <Input v-model="kWPriceControl"></Input>
           <RowText :text="currentCurrency.title"/>
           <!-- <MiniSwitcherUI v-if="!isAdvancedMode" :activeText="$t('on')" :disableText="$t('off')" v-model="energyEnable" /> -->
         </Row>
@@ -22,7 +23,7 @@
       <CardRow v-if="isAdvancedMode">
         <Row>
           <RowText :text="$t('workHours')"/>
-          <Input :disabled="!energyEnable" v-model="hoursControl"></Input>
+          <InputSimple v-model="hoursControl"></InputSimple>
           <RowText :text="$t('hours')"/>
         </Row>
       </CardRow>
@@ -38,7 +39,7 @@
       <CardRow>
         <Row>
           <RowText :text="$t('sum')"/>
-          <Output promoted :value="getEnergySum()"></Output>
+          <Output promoted :value="isHashrateMode ? getEnergySumHashrate() : getEnergySum()"></Output>
           <RowText :text="currentCurrency.title"/>
         </Row>
       </CardRow>
@@ -66,6 +67,7 @@ import Output from '../../Elements/Output.vue';
 import ModeMixin from '../../mixins/mode';
 import MiniSwitcherUI from '../../UI/MiniButton.vue';
 import { DataPort } from '../../../store/modules/helpers/DataPort';
+import InputSimple from '../../Elements/InputSimple.vue';
 
 const parametersModule = getModule(Parameters, store)
 const calcModule = getModule(Calculate, store)
@@ -78,6 +80,7 @@ const cryptoModule = getModule(Crypto, store)
     Row,
     RowText,
     Input,
+    InputSimple,
     Output,
     MiniSwitcherUI
   }
@@ -86,7 +89,7 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
   get currentCurrency() {
     return currencyModule.current
   }
-  
+
   get hoursControl() {
     return String(parametersModule.energy.workHours)
   }
@@ -134,6 +137,10 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
       return calcModule.energyConsumptionSumAdvancedGPU(current).toFixed(2)
     }
     else return "0.00"
+  }
+
+  getEnergySumHashrate() {
+    return calcModule.energyConsumptionAdvancedHashrate().toFixed(2)
   }
 
   get energyEnable() {

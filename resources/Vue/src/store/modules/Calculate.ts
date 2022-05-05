@@ -91,7 +91,7 @@ class CalcBaseHashrate {
   getHashrate(coin: ICryptoItem) {
     const algrorithm = DataPort.getAlgorithm()
 
-    const hashrate_c021 = algrorithm ? algrorithm.mhS : 0
+    const hashrate_c021 = algrorithm ? algrorithm.mhS * 1000000 : 0
 
     return hashrate_c021
   }
@@ -268,10 +268,11 @@ class CalcAdvancedGPU {
   }
 
   getFullFarmCost() {
+    const isInput = !DataPort.getIsEnabledFarmCost()
     const farmCost_u36 = DataPort.getFarmCost()
     const farmFrameCost_u37 = DataPort.getFarmFrameCost()
 
-    const fullFarmCost_c32 = farmCost_u36 + farmFrameCost_u37
+    const fullFarmCost_c32 = isInput ? DataPort.getFarmFullCost() : farmCost_u36 + farmFrameCost_u37
 
     // console.log("полная стоимость фермы", fullFarmCost_c32)
     return fullFarmCost_c32
@@ -411,12 +412,12 @@ class CalcAdvancedHashrate {
 
   getHashrate(coin: ICryptoItem) {
     const algorithm = DataPort.getAlgorithm()
-    const hashrate_c041 = algorithm ? algorithm.mhS : 0
+    const hashrate_c041 = algorithm ? algorithm.mhS * 1000000 : 0
 
     return hashrate_c041
   }
 
-  getSummaryPowerConsumption(coin: ICryptoItem) {
+  getSummaryPowerConsumption(coin?: ICryptoItem) {
     const summaryPowerConsumption_c412 = DataPort.getPowerConsumption()
 
     return summaryPowerConsumption_c412
@@ -472,8 +473,8 @@ class CalcAdvancedHashrate {
     return coinsCount_c044
   }
 
-  getKWConsumption(coin: ICryptoItem) {
-    const kWConsumption_c045 = DataPort.getPowerConsumption() / 1000
+  getKWConsumption(coin?: ICryptoItem) {
+    const kWConsumption_c045 = DataPort.getPowerConsumption() * 1000
 
     return kWConsumption_c045
   }
@@ -500,20 +501,21 @@ class CalcAdvancedHashrate {
     return coinPrice_c047
   }
 
-  getSum(coin: ICryptoItem) {
+  getSum(coin?: ICryptoItem) {
     const kWhPrice_u43 = DataPort.getkwHPrice()
-    const kWConsumption_c045 = this.getKWConsumption(coin)
+    const kWConsumption_c045 = this.getKWConsumption()
 
     const sum_c41 = kWConsumption_c045 * kWhPrice_u43
 
     return sum_c41
   }
 
-  getFullFarmCost(coin: ICryptoItem) {
+  getFullFarmCost(coin?: ICryptoItem) {
+    const isInput = !DataPort.getIsEnabledFarmCost()
     const farmCost_u46 = DataPort.getFarmCost()
     const farmFrameCost_u47 = DataPort.getFarmFrameCost()
 
-    const fullFarmCost_c42 = farmCost_u46 + farmFrameCost_u47
+    const fullFarmCost_c42 = isInput ? DataPort.getFarmFullCost() : farmCost_u46 + farmFrameCost_u47
 
     return fullFarmCost_c42
   }
@@ -819,6 +821,13 @@ class Calculate extends VuexModule {
       const calcAdvancedHashrate = new CalcAdvancedHashrate()
       
       return calcAdvancedHashrate.gain24h(coin)
+    }
+  }
+
+  get energyConsumptionAdvancedHashrate() {
+    return () => {
+      const calcAdvancedHashrate = new CalcAdvancedHashrate()
+      return calcAdvancedHashrate.getSum()
     }
   }
 

@@ -57,7 +57,9 @@ export class GPU extends VuexModule {
       })
     })
 
-    cryptoModule.updateGPU(Array.from(algorithmSet))
+    cryptoModule.updateGPU(Array.from(algorithmSet).filter(algo => {
+      return this.selected.every(device => device.algorithms.find(alg => alg.key === algo))
+    }))
   }
 
   @Mutation
@@ -84,6 +86,8 @@ export class GPU extends VuexModule {
 
   @Action
   updateItemCount({ type, id, value }: { type: 'plus' | 'minus' | 'input', id: string, value: any }) {
+    if (!value) value = 0
+    
     const item = this.selected.find(o => o.id === id)
     if (!item) return
     
@@ -102,7 +106,7 @@ export class GPU extends VuexModule {
         break;
     }
 
-    if (item.count === 0) {
+    if (item.count <= 0) {
       const index = this.selected.findIndex(item => item.id === id)
       this.selected.splice(index, 1)
 

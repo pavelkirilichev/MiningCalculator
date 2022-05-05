@@ -167,7 +167,7 @@ export default class CryptoItem extends mixins(ModeMixin) {
   }
 
   getImg(item: ICryptoItem) {
-    return `/uploads/crypto/${item.coin.toLowerCase()}.png`
+    return `/uploads/crypto/${item.coin.toLowerCase()}.png?v=964`
   }
 
   gain24hGPU(coin: ICryptoItem) {

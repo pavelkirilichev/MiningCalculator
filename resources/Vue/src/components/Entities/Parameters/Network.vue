@@ -25,8 +25,8 @@
             <InputSimple :disabled="!networkEnable" v-if="isDay" v-model="networkGwothTimeControlDay"></InputSimple>
             <InputSimple :disabled="!networkEnable" v-if="isWeek" v-model="networkGwothTimeControlWeek"></InputSimple>
             <InputSimple :disabled="!networkEnable" v-if="isMonth" v-model="networkGwothTimeControlMonth"></InputSimple>
-            <RowText :text="getNetworkGrowthTimeTitle()"/>
-            <UIHint :text="$t('networkComplexityGrowthTimeTooltip').replace('/$unit/', getNetworkGrowthTimeTitle())" />
+            <RowText :text="getNetworkGrowthTimeBridge(isDay ? networkGwothTimeControlDay : isWeek ? networkGwothTimeControlWeek : networkGwothTimeControlMonth)"/>
+            <UIHint :text="$t('networkComplexityGrowthTimeTooltip').replace('/$unit/', getNetworkGrowthTimeTitle2())" />
           </Row>
         </CardRow>
       </template>
@@ -115,9 +115,48 @@ export default class Network extends mixins(ModeMixin) {
   }
 
   getNetworkGrowthTimeTitle() {
-    if(this.isDay) return this.$t('days')
-    if(this.isWeek) return this.$t('week2')
+    if(this.isDay) return this.$t('day')
+    if(this.isWeek) return this.$t('week4')
     if(this.isMonth) return this.$t('month')
+  }
+
+  getNetworkGrowthTimeTitle2() {
+    if(this.isDay) return this.$t('days')
+    if(this.isWeek) return this.$t('week3')
+    if(this.isMonth) return this.$t('month3')
+  }
+
+  getNetworkGrowthTimeBridge(value: string) {
+    if(this.isDay) return this.getNetworkGrowthTimeDayPlural(Number(value))
+    if(this.isWeek) return this.getNetworkGrowthTimeWeekPlural(Number(value))
+    if(this.isMonth) return this.getNetworkGrowthTimeMonthPlural(Number(value))
+  }
+
+  getNetworkGrowthTimeDayPlural(value: number) {
+    const lastNumber = value % 10
+
+    if(lastNumber === 0) return this.$t('days')
+    if(lastNumber === 1) return this.$t('day')
+    if(lastNumber >= 2 && lastNumber <= 4) return this.$t('day_p2')
+    if(lastNumber >= 5 && lastNumber <= 9) return this.$t('days')
+  }
+
+  getNetworkGrowthTimeWeekPlural(value: number) {
+    const lastNumber = value % 10
+
+    if(lastNumber === 0) return this.$t('week3')
+    if(lastNumber === 1) return this.$t('week')
+    if(lastNumber >= 2 && lastNumber <= 4) return this.$t('week_p2')
+    if(lastNumber >= 5 && lastNumber <= 9) return this.$t('week3')
+  }
+
+  getNetworkGrowthTimeMonthPlural(value: number) {
+    const lastNumber = value % 10
+
+    if(lastNumber === 0) return this.$t('month3')
+    if(lastNumber === 1) return this.$t('month')
+    if(lastNumber >= 2 && lastNumber <= 4) return this.$t('month_p2')
+    if(lastNumber >= 5 && lastNumber <= 9) return this.$t('month3')
   }
 
   get initialDifficultyLevelControl() {

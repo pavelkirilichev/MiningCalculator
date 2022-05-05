@@ -26,7 +26,7 @@ class Parameters extends VuexModule {
     workHours: 24,
     powerConsumption: 0,
     summaryPowerConsumption: 0,
-    isEnable: true,
+    isEnable: false,
   }
 
   commissions = {
@@ -65,6 +65,7 @@ class Parameters extends VuexModule {
   farm = {
     farmCost: 0,
     frameCost: 0,
+    farmFullCost: 0,
     isEnable: true,
   }
 
@@ -117,11 +118,6 @@ class Parameters extends VuexModule {
   @Mutation
   updateIsFormCostEnabled(value: boolean) {
     this.farm.isEnable = value
-
-    if (!value) {
-      this.farm.farmCost = 0
-      this.farm.frameCost = 0
-    }
   }
 
   @Mutation
@@ -129,9 +125,9 @@ class Parameters extends VuexModule {
     this.energy.isEnable = value
 
     if (!value) {
-      this.energy.kWPrice = 0
+      // this.energy.kWPrice = 0
+      // this.energy.workHours = 24
       this.energy.powerConsumption = 0
-      this.energy.workHours = 24
 
       this.register = this.register.filter(token => token !== 'energy.powerConsumption')
     }

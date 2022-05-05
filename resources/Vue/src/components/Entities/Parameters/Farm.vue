@@ -22,7 +22,7 @@
         <Row>
           <RowText :text="$t('fullFarmCost')"/>
           <Output v-if="farmCostEnable" promoted :value="getFarmFullCost()"></Output>
-          <!-- <Input v-else :value="getFarmFullCost()"></Input> -->
+          <Input v-else v-model="farmFullCostControl"></Input>
           <RowText :text="currentCurrency.title"/>
         </Row>
       </CardRow>
@@ -76,6 +76,14 @@ export default class Farm extends mixins(ModeMixin) {
 
   set farmCostControl(value: string) {
     parametersModule.updateParameter({ key: 'farm.farmCost', value: value, isRate: true })
+  }
+
+  get farmFullCostControl() {
+    return String(parametersModule.getParameter("farm.farmFullCost", true))
+  }
+
+  set farmFullCostControl(value: string) {
+    parametersModule.updateParameter({ key: 'farm.farmFullCost', value: value, isRate: true })
   }
 
   get frameCostControl() {

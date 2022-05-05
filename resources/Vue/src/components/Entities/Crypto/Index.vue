@@ -23,13 +23,18 @@ import { getModule } from 'vuex-module-decorators';
 import UIList from '../../UI/List.vue';
 import CryptoItem from './Item.vue'
 
-import { Crypto, ICryptoItem } from '../../../store/modules/Crypto';
+import { Crypto, ICryptoItem, ISelectedCryptoItem } from '../../../store/modules/Crypto';
 import store from '../../../store/main';
 import Card from '../../Elements/Card.vue';
 import { mixins } from 'vue-class-component';
 import ModeMixin from '../../mixins/mode';
+import { Calculate } from '../../../store/modules/Calculate';
+
+// @ts-ignore
+import orderBy from 'lodash/orderBy'
 
 const cryptoModule = getModule(Crypto, store)
+const calculateModule = getModule(Calculate, store)
 
 @Component({
   components: {
@@ -40,7 +45,38 @@ const cryptoModule = getModule(Crypto, store)
 })
 export default class CryptoVue extends mixins(ModeMixin) {
   get list() {
-    return cryptoModule.list
+    return orderBy(cryptoModule.list.map(coin => {
+      const _coin = {
+        ...coin,
+        _24h: 0
+      }
+
+      // if(this.isHashrateMode) {
+      //   _coin._24h = calculateModule.gain24hFiatHashrate(coin)
+      // }
+      // else {
+      //   _coin._24h = calculateModule.gain24hFiatGPU(coin)
+      // }
+      
+      if(this.isAdvancedMode) {
+        if(this.isHashrateMode) {
+          _coin._24h = calculateModule.gain24hFiatAdvancedHashrate(coin)
+        }
+        else {
+          _coin._24h = calculateModule.gain24hFiatAdvancedGPU(coin)
+        }
+      }
+      else {
+        if(this.isHashrateMode) {
+          _coin._24h = calculateModule.gain24hFiatHashrate(coin)
+        }
+        else {
+          _coin._24h = calculateModule.gain24hFiatGPU(coin)
+        }
+      }
+
+      return _coin
+    }), ['_24h'], ['desc'])
   }
 
   changeCryptoHandler(item: ICryptoItem) {

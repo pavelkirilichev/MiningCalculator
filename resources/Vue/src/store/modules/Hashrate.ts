@@ -63,6 +63,8 @@ class Hashrate extends VuexModule {
 
   @Action
   updateItemCount({ type, id, value }: { type: 'plus' | 'minus' | 'input', id: string, value: any }) {
+    if (!value) value = 0
+
     const item = this.current
     if (!item) return
     
@@ -84,7 +86,7 @@ class Hashrate extends VuexModule {
         break;
     }
 
-    if (item.count === 0) {
+    if (item.count <= 0) {
       this.context.commit('resetCurrent')
       this.context.dispatch('updateCrypto')
     }

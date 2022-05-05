@@ -10,6 +10,12 @@ class ChangeHelper {
     const register = DataPort.getParametersRegister()
     return register.some(token => ["exchangeRate.actualPrice", "exchangeRate.valueGrowthPercentageMonth", "exchangeRate.valueGrowthPercentageYear"].includes(token))
   }
+
+  static hasFullFarmCost() {
+    const register = DataPort.getParametersRegister()
+
+    return register.some(token => ['farm.farmFullCost'].includes(token))
+  }
 }
 
 export { ChangeHelper }

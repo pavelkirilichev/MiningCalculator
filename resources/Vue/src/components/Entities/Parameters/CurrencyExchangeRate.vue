@@ -41,6 +41,7 @@ import Output from '../../Elements/Output.vue';
 import ModeMixin from '../../mixins/mode';
 import UIToggler from '../../UI/Toggler.vue';
 import MiniSwitcherUI from '../../UI/MiniButton.vue';
+import { CurrencyHelper } from '../../../store/modules/helpers/CurrencyHelper';
 
 const parametersModule = getModule(Parameters, store)
 const cryptoModule = getModule(Crypto, store)
@@ -85,10 +86,18 @@ export default class CurrencyExchangeRate extends mixins(ModeMixin) {
 
   get cryptoActualPriceControl() {
     const hasActual = parametersModule.register.some(token => token === 'exchangeRate.actualPrice')
+    const currentCurrency = cryptoModule.current
     if(hasActual) {
       return String(parametersModule.getParameter("exchangeRate.actualPrice", true))
     }
-    else return String(cryptoModule.current?.price || 0)
+
+    if(currentCurrency) {
+      console.log(currentCurrency.price, CurrencyHelper.convertToCurrentCurrency(currentCurrency.price))
+      // return String(CurrencyHelper.convertToCurrentCurrency(currentCurrency.price))
+      return String(currentCurrency.price)
+    }
+
+    return "0"
   }
 
   set cryptoActualPriceControl(value: string) {

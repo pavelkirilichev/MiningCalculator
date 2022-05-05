@@ -1,5 +1,20 @@
 export default [
   {
+    algorithm: "KAWPOW",
+    coin: "RVN",
+    difficulty: 38615.92,
+    id: "45378f7caf33c51c4b4d31e282fb6ffc66f06c00",
+    name: "Ravencoin",
+    network_hashrate: 2764235225083,
+    price: 0.044773831440797,
+    reward: 5.4264991140731e-8,
+    reward_block: 2500.02,
+    reward_unit: "RVN",
+    type: "coin",
+    updated: 1651683636,
+    volume: 13962390.894852,
+  },
+  {
     algorithm: "Ethash",
     coin: "ETH",
     difficulty: 12857241691046290,

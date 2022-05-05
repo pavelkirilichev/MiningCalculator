@@ -9,6 +9,10 @@ import { Currency } from './modules/Currency'
 import { Calculate } from './modules/Calculate'
 import { getModule } from 'vuex-module-decorators';
 
+// @ts-ignore
+import VueTheMask from 'vue-the-mask'
+Vue.use(VueTheMask)
+
 Vue.use(Vuex)
 
 enum Modes {
@@ -46,7 +50,6 @@ const store = new Vuex.Store({
     },
     setDataMode(state, mode: string) {
       state.dataMode = mode
-      state.Parameters.energy.isEnable = true
     }
   }
 })

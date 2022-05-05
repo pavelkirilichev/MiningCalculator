@@ -48,6 +48,10 @@
     padding: 0 15px;
   }
 
+  @include xl() {
+    padding: 0 0;
+  }
+
   @include from-xs-to-lg() {
     &:nth-child(n + 2) {
       margin-top: 40px;

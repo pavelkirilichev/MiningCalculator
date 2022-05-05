@@ -48,6 +48,10 @@ class DataPort {
     return parametersModule.getParameter("farm.farmCost", true)
   }
 
+  static getFarmFullCost() {
+    return parametersModule.getParameter("farm.farmFullCost", true)
+  }
+
   static getIsEnabledFarmCost() {
     return parametersModule.farm.isEnable
   }
