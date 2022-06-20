@@ -36,6 +36,7 @@
         "bootstrap-vue": "^2.22.0",
         "cors": "^2.8.5",
         "express": "^4.17.3",
+        "pinia": "^2.0.14",
         "puppeteer": "^13.6.0",
         "svg-to-vue-component": "^0.3.8",
         "ts-node": "^10.7.0",

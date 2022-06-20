@@ -6,6 +6,8 @@ import { DataPort } from './helpers/DataPort'
 import { GPUHelper } from './helpers/GPUHelper';
 import { ExchangeRateModes, NetworkModes } from './Parameters';
 
+const shaType = ['SHA-256', 'BCD']
+
 class CalcBaseGPU {
   getDevicesHashrate(coin: ICryptoItem) {
     const devices = DataPort.getDevices()
@@ -164,10 +166,9 @@ class CalcAdvancedGPU {
   }
 
   getSummaryPowerConsumption(coin: ICryptoItem) {
-    const isUserInput = DataPort.getParametersRegister().some(token => token === "energy.powerConsumption") && DataPort.getPowerConsumption()
+    const isUserInput = DataPort.getParametersRegister().some(token => token === "energy.gpuPowerConsumption") && DataPort.getPowerConsumption()
 
-    const kWhPrice_u34 = DataPort.getWorkHours()
-    const summaryPowerConsumption_c312 = isUserInput ? DataPort.getPowerConsumption() * 1000000 : (this.getPowerConsumption(coin) * kWhPrice_u34)
+    const summaryPowerConsumption_c312 = isUserInput ? DataPort.getPowerConsumption() : (this.getPowerConsumption(coin))
 
     // console.log('summary power', summaryPowerConsumption_c312)
 
@@ -175,26 +176,31 @@ class CalcAdvancedGPU {
   }
   
   getNetworkDifficulty(coin: ICryptoItem) {
+    const isSHa = shaType.map(s => s.toLowerCase()).includes(coin.algorithm.toLowerCase())
     const isUserInput = ChangeHelper.hasNetworkKeys()
+    const baseValue_u318 = isUserInput ? (DataPort.getNetworkDifficultyLevel() || isSHa ? coin.difficulty * 2**32 : coin.difficulty) : (isSHa ? coin.difficulty * 2**32 : coin.difficulty)
     const networkGrowthInComplexity_u319 = DataPort.getNetworkGrowthInComplexity()
-    const networkGrowthTime_u320_1 = DataPort.getNetworkGrowthTimeDay() > 0 ? DataPort.getNetworkGrowthTimeDay() : 1
-    const networkGrowthTime_u320_2 = DataPort.getNetworkGrowthTimeWeek() > 0 ? DataPort.getNetworkGrowthTimeWeek() : 1
-    const networkGrowthTime_u320_3 = DataPort.getNetworkGrowthTimeMonth() > 0 ? DataPort.getNetworkGrowthTimeMonth() : 1
+    const networkGrowthTime_u320_1 = DataPort.getNetworkGrowthTimeDay()
+    const networkGrowthTime_u320_2 = Math.floor(DataPort.getNetworkGrowthTimeWeek() * 7)
+    const networkGrowthTime_u320_3 = Math.floor(DataPort.getNetworkGrowthTimeMonth() * 30)
 
-    const baseValue = isUserInput ? (DataPort.getNetworkDifficultyLevel() || coin.difficulty) : coin.difficulty
-    const networkDifficulty_c032: { base: number[], day: number[], week: number[], month: number[] } = {
-      base: [baseValue],
-      day: [baseValue],
-      week: [baseValue],
-      month: [baseValue]
+    const netwrokGrowthTime_u320: {[K in NetworkModes]: number } = {
+      [NetworkModes.DAY]: networkGrowthTime_u320_1,
+      [NetworkModes.WEEK]: networkGrowthTime_u320_2,
+      [NetworkModes.MONTH]: networkGrowthTime_u320_3
     }
 
-    for (let i = 1; i < 2048; i++) {
-      networkDifficulty_c032.base[i] = baseValue
-      // networkDifficulty_c032.day[i] = (((Math.abs(100 + networkGrowthInComplexity_u319 / networkGrowthTime_u320_1) * 0.01)) * networkDifficulty_c032.day[i - 1])
-      networkDifficulty_c032.day[i] = (Math.abs(100 + (networkGrowthInComplexity_u319 / (networkGrowthTime_u320_1))) * 0.01) * networkDifficulty_c032.day[i - 1]
-      networkDifficulty_c032.week[i] = (Math.abs(100 + (networkGrowthInComplexity_u319 / (networkGrowthTime_u320_2 * 7))) * 0.01) * networkDifficulty_c032.week[i - 1]
-      networkDifficulty_c032.month[i] = (Math.abs(100 + (networkGrowthInComplexity_u319 / (networkGrowthTime_u320_3 * 30))) * 0.01) * networkDifficulty_c032.month[i - 1]
+    const networkDifficulty_c032 = [baseValue_u318]
+
+    // console.log(netwrokGrowthTime_u320[DataPort.getNetworkMode()])
+
+    for (let i = 1; i < 2049; i++) {
+      if (i <= netwrokGrowthTime_u320[DataPort.getNetworkMode()]) {
+        networkDifficulty_c032[i] = networkDifficulty_c032[i - 1] * (1 + (networkGrowthInComplexity_u319 / 100))
+      }
+      else {
+        networkDifficulty_c032[i] = networkDifficulty_c032[i - 1]
+      }
     }
 
     // console.log("сложность", networkDifficulty_c032)
@@ -211,7 +217,7 @@ class CalcAdvancedGPU {
     if(networkMode === NetworkModes.WEEK) key = 'week'
     if(networkMode === NetworkModes.MONTH) key = 'month'
 
-    const findBlocksCount_c033 = networkDifficulty_c032[key].map(value => (hashrate_c031 * 86400) / value)
+    const findBlocksCount_c033 = networkDifficulty_c032.map(value => (hashrate_c031 * 86400) / value)
 
     // console.log("найдено блоков", findBlocksCount_c033)
     return findBlocksCount_c033
@@ -257,11 +263,14 @@ class CalcAdvancedGPU {
     return coinPrice_c037
   }
 
-  getPowerConsumptionSum(coin: ICryptoItem) {
-    const kWhPrice_u33 = DataPort.getkwHPrice()
-    const kWConsumption_c035 = this.getKWConsumption(coin)
+  getPowerConsumptionSum(coin?: ICryptoItem) {
+    const isUserInput = DataPort.getParametersRegister().some(token => token === "energy.gpuPowerConsumption") && DataPort.getGpuPowerConsumption()
 
-    const powerConsumptionSum_c31 = kWConsumption_c035 * kWhPrice_u33
+    const kWhPrice_u33 = DataPort.getkwHPrice()
+    const kWhHours_u34 = DataPort.getWorkHours()
+    const kWConsumption_c035 = isUserInput ? DataPort.getGpuPowerConsumption() : coin ? this.getKWConsumption(coin!) : 0
+
+    const powerConsumptionSum_c31 = kWConsumption_c035 * kWhPrice_u33 * kWhHours_u34
 
     // console.log("сумма", powerConsumptionSum_c31)
     return powerConsumptionSum_c31
@@ -424,26 +433,27 @@ class CalcAdvancedHashrate {
   }
   
   getNetworkDifficulty(coin: ICryptoItem) {
+    const isSHa = shaType.map(s => s.toLowerCase()).includes(coin.algorithm.toLowerCase())
     const isUserInput = ChangeHelper.hasNetworkKeys()
+    const baseValue_u418 = isUserInput ? (DataPort.getNetworkDifficultyLevel() || (isSHa ? coin.difficulty * 2**32 : coin.difficulty)) : (isSHa ? coin.difficulty * 2**32 : coin.difficulty)
     const networkGrowthInComplexity_u419 = DataPort.getNetworkGrowthInComplexity()
-    const networkGrowthTime_u420_1 = DataPort.getNetworkGrowthTimeDay() > 0 ? DataPort.getNetworkGrowthTimeDay() : 1
-    const networkGrowthTime_u420_2 = DataPort.getNetworkGrowthTimeWeek() > 0 ? DataPort.getNetworkGrowthTimeWeek() : 1
-    const networkGrowthTime_u420_3 = DataPort.getNetworkGrowthTimeMonth() > 0 ? DataPort.getNetworkGrowthTimeMonth() : 1
+    const networkGrowthTime_u420_1 = DataPort.getNetworkGrowthTimeDay()
+    const networkGrowthTime_u420_2 = Math.floor(DataPort.getNetworkGrowthTimeWeek() * 7)
+    const networkGrowthTime_u420_3 = Math.floor(DataPort.getNetworkGrowthTimeMonth() * 30)
 
-    const baseValue = isUserInput ? (DataPort.getNetworkDifficultyLevel() || coin.difficulty) : coin.difficulty
-    const networkDifficulty_c042: { base: number[], day: number[], week: number[], month: number[] } = {
-      base: [baseValue],
-      day: [baseValue],
-      week: [baseValue],
-      month: [baseValue]
+    const netwrokGrowthTime_u420: {[K in NetworkModes]: number } = {
+      [NetworkModes.DAY]: networkGrowthTime_u420_1,
+      [NetworkModes.WEEK]: networkGrowthTime_u420_2,
+      [NetworkModes.MONTH]: networkGrowthTime_u420_3
     }
 
-    for (let i = 1; i < 2048; i++) {
-      networkDifficulty_c042.base[i] = baseValue
-      // networkDifficulty_c042.day[i] = (((Math.abs(100 + networkGrowthInComplexity_u419 / networkGrowthTime_u420_1) * 0.01)) * networkDifficulty_c042.day[i - 1])
-      networkDifficulty_c042.day[i] = (Math.abs(100 + (networkGrowthInComplexity_u419 / (networkGrowthTime_u420_1))) * 0.01) * networkDifficulty_c042.day[i - 1]
-      networkDifficulty_c042.week[i] = (Math.abs(100 + (networkGrowthInComplexity_u419 / (networkGrowthTime_u420_2 * 7))) * 0.01) * networkDifficulty_c042.week[i - 1]
-      networkDifficulty_c042.month[i] = (Math.abs(100 + (networkGrowthInComplexity_u419 / (networkGrowthTime_u420_3 * 30))) * 0.01) * networkDifficulty_c042.month[i - 1]
+    const networkDifficulty_c042 = [baseValue_u418]
+
+    for (let i = 1; i < 2049; i++) {
+      if (i <= netwrokGrowthTime_u420[DataPort.getNetworkMode()]) {
+        networkDifficulty_c042[i] = networkDifficulty_c042[i - 1] * (1 + (networkGrowthInComplexity_u419 / 100))
+      }
+      else networkDifficulty_c042[i] = networkDifficulty_c042[i - 1]
     }
 
     // console.log("сложность", networkDifficulty_c032)
@@ -460,7 +470,7 @@ class CalcAdvancedHashrate {
     if(networkMode === NetworkModes.WEEK) key = 'week'
     if(networkMode === NetworkModes.MONTH) key = 'month'
 
-    const findBlocksCount_c043 = networkDifficulty_c042[key].map(value => (hashrate_c041 * 86400) / value)
+    const findBlocksCount_c043 = networkDifficulty_c042.map(value => (hashrate_c041 * 86400) / value)
 
     // console.log("найдено блоков", findBlocksCount_c033)
     return findBlocksCount_c043
@@ -474,7 +484,7 @@ class CalcAdvancedHashrate {
   }
 
   getKWConsumption(coin?: ICryptoItem) {
-    const kWConsumption_c045 = DataPort.getPowerConsumption() * 1000
+    const kWConsumption_c045 = DataPort.getPowerConsumption()
 
     return kWConsumption_c045
   }
@@ -502,10 +512,11 @@ class CalcAdvancedHashrate {
   }
 
   getSum(coin?: ICryptoItem) {
+    const kWHours_u44 = DataPort.getWorkHours()
     const kWhPrice_u43 = DataPort.getkwHPrice()
     const kWConsumption_c045 = this.getKWConsumption()
 
-    const sum_c41 = kWConsumption_c045 * kWhPrice_u43
+    const sum_c41 = kWConsumption_c045 * kWhPrice_u43  * kWHours_u44
 
     return sum_c41
   }
@@ -732,7 +743,7 @@ class Calculate extends VuexModule {
     return (coin: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
 
-      return calcAdvancedGPU.getSummaryPowerConsumption(coin)
+      return calcAdvancedGPU.getPowerConsumption(coin)
     }
   }
 
@@ -801,7 +812,7 @@ class Calculate extends VuexModule {
   }
 
   get energyConsumptionSumAdvancedGPU() {
-    return (coin: ICryptoItem) => {
+    return (coin?: ICryptoItem) => {
       const calcAdvancedGPU = new CalcAdvancedGPU()
 
       return calcAdvancedGPU.getPowerConsumptionSum(coin)

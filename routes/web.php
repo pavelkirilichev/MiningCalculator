@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\HardWareController;
+use Illuminate\Support\Facades\Cache;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,3 +33,6 @@ Route::get('/{lang?}', function ($lang = '') {
     return view('pages.homepage');
 });
 
+Route::get('cache_clear', function() {
+    cache()->flush();
+});

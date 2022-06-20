@@ -40,6 +40,10 @@ class DataPort {
     return parametersModule.getParameter("energy.powerConsumption", true)
   }
 
+  static getGpuPowerConsumption() {
+    return parametersModule.getParameter("energy.gpuPowerConsumption", true)
+  }
+
   static getAlgorithm() {
     return hashrateModule.current
   }

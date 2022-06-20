@@ -6,8 +6,8 @@
           <Row>
             <RowText :text="$t('powerConsumption')"/>
             <Input v-if="isHashrateMode" v-model="powerConsumptionControl"></Input>
-            <Input v-else :disabled="!energyEnable" v-model="powerConsumptionControl"></Input>
-            <RowText text="MWh"/>
+            <Input v-else :disabled="!energyEnable" v-model="gpuPowerConsumptionControl"></Input>
+            <RowText text="KWh"/>
             <MiniSwitcherUI v-if="!isHashrateMode" :activeText="$t('on')" :disableText="$t('off')" v-model="energyEnable" />
           </Row>
         </CardRow>
@@ -27,13 +27,13 @@
           <RowText :text="$t('hours')"/>
         </Row>
       </CardRow>
-      <!-- <CardRow v-if="isHashrateMode && !isAdvancedMode">
+      <CardRow v-if="isHashrateMode && !isAdvancedMode">
         <Row>
           <RowText :text="$t('summaryEnergyComsumption')"/>
           <Input v-model="summaryEnergyConsumptionControl"></Input>
           <RowText text="kWh"/>
         </Row>
-      </CardRow> -->
+      </CardRow>
     </template>
     <template #footer v-if="isAdvancedMode">
       <CardRow>
@@ -98,23 +98,30 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
     parametersModule.updateParameter({ key: 'energy.workHours', value: value })
   }
 
-  get powerConsumptionControl() {
-    const hasActual = parametersModule.register.some(token => token === 'energy.powerConsumption')
+  get gpuPowerConsumptionControl() {
+    const hasActual = parametersModule.register.some(token => token === 'energy.gpuPowerConsumption')
 
-    if(hasActual || this.isHashrateMode) {
-      return String(parametersModule.getParameter("energy.powerConsumption"))
+    if(hasActual) {
+      return String(parametersModule.getParameter("energy.gpuPowerConsumption"))
     }
     else {
       if(cryptoModule.current) {
         const devicesSummaryConsumption = calcModule.devicesPowerConsumptionAdvancedGPU(cryptoModule.current)
-        return (devicesSummaryConsumption / 1000000).toFixed(5)
+        return (devicesSummaryConsumption / 1000).toFixed(5)
       }
       else return "0"
     }
   }
+  set gpuPowerConsumptionControl(value: string) {
+    parametersModule.updateParameter({ key: 'energy.gpuPowerConsumption', value: value })
+  }
 
+  get powerConsumptionControl() {
+    return String(parametersModule.getParameter('energy.powerConsumption'))
+  }
   set powerConsumptionControl(value: string) {
     parametersModule.updateParameter({ key: 'energy.powerConsumption', value: value })
+    
   }
 
   get kWPriceControl() {
@@ -124,15 +131,21 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
     parametersModule.updateParameter({ key: 'energy.kWPrice', value: value, isRate: true })
   }
 
-  // get summaryEnergyConsumptionControl() {
-  //   return String(parametersModule.energy.kWPrice)
-  // }
-  // set summaryEnergyConsumptionControl(value: string) {
-  //   parametersModule.updateParameter({ key: 'energy.summaryPowerConsumption', value: value })
-  // }
+  get summaryEnergyConsumptionControl() {
+    return String(parametersModule.energy.summaryPowerConsumption)
+  }
+  set summaryEnergyConsumptionControl(value: string) {
+    parametersModule.updateParameter({ key: 'energy.summaryPowerConsumption', value: value })
+  }
 
   getEnergySum() {
     const current = cryptoModule.current
+    const hasActual = parametersModule.register.some(token => token === 'energy.gpuPowerConsumption')
+
+    if(hasActual) {
+      return calcModule.energyConsumptionSumAdvancedGPU().toFixed(2)
+    }
+    
     if(current) {
       return calcModule.energyConsumptionSumAdvancedGPU(current).toFixed(2)
     }
@@ -146,7 +159,6 @@ export default class ElectroEnergy extends mixins(ModeMixin) {
   get energyEnable() {
     return parametersModule.energy.isEnable
   }
-
   set energyEnable(value: boolean) {
     parametersModule.updateEnergyIsEnable(value)
   }

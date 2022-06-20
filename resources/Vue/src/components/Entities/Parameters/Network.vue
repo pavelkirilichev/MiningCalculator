@@ -14,7 +14,7 @@
         <CardRow>
           <Row>
             <RowText :text="$t('difficultyGrowth')"/>
-            <Input percentage :disabled="!networkEnable" v-model="growthInComplexityControl"></Input>
+            <Input hasNegative percentage :disabled="!networkEnable" v-model="growthInComplexityControl"></Input>
             <RowText text="%"/>
             <UIHint :text="$t('networkComplexityGrowthPercentageTooltip').replace('/$unit/', getNetworkGrowthTimeTitle())" />
           </Row>

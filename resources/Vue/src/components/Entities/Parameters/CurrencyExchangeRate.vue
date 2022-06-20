@@ -12,8 +12,8 @@
       <CardRow>
         <Row>
           <RowText :text="$t('valueGrowthPercentage')" :addon="` (${$t('month')}/${$t('year')})`"/>
-          <Input percentage :disabled="!currencyRateEnable" v-if="isExchangeRateModeMonth" v-model="valueGrowthPercentageControlMonth"></Input>
-          <Input percentage :disabled="!currencyRateEnable" v-if="isExchangeRateModeYear" v-model="valueGrowthPercentageControlYear"></Input>
+          <Input percentage hasNegative :disabled="!currencyRateEnable" v-if="isExchangeRateModeMonth" v-model="valueGrowthPercentageControlMonth"></Input>
+          <Input percentage hasNegative :disabled="!currencyRateEnable" v-if="isExchangeRateModeYear" v-model="valueGrowthPercentageControlYear"></Input>
           <RowText text="%"/>
           <UIToggler :value="toggle" @change="toggleHandler" :text="$t('month')[0]" :textActive="$t('year')[0]" mini/>
         </Row>

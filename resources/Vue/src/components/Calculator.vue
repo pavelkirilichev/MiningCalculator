@@ -49,6 +49,11 @@
             <Network />
           </Block>
         </Blocks>
+        <!-- Yandex.RTB R-A-1693708-1 -->
+        <div ref="vueScript" class="ads">
+          <div id="yandex_rtb_R-A-1693708-2"></div>
+          <component is="script" type="text/javascript" v-html="script"></component>
+        </div>
         <Blocks v-if="isAdvancedMode && currentCrypto" center>
           <Block :title="$t('result')" full center >
             <Result></Result>
@@ -109,6 +114,17 @@ const cryptoModule = getModule(Crypto, store)
   }
 })
 export default class Calculator extends mixins(ModeMixin) {
+  $refs!: {
+    vueScript: HTMLDivElement
+  }
+
+  script = `window.yaContextCb.push(()=>{
+        Ya.Context.AdvManager.render({
+          renderTo: 'yandex_rtb_R-A-1693708-2',
+          blockId: 'R-A-1693708-2'
+        })
+      })`.trim()
+
   get cryptoLength() {
     return cryptoModule.list.length || cryptoModule.current
   }

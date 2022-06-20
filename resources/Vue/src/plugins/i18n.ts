@@ -69,7 +69,7 @@ const messages = {
     earnings: 'Прибыль',
     farmPaybackPeriod: 'Срок окупаемости фермы',
     chosenCrypto: 'Выбранная криптовалюта',
-    gain: 'Выручка',
+    gain: 'Прибыль',
     _24h: '24ч',
     crypto: 'крипта',
     fiat: 'фиат',

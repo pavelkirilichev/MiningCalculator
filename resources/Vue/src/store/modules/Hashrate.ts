@@ -3,6 +3,7 @@ import crypto from '../../mock/crypto';
 import { CoinsService } from '../../services/CoinsService';
 import { cryptoModule } from '../main';
 import { ICryptoItem, ISelectedCryptoItem } from './Crypto';
+import { filterCryptoByAlgorithm } from './helpers/AlgorithmFilterHelper';
 
 let t: any
 
@@ -109,7 +110,7 @@ class Hashrate extends VuexModule {
   getAll(search?: string) {
     new CoinsService().getAll(search).then(res => {
       if (res.status) {
-        this.context.commit('setList', res.data)
+        this.context.commit('setList', filterCryptoByAlgorithm(res.data))
       }
     }).catch(err => {})
   }

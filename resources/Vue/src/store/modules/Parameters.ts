@@ -25,6 +25,7 @@ class Parameters extends VuexModule {
     kWPrice: 0,
     workHours: 24,
     powerConsumption: 0,
+    gpuPowerConsumption: 0,
     summaryPowerConsumption: 0,
     isEnable: false,
   }
@@ -127,9 +128,9 @@ class Parameters extends VuexModule {
     if (!value) {
       // this.energy.kWPrice = 0
       // this.energy.workHours = 24
-      this.energy.powerConsumption = 0
+      this.energy.gpuPowerConsumption = 0
 
-      this.register = this.register.filter(token => token !== 'energy.powerConsumption')
+      this.register = this.register.filter(token => token !== 'energy.gpuPowerConsumption')
     }
   }
 

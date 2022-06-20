@@ -4,13 +4,13 @@ class CurrencyHelper {
   static convertToCurrentCurrency(value: number) {
     const currentCurrency = currencyModule.current
 
-    return Number(value * currentCurrency.rate)
+    return Number(value > 0 ? value * currentCurrency.rate : 0)
   }
   
   static convertFromCurrentCurrency(value: number) {
     const currentCurrency = currencyModule.current
 
-    return Number(value / currentCurrency.rate)
+    return Number(value > 0 ? value / currentCurrency.rate : 0)
   }
 }
 

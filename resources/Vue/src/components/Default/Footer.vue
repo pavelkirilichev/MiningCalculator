@@ -22,7 +22,13 @@
         <div class="footer__logo footer__logo--desktop">
           <img class="logo footer__logo-img" :src="require('../../../../img/logo3.svg')"/>
         </div>
-        <div class="footer__text footer__text--bottom" v-html="$t('rights')"></div>
+        <span class="footer__text footer__text--bottom" v-html="$t('rights')"></span>
+        <span v-if="$i18n.locale === 'ru'" class="footer__text footer__text--bottom">
+          <a target="_blank" href="/uploads/Terms of usage Kriptek.doc">Пользовательское соглашение</a>
+        </span>
+        <span v-if="$i18n.locale === 'en'" class="footer__text footer__text--bottom">
+          <a target="_blank" href="/uploads/Terms of usage Kriptek eng.docx">Terms of usage</a>
+        </span>
         <span class="footer__text footer__text--bottom" v-html="$t('minerstat')"></span>
         <!-- <a href="https://minerstat.com" target="_blank" class="footer__text footer__text--bottom">minerstat.com</a> -->
       </div>

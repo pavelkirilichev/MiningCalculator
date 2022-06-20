@@ -37,6 +37,12 @@ import { DataMode } from '../main';
 
 // const order = new Order()
 
+const blackList = ['KAWPOW', 'X11']
+
+function filterByAlgorithm(array: ICryptoItem[]) {
+  return array.filter(el => !blackList.some(alg => el.algorithm.toLowerCase() === alg.toLowerCase()))
+}
+
 interface ICryptoItem {
   coin: string,
   name: string,

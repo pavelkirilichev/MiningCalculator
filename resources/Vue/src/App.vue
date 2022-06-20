@@ -3,6 +3,11 @@
     <Header :scrolled="scrolled"></Header>
     <Main>
       <Hero></Hero>
+      <!-- Yandex.RTB R-A-1693708-3 -->
+      <div ref="vueScript" class="ads container">
+        <div id="yandex_rtb_R-A-1693708-1"></div>
+        <component is="script" type="text/javascript" v-html="script"></component>
+      </div>
       <Calculator />
       <AddInfo />
     </Main>
@@ -43,6 +48,17 @@ const gpuModule = getModule(GPU, store)
   }
 })
 export default class App extends Vue {
+  $refs!: {
+    vueScript: HTMLDivElement
+  }
+
+  script = `window.yaContextCb.push(()=>{
+          Ya.Context.AdvManager.render({
+            renderTo: 'yandex_rtb_R-A-1693708-1',
+            blockId: 'R-A-1693708-1'
+          })
+        })`.trim()
+
   scrolled = false
 
   mounted() {

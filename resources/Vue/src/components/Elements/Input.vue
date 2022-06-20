@@ -39,25 +39,29 @@ export default class Input extends Vue {
   @Prop({ type: [Number, String] }) value!: any;
   @Prop({ type: Boolean }) big!: boolean;
   @Prop({ type: Boolean }) percentage!: boolean;
+  @Prop({ type: Boolean }) hasNegative!: boolean
   
   old = ''
   t: any
 
-  mask: Mask.MaskedNumberOptions = {
-    mask: Number,  // enable number mask
+  get mask(): Mask.MaskedNumberOptions {
+    return {
+      mask: Number,  // enable number mask
 
-    // other options are optional with defaults below
-    signed: false,  // disallow negative
-    thousandsSeparator: '',  // any single char
-    padFractionalZeros: false,  // if true, then pads zeros at end to the length of scale
-    normalizeZeros: true,  // appends or removes zeros at ends
-    radix: ',',  // fractional delimiter
-    mapToRadix: ['.'],  // symbols to process as radix
-    
+      // other options are optional with defaults below
+      signed: !this.hasNegative,  // disallow negative
+      thousandsSeparator: '',  // any single char
+      padFractionalZeros: false,  // if true, then pads zeros at end to the length of scale
+      normalizeZeros: true,  // appends or removes zeros at ends
+      radix: ',',  // fractional delimiter
+      mapToRadix: ['.'],  // symbols to process as radix
+      
 
-    // additional number interval options (e.g.)
-    min: 0,
-    scale: 10,
+      // additional number interval options (e.g.)
+      min: this.hasNegative ? -Infinity : 0,
+      max: this.percentage ? 100 : Infinity,
+      scale: 10,
+    }
   }
 
   onChange(value: number) {
@@ -65,13 +69,19 @@ export default class Input extends Vue {
     let str = val.replace(/\,/g, '.')
 
     if (this.percentage) {
-      if (Number(str) > 99.99) {
+      const num = Number(str)
+
+      if (num > 99.99) {
         str = "100";
-        this.$refs.input.value = str
       }
+      if (num < -99.99) {
+        str = "-100";
+      }
+      
+      this.$refs.input.value = str
     }
 
-    if(str.match(/^(\d+|\d+\.\d+)$/)) {
+    if(str.match(/^(-?\d+|-?\d+\.\d+)$/)) {
       this.$emit("input", str);
     }
   }
