@@ -175,7 +175,7 @@ class CalcAdvancedGPU {
     return summaryPowerConsumption_c312
   }
   
-  getNetworkDifficulty(coin: ICryptoItem) {
+  getNetworkDifficulty(coin: ICryptoItem) {    
     const isSHa = shaType.map(s => s.toLowerCase()).includes(coin.algorithm.toLowerCase())
     const isUserInput = ChangeHelper.hasNetworkKeys()
     const baseValue_u318 = isUserInput ? (DataPort.getNetworkDifficultyLevel() || isSHa ? coin.difficulty * 2**32 : coin.difficulty) : (isSHa ? coin.difficulty * 2**32 : coin.difficulty)
@@ -185,18 +185,31 @@ class CalcAdvancedGPU {
     const networkGrowthTime_u320_3 = Math.floor(DataPort.getNetworkGrowthTimeMonth() * 30)
 
     const netwrokGrowthTime_u320: {[K in NetworkModes]: number } = {
-      [NetworkModes.DAY]: networkGrowthTime_u320_1,
-      [NetworkModes.WEEK]: networkGrowthTime_u320_2,
-      [NetworkModes.MONTH]: networkGrowthTime_u320_3
+      [NetworkModes.DAY]: networkGrowthTime_u320_1 || coin.rate.day,
+      [NetworkModes.WEEK]: networkGrowthTime_u320_2 || coin.rate.week,
+      [NetworkModes.MONTH]: networkGrowthTime_u320_3 || coin.rate.month
     }
 
     const networkDifficulty_c032 = [baseValue_u318]
+    const key = DataPort.getNetworkMode()
+    let cooef;
+
+    switch (key) {
+      case NetworkModes.DAY:
+        cooef = 1
+        break
+      case NetworkModes.WEEK:
+        cooef = 7
+        break;
+      case NetworkModes.MONTH:
+        cooef = 30
+    }
 
     // console.log(netwrokGrowthTime_u320[DataPort.getNetworkMode()])
 
     for (let i = 1; i < 2049; i++) {
-      if (i <= netwrokGrowthTime_u320[DataPort.getNetworkMode()]) {
-        networkDifficulty_c032[i] = networkDifficulty_c032[i - 1] * (1 + (networkGrowthInComplexity_u319 / 100))
+      if (i <= netwrokGrowthTime_u320[key]) {
+        networkDifficulty_c032[i] = networkDifficulty_c032[i - 1] * ((1 + (networkGrowthInComplexity_u319 / 100) / cooef))
       }
       else {
         networkDifficulty_c032[i] = networkDifficulty_c032[i - 1]
@@ -448,10 +461,23 @@ class CalcAdvancedHashrate {
     }
 
     const networkDifficulty_c042 = [baseValue_u418]
+    const key = DataPort.getNetworkMode()
+    let cooef;
+
+    switch (key) {
+      case NetworkModes.DAY:
+        cooef = 1
+        break
+      case NetworkModes.WEEK:
+        cooef = 7
+        break;
+      case NetworkModes.MONTH:
+        cooef = 30
+    }
 
     for (let i = 1; i < 2049; i++) {
       if (i <= netwrokGrowthTime_u420[DataPort.getNetworkMode()]) {
-        networkDifficulty_c042[i] = networkDifficulty_c042[i - 1] * (1 + (networkGrowthInComplexity_u419 / 100))
+        networkDifficulty_c042[i] = networkDifficulty_c042[i - 1] * ((1 + (networkGrowthInComplexity_u419 / 100) / cooef))
       }
       else networkDifficulty_c042[i] = networkDifficulty_c042[i - 1]
     }

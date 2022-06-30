@@ -180,7 +180,13 @@ export default class Network extends mixins(ModeMixin) {
   }
 
   get networkGwothTimeControlDay() {
-    return String(parametersModule.getParameter("network.networkGwothTimeDay"))
+    if(!cryptoModule.current) return '0'
+
+    const isChanged = parametersModule.register.some(token => token === "network.networkGwothTimeDay")
+    if(isChanged) {
+      return String(parametersModule.getParameter("network.networkGwothTimeDay"))
+    }
+    else return String(cryptoModule.current.rate.day)
   }
 
   set networkGwothTimeControlDay(value: string) {
@@ -190,7 +196,14 @@ export default class Network extends mixins(ModeMixin) {
   }
 
   get networkGwothTimeControlWeek() {
-    return String(parametersModule.getParameter("network.networkGwothTimeWeek"))
+    if(!cryptoModule.current) return '0'
+
+    const isChanged = parametersModule.register.some(token => token === "network.networkGwothTimeWeek")
+
+    if(isChanged) {
+      return String(parametersModule.getParameter("network.networkGwothTimeWeek"))
+    }
+    else return String(cryptoModule.current.rate.week)
   }
 
   set networkGwothTimeControlWeek(value: string) {
@@ -200,7 +213,14 @@ export default class Network extends mixins(ModeMixin) {
   }
 
   get networkGwothTimeControlMonth() {
-    return String(parametersModule.getParameter("network.networkGwothTimeMonth"))
+    if(!cryptoModule.current) return '0'
+
+    const isChanged = parametersModule.register.some(token => token === "network.networkGwothTimeMonth")
+
+    if(isChanged) {
+      return String(parametersModule.getParameter("network.networkGwothTimeMonth"))
+    }
+    else return String(cryptoModule.current.rate.week)
   }
 
   set networkGwothTimeControlMonth(value: string) {

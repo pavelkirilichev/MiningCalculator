@@ -56,7 +56,12 @@ interface ICryptoItem {
   reward_block: number
   price: number,
   volume: number,
-  updated: number
+  updated: number,
+  rate: {
+    day: number,
+    week: number,
+    month: number
+  }
 }
 
 interface ISelectedCryptoItem extends ICryptoItem {
@@ -105,12 +110,27 @@ class Crypto extends VuexModule {
 
   @Mutation
   setHashrateList(data: ICryptoItem[]) {
-    this.hashrateList = data
+    // TODO:
+    this.hashrateList = data.map(coin => ({
+      ...coin,
+      rate: {
+        day: 1.4,
+        week: 2,
+        month: 5
+      }
+    }))
   }
 
   @Mutation
   setGPUList(data: ICryptoItem[]) {
-    this.GPUList = data
+    this.GPUList = data.map(coin => ({
+      ...coin,
+      rate: {
+        day: 1.4,
+        week: 2,
+        month: 5
+      }
+    }))
   }
 
   @Mutation
@@ -133,7 +153,6 @@ class Crypto extends VuexModule {
   updateHashrate(params: string[]) {
     this.context.commit('resetHashrate')
     this.getByAlgorithms(params).then(data => {
-      console.log(data)
       this.context.commit('setHashrateList', data)
       this.context.commit('updateHandle')
     })
