@@ -111,26 +111,12 @@ class Crypto extends VuexModule {
   @Mutation
   setHashrateList(data: ICryptoItem[]) {
     // TODO:
-    this.hashrateList = data.map(coin => ({
-      ...coin,
-      rate: {
-        day: 1.4,
-        week: 2,
-        month: 5
-      }
-    }))
+    this.hashrateList = data
   }
 
   @Mutation
   setGPUList(data: ICryptoItem[]) {
-    this.GPUList = data.map(coin => ({
-      ...coin,
-      rate: {
-        day: 1.4,
-        week: 2,
-        month: 5
-      }
-    }))
+    this.GPUList = data
   }
 
   @Mutation

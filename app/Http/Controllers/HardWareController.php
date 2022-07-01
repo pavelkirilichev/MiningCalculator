@@ -25,6 +25,8 @@ class HardWareController extends Controller
                     ->whereColumn('h.id', 'a.hardware_id')
                     ->whereIn('a.name', $this->whiteList);
             })
+            ->join('hardware_rating', 'h.id', '=', 'hardware_rating.hardware_id')
+            ->orderby('rating', 'DESC')
             ->limit(30)
             ->get();
 
@@ -36,6 +38,8 @@ class HardWareController extends Controller
                     ->whereColumn('h.id', 'a.hardware_id')
                     ->whereIn('a.name', $this->whiteList);
             })
+            ->join('hardware_rating', 'h.id', '=', 'hardware_rating.hardware_id')
+            ->orderby('rating', 'DESC')
             ->limit(30)
             ->get();
 
